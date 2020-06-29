@@ -15,6 +15,7 @@ public:
 
 	void setPos(Vector2D newPos);
 	SDL_Rect getPointRect();
+	SDL_Rect getDest();
 private:
 	Vector2D pos_, speed_;
 	double width_, height_;

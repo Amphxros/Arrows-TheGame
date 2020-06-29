@@ -12,6 +12,7 @@ public:
 	void render();
 	void update();
 
+	SDL_Rect getCollisionDest();
 
 private:
 	Vector2D pos_, speed_;

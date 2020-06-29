@@ -20,7 +20,8 @@ Arrow::~Arrow()
 void Arrow::update()
 {
 	pos_ = { pos_.getX() + speed_.getX(), pos_.getY() };
-	if (pos_.getX() < 800) {
+
+	if (pos_.getX() < game_->getWindowWidth()) {
 		delete this;
 	}
 }
@@ -51,4 +52,15 @@ SDL_Rect Arrow::getPointRect()
 	point.h = height_ / 2;
 
 	return point;
+}
+
+SDL_Rect Arrow::getDest()
+{
+	SDL_Rect dest;
+	dest.x = pos_.getX();
+	dest.y = pos_.getY();
+	dest.w = width_;
+	dest.h = height_;
+
+	return dest;
 }

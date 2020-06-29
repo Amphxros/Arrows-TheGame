@@ -3,14 +3,14 @@
 #include "SDL_image.h"
 #include "checkML.h"
 #include <iostream>
+#include "Game.h"
 
 using namespace std;
 
 using uint = unsigned int;
 
 void firstTest() {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // Check Memory Leaks
-	SDL_Window* window = nullptr;
+		SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	const uint winWidth = 800;
 	const uint winHeight = 600;
@@ -32,6 +32,8 @@ void firstTest() {
 }
 
 int main(int argc, char* argv[]){
-	firstTest();
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // Check Memory Leaks
+	Game g;
+	g.run();
 	return 0;
 }
