@@ -1,20 +1,26 @@
 #pragma once
-class Vector2D
-{
-public:
-	Vector2D() : Vector2D(0, 0) {}
-	Vector2D(double x, double y) : x_(x), y_(y) {}
 
-	inline double getX() { return x_; }
-	inline double getY() { return y_; }
+#include <iostream>
 
-	void normalize();
-	Vector2D operator+(const Vector2D& v);
-	double operator*(const Vector2D& v);
-	Vector2D operator*(double d);
-
+class Vector2D {
 private:
-	double x_, y_;
+	double x_;
+	double y_;
+public:
+	Vector2D() : x_(0), y_(0) {};
+	Vector2D(double x, double y): x_(x), y_(y) {};
+	
+	inline double getX() const { return x_; }
+	inline double getY() const { return y_; }
+	
+	void Normalize();
+	void SetVector(double nX, double nY) { x_ = nX, y_ = nY; }
+	
+	Vector2D operator +(Vector2D v) { return { x_ + v.getX(),y_ + v.getY() }; }
+	Vector2D operator *(double d ) { return { x_*d , y_ *d }; }
+	Vector2D operator *(Vector2D v) { return { x_ * v.getX(),y_ * v.getY() }; }
 };
 
 using Point2D = Vector2D;
+
+

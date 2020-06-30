@@ -1,27 +1,31 @@
 #pragma once
+
 #include "Vector2D.h"
 #include "Texture.h"
+#include<iostream>
+
 class Game;
 class Balloon
 {
 public:
-	Balloon();
-	Balloon(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, Game* game);
-	~Balloon();
+	Balloon::Balloon();
+	Balloon::Balloon(Point2D p, double w, double h,
+		Vector2D speed, bool state, Texture* t);
+	Balloon::~Balloon();
 
-	void render();
-	void update();
-
-	SDL_Rect getCollisionDest();
+	void Balloon::Render()const;
+	bool Balloon::Update();
+	SDL_Rect* Balloon::GetRect() {
+		return new SDL_Rect{ (int)pos.getY(),(int)pos.getX(),(int)H / 7, (int)W / 6 };}
 
 private:
-	Vector2D pos_, speed_;
-	double width_, height_;
-	Texture* texture_ = nullptr;
-	Game* game_ = nullptr;
-
-	int color_;
-	int frame;
-
+	Point2D pos;
+	double W, H;
+	int color;
+	Vector2D dir;
+	bool stat= true;
+	uint ins = 0;
+	Texture* T;
+	Game*g;
 };
 

@@ -1,31 +1,29 @@
 #pragma once
-
 #include "Vector2D.h"
 #include "Texture.h"
 #include "Arrow.h"
+#include <iostream>
 class Game;
 class Bow
 {
 public:
 	Bow();
-	Bow(Vector2D pos, Vector2D speed, double width, double height, Texture* textureA, Texture* textureB, Texture* arrowTexture,Game* game);
-	~Bow();
-
+	Bow(Point2D pos, Vector2D speed, double width, double height, Texture* textureA,Texture* textureB, Texture* arrowtexture, Game* game);
 	void render();
 	void update();
-	void handleEvents(const SDL_Event & event);
-
+	void handleEvents(SDL_Event& e);
 private:
-	//bow elements
 	Vector2D pos_, speed_;
 	double width_, height_;
-	Texture* texture_A = nullptr;
-	Texture* texture_B=nullptr;
-	Game* game_ = nullptr;
+	Texture* texture_A;
+	Texture* texture_B;
+	Game* game_;
 
-	//arrow charged
-	Arrow* arrow_=nullptr;
-	Texture* texture_arrow=nullptr;
+	Arrow* arrow_ = nullptr;
+	Texture* arrow_texture_;
+	
+	bool charged;
+	bool controlador = false;
 
 };
 

@@ -1,141 +1,95 @@
+#include "SDL.h"
+#include "SDL_image.h"
+#include "Vector2D.h"
 #include "Game.h"
+#include "Texture.h"
+#include <iostream>
 #include <time.h>
+
+using namespace std;
+using uint = unsigned int;
 
 Game::Game()
 {
 	srand(time(NULL));
 	SDL_Init(SDL_INIT_EVERYTHING);
-	window_ = SDL_CreateWindow("Practica 1: Bow and Arrow", SDL_WINDOWPOS_CENTERED,
+
+	window = SDL_CreateWindow("BOW and ARROW", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
-	renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
+	render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	if (window_ == nullptr || renderer_ == nullptr) {
-		throw "SDL ERROR \n";
+	for (int i = 0; i < N_TEXTURES; i++) {
+		texture[i] = new Texture(render, textures[i].route, textures[i].fil, textures[i].col);
 	}
+	Point2D pos = { 0,0 };
+	bow = new Bow ( pos, { 0, BOW_VELOCITY },100,150, texture[BT], texture[BT2], texture[AT], this);
 
-	initGame();
+	Balloon* b = new Balloon({ WIN_HEIGHT, WIN_HEIGHT }, 512, 512, {0,BALLOON_VELOCITY},true,texture[BL]);
+	balloons.push_back(b);
 }
 
 Game::~Game()
 {
-	closeGame();
 }
 
-void Game::render() const
+void Game::Run()
 {
-	SDL_Rect dest;
-	dest.x = dest.y = 0;
-	dest.w = WIN_WIDTH;
-	dest.h = WIN_HEIGHT;
+	while (availableArrows<20) {
+		HandleEvent();
+		BalloonGenerate();
+		Update();
+		Render();
+		SDL_Delay(1000 / FRAME_RATE);
 
-	textures_[BG]->render(dest);
-
-	if (bow_ != nullptr) {
-		bow_->render();
-	}
-	for (auto& arrow : arrows_) {
-		arrow->render();
-	}
-
-	for (auto& balloon : balloons_) {
-		balloon->render();
 	}
 }
 
-void Game::update()
-{
-
-	if (bow_ != nullptr) {
-		bow_->update();
-	}
-	for (auto& arrow : arrows_) {
-		arrow->update();
-	}
-
-	for (auto& balloon : balloons_) {
-		balloon->update();
-	}
-}
-
-void Game::handleEvents()
+void Game::HandleEvent()
 {
 	SDL_Event event;
-	while (SDL_PollEvent(&event) && !exit) {
-		if (event.type == SDL_QUIT) {
-			exit = true;
-		}
-		else {
-			bow_->handleEvents(event);
-		}
+	while (SDL_PollEvent(&event)) {
+		bow->handleEvents(event);
 	}
 }
 
-void Game::run()
+void Game::Render()
 {
-	while (!SDL_QuitRequested() && !exit) {
-		update();
-		handleEvents();
-		render();
+ 	SDL_RenderClear(render);
+	texture[BG]->render({ 0, 0, WIN_WIDTH, WIN_HEIGHT });
+	bow->render();
+
+	for (int i = 0; i < arrows.size(); i++)
+		arrows[i]->Render();
+	for (int i = 0; i < balloons.size(); i++)
+		balloons[i]->Render();
+
+	SDL_RenderPresent(render);
+}
+
+
+
+void Game::Update()
+{
+	bow->update();
+
+}
+
+bool Game::Collision(Balloon* b)
+{
+	for (int i = 0; i < arrows.size(); i++) {
+		if (SDL_HasIntersection(b->GetRect(), arrows[i]->GetPoint())) {
+			return true;
+		}
 	}
-	closeGame();
+	return false;
 }
 
 void Game::shoot(Arrow* arrow)
 {
-	arrows_.push_back(arrow);
+	arrows.push_back(arrow);
+	availableArrows--;
 }
 
-bool Game::collision(Balloon* b, int rows, int cols)
+void Game::BalloonGenerate()
 {
-	SDL_Rect dest = b->getCollisionDest();
-	bool col = false;
-
-	int i = 0;
-	while (!col && i < arrows_.size()) {
-		SDL_Rect arrow_dest = arrows_[i]->getPointRect();
-
-		if (SDL_HasIntersection(&dest, &arrow_dest)) {
-			col = true;
-		}
-		++i;
-	}
-
-	return col;
-}
-
-void Game::initGame()
-{
-	bow_ = new Bow({ 0,0 }, { 0, 4}, 100, 150, textures_[BOW_A], textures_[BOW_B], textures_[ARROW], this);
-
-	for (int i = 0; i < NUM_TEXTURES; i++) {
-		textures_[i] = new Texture(renderer_, routesTextures[i].route, routesTextures[i].rows, routesTextures[i].columns);
-	}
-}
-
-void Game::closeGame()
-{
-	delete bow_;
-	bow_ = nullptr;
-	
-	for (auto& arrow : arrows_) {
-		delete arrow;
-		arrow = nullptr;
-	}
-	
-	for (auto& balloon : balloons_) {
-		delete balloon;
-		balloon = nullptr;
-	}
-	
-	SDL_DestroyRenderer(renderer_);
-	SDL_DestroyWindow(window_);
-	SDL_Quit();
-}
-
-void Game::createBallons()
-{
-	if (rand() % 20 == 1) {
-		Balloon* balloon = new Balloon({ (double)((double)WIN_WIDTH / 2) + rand() % (WIN_WIDTH / 2),(double)WIN_HEIGHT }, { -1,2 + (double)(rand() % 4) }, 3072/6, 3584/7, textures_[BALLOON], this);
-		balloons_.push_back(balloon);
-	}
 }

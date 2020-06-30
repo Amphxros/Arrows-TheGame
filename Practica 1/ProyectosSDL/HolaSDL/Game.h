@@ -1,73 +1,72 @@
 #pragma once
-
+#include "SDL.h"
+#include "SDL_image.h"
+#include "checkML.h"
 #include "Texture.h"
 #include <iostream>
 #include <string>
 #include <vector>
-#include <list>
-#include <fstream>
 #include "Balloon.h"
 #include "Arrow.h"
 #include "Bow.h"
 
 
+using namespace std;
+
 using uint = unsigned int;
-const int NUM_TEXTURES = 5;
 
+const uint WIN_WIDTH = 800;
+const uint WIN_HEIGHT = 600;
+const uint N_TEXTURES = 5;
+const uint FRAME_RATE = 50;
+const uint BOW_VELOCITY = 5;
+const uint BALLOON_VELOCITY = 3;
+const uint ARROW_VELOCITY = 4;
 
+enum { BG, BT,BT2, BL, AT };
 
-enum TextureID { BG, BOW_A, BOW_B, ARROW, BALLOON };
-struct Routes {
-	std::string route;
-	int rows, columns;
+struct Textures
+{
+	string route;
+	int fil;
+	int col;
 };
-
 
 
 class Game
 {
 public:
-	Game();
-	~Game();
-
-	void render() const;
-	void update();
-	void handleEvents();
-
-	void run();
-	void shoot(Arrow* arrow);
-
-	bool collision(Balloon* b, int rows, int cols);
-	inline uint getWindowWidth() { return WIN_WIDTH; }
-	inline uint getWindowHeight() { return WIN_HEIGHT; }
-
+	Game::Game();
+	Game::~Game();
+	void Game::Run();
+	void Game::HandleEvent();
+	void Game::Render();
+	void Game::Update();
+	bool Game::Collision(Balloon* b);
+	void Game::shoot(Arrow* arrow);
 
 private:
-	const uint WIN_WIDTH = 800;
-	const uint WIN_HEIGHT = 800;
-	const int FRAMERATE = 60;
-	
-	SDL_Window* window_ = nullptr;
-	SDL_Renderer* renderer_ = nullptr;
-	
-	Bow* bow_;
-	std::vector<Arrow*> arrows_;
-	std::vector<Balloon*> balloons_;
-	Texture* textures_[NUM_TEXTURES];
+
+	SDL_Window* window = nullptr;
+	SDL_Renderer* render = nullptr;
 
 	bool exit = false;
+	//int points;
+	//int arrows;
+	Texture* texture[N_TEXTURES];
+	Bow* bow;
+	int availableArrows = 10;
+
+	vector<Arrow*> arrows;
+	vector<Balloon*> balloons;
+	Textures textures [N_TEXTURES] = { 
+		{"..\\images\\bg1.png", 1, 1},										
+		{"..\\images\\Bow2.png", 1, 1},											
+		{"..\\images\\Bow1.png", 1, 1},											
+		{"..\\images\\balloons.png", 7, 6},
+		{"..\\images\\Arrow1.png", 1, 1} };
+	void BalloonGenerate();
 
 
-	void initGame();
-	void closeGame();
-	void createBallons();
-
-	Routes routesTextures[NUM_TEXTURES] = {
-	{"..\\images\\bg1.png", 1, 1},
-	{ "..\\images\\Bow1.png",1,1 },
-	{ "..\\images\\Bow2.png",1,1 },
-	{ "..\\images\\Arrow1.png",1,1 },
-	{ "..\\images\\balloons.png",7,6 }
-	};
 };
 

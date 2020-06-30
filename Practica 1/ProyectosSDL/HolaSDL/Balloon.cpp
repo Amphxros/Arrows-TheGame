@@ -1,48 +1,54 @@
 #include "Balloon.h"
-#include "Game.h"
+
 Balloon::Balloon()
 {
 }
 
-Balloon::Balloon(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, Game* game):
-	pos_(pos), speed_(speed), width_(width), height_(height), texture_(texture), game_(game)
+Balloon::Balloon(Point2D p, double w, double h, Vector2D speed, bool state, Texture* t)
 {
-	color_ = rand() % 7;
+	pos = p;
+	W = w;
+	H = h;
+	dir = speed;
+	T = t;
+	stat = state;
 }
+
 
 Balloon::~Balloon()
 {
-	delete texture_;
-	delete game_;
+	delete  T;
+
 }
 
-void Balloon::render()
+void Balloon::Render() const
 {
-	SDL_Rect dest;
-	dest.x = pos_.getX();
-	dest.y = pos_.getY();
-	dest.w = width_;
-	dest.h = height_;
+	SDL_Rect d;
+	d.h = H / 7;
+	d.w = W / 6;
+	d.x = pos.getX();
+	d.y = pos.getY();
+	if (ins == 0) T->renderFrame(d, color, ins);
+	//else T->renderFrame(d, color, (SDL_GetTicks() - ins) / FRAME_RATE);
 
-	texture_->renderFrame(dest, color_, frame);
 }
 
-void Balloon::update()
+bool Balloon::Update()
 {
-	pos_ = { pos_.getX() + speed_.getX(), pos_.getY() + speed_.getY() };
+	pos = { pos.getX(), pos.getY() + (dir.getY() * dir.getX()) }; //Actualiza la posicion del globo
 
-	if (pos_.getX() < game_->getWindowHeight()) {
-		delete this;
+	if (pos.getY() < 0 - H) 
+	{
+		return false;
 	}
+
+	//if(collision)
+	/*stat = false;
+		ins = SDL_GetTicks();*/
+	//if ((SDL_GetTicks() - ins) / FRAME_RATE == 6) return false;
+
+	else return true;
+
 }
 
-SDL_Rect Balloon::getCollisionDest()
-{
-	SDL_Rect dest;
-	dest.x = pos_.getX();
-	dest.y = pos_.getY();
-	dest.w = width_;
-	dest.h = height_;
-	
-	return dest;
-}
+
