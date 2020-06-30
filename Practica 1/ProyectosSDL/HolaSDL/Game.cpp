@@ -22,14 +22,22 @@ Game::Game()
 		texture[i] = new Texture(renderer_, textures[i].route, textures[i].fil, textures[i].col);
 	}
 
-	bow = new Bow ({ 0,0 }, { 0, BOW_VELOCITY },100,150, texture[BT], texture[BT2], texture[AT], this);
+	bow = new Bow({ 0,0 }, { 0, BOW_VELOCITY }, 100, 150, texture[BT], texture[BT2], texture[AT], this);
 
-	Balloon* b = new Balloon({ WIN_HEIGHT, WIN_HEIGHT }, 512, 512, {0,BALLOON_VELOCITY},true,texture[BL]);
-	balloons.push_back(b);
 }
 
 Game::~Game()
 {
+	for (auto& arrow : arrows) {
+		delete arrow;
+	}
+	for (auto& balloon : balloons) {
+		delete balloon;
+	}
+	for (auto& tex_ : texture) {
+		delete tex_;
+	}
+	delete bow;
 }
 
 void Game::Run()
@@ -39,7 +47,7 @@ void Game::Run()
 		BalloonGenerate();
 		update();
 		render();
-
+		BalloonGenerate();
 		SDL_Delay(1000 / FRAME_RATE);
 
 	}
@@ -64,7 +72,7 @@ void Game::render()
 		arrow->render();
 	}
 	for (auto& balloon : balloons) {
-		balloon->Render();
+		balloon->render();
 	}
 
 	SDL_RenderPresent(renderer_);
@@ -77,6 +85,10 @@ void Game::update()
 	bow->update();
 	for (auto& arrow : arrows) {
 		arrow->update();
+	}
+	
+	for (auto& balloon : balloons) {
+		balloon->update();
 	}
 }
 
@@ -98,4 +110,8 @@ void Game::shoot(Arrow* arrow)
 
 void Game::BalloonGenerate()
 {
+	if (rand() % 15 == 0) {
+		Balloon* b = new Balloon({ (double)(100 + rand() % (WIN_WIDTH+ 512/7)),(double)WIN_HEIGHT - 100 }, { 0, BALLOON_VELOCITY }, 512, 512, true, texture[BL], this);
+		balloons.push_back(b);
+	}
 }

@@ -8,24 +8,24 @@ class Game;
 class Balloon
 {
 public:
-	Balloon::Balloon();
-	Balloon::Balloon(Point2D p, double w, double h,
-		Vector2D speed, bool state, Texture* t);
-	Balloon::~Balloon();
+	Balloon();
+	Balloon(Vector2D pos, Vector2D speed,double width, double height, bool state, Texture* texture,Game* game);
+	~Balloon();
 
-	void Balloon::Render()const;
-	bool Balloon::Update();
-	SDL_Rect* Balloon::GetRect() {
-		return new SDL_Rect{ (int)pos.getY(),(int)pos.getX(),(int)H / 7, (int)W / 6 };}
+	void render()const;
+	bool update();
+
+	SDL_Rect* GetRect() {
+		return new SDL_Rect{ (int)pos_.getY(),(int)pos_.getX(),(int)height_ / 7, (int)width_ / 6 };}
 
 private:
-	Point2D pos;
-	double W, H;
+	Vector2D pos_;
+	Vector2D speed_;
+	double width_, height_;
 	int color;
-	Vector2D dir;
 	bool stat= true;
 	uint ins = 0;
-	Texture* T;
-	Game*g;
+	Texture* texture_;
+	Game* game_;
 };
 
