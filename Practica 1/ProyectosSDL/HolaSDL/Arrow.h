@@ -3,25 +3,26 @@
 #include "Vector2D.h"
 #include "Texture.h"
 #include <iostream>
-
+class Game;
 class Arrow
 {
 public:
-	Arrow::Arrow();
-	Arrow::Arrow(double w,double h,Point2D p, Vector2D speed,Texture* t);
+	Arrow();
+	Arrow(Point2D pos, Vector2D speed, double width, double height,Texture* texture, Game* game);
 	Arrow::~Arrow();
-	void Arrow::Render()const;
-	void Arrow::SetPos(Vector2D v);
-	bool Arrow::Update();
-	SDL_Rect* GetPoint()
-	{ return new SDL_Rect{ (int)pos.getY(), (int)pos.getX() + ((int)W / 4) * 3 , (int)H / 2, (int)W / 4 };}
-
+	
+	void render()const;
+	bool update();
+	void setPos(Vector2D v);
+	
+	SDL_Rect* GetPoint();
 
 private:
-	double W, H;
-	Point2D pos;
-	Vector2D dir;
-	Texture* T = nullptr;
+	double width_, height_;
+	Vector2D pos_;
+	Vector2D speed_;
+	Texture* texture_ = nullptr;
+	Game* game_;
 
 };
 

@@ -38,17 +38,20 @@ class Game
 public:
 	Game::Game();
 	Game::~Game();
-	void Game::Run();
-	void Game::HandleEvent();
-	void Game::Render();
-	void Game::Update();
-	bool Game::Collision(Balloon* b);
-	void Game::shoot(Arrow* arrow);
+	
+	void Run();
+	
+	void render();
+	void update();
+	void HandleEvent();
+	
+	bool Collision(Balloon* b);
+	void shoot(Arrow* arrow);
 
 private:
 
-	SDL_Window* window = nullptr;
-	SDL_Renderer* render = nullptr;
+	SDL_Window* window_ = nullptr;
+	SDL_Renderer* renderer_ = nullptr;
 
 	bool exit = false;
 	//int points;

@@ -1,45 +1,44 @@
 #include "Arrow.h"
 
-Arrow::Arrow()
+Arrow::Arrow():pos_(),speed_(),width_(0),height_(0),texture_(nullptr),game_(nullptr)
 {
-	T = nullptr;
-	pos = { 0,0 };
-	dir = { 0,0 };
 }
 
-Arrow::Arrow(double w, double h, Point2D p, Vector2D speed, Texture* t)
+Arrow::Arrow(Point2D pos, Vector2D speed, double width, double height, Texture* texture, Game* game):
+	pos_(pos), speed_(speed), width_(width), height_(height), texture_(texture),game_(game)
 {
-	W = w;
-	H = h;
-	pos = p;
-	dir = speed;
-	T = t;
 }
 
 Arrow::~Arrow()
 {
-	delete T;
+	delete texture_;
 }
 
-void Arrow::Render() const{
-	SDL_Rect d;
+void Arrow::render() const{
+	SDL_Rect dest;
 
-	d.h = H;
-	d.w = W;
-	d.x = pos.getX();
-	d.y = pos.getY();
+	dest.x = pos_.getX();
+	dest.y = pos_.getY();
+	dest.h = height_;
+	dest.w = width_;
 
-	T->render(d);
+	texture_->render(dest);
 }
 
-void Arrow::SetPos(Vector2D v)
+void Arrow::setPos(Vector2D v)
 {
-	pos = { v.getX(), v.getY() };
+	pos_ = { v.getX(), v.getY() };
 }
 
-bool Arrow::Update()
+SDL_Rect* Arrow::GetPoint()
 {
-	pos = { pos.getX() + (dir.getY() * dir.getX()), pos.getY() };
+	return new SDL_Rect{ (int)pos_.getY(), (int)pos_.getX() + ((int)width_ / 4) * 3 , (int)height_ / 2, (int)width_ / 4 }; 
+
+}
+
+bool Arrow::update()
+{
+	pos_ = { pos_.getX() + (speed_.getY() * speed_.getX()), pos_.getY() };
 	
 	return true;
 }

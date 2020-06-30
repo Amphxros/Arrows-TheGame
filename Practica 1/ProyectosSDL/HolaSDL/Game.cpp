@@ -14,15 +14,15 @@ Game::Game()
 	srand(time(NULL));
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	window = SDL_CreateWindow("BOW and ARROW", SDL_WINDOWPOS_CENTERED,
+	window_ = SDL_CreateWindow("BOW and ARROW", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
-	render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
 
 	for (int i = 0; i < N_TEXTURES; i++) {
-		texture[i] = new Texture(render, textures[i].route, textures[i].fil, textures[i].col);
+		texture[i] = new Texture(renderer_, textures[i].route, textures[i].fil, textures[i].col);
 	}
-	Point2D pos = { 0,0 };
-	bow = new Bow ( pos, { 0, BOW_VELOCITY },100,150, texture[BT], texture[BT2], texture[AT], this);
+
+	bow = new Bow ({ 0,0 }, { 0, BOW_VELOCITY },100,150, texture[BT], texture[BT2], texture[AT], this);
 
 	Balloon* b = new Balloon({ WIN_HEIGHT, WIN_HEIGHT }, 512, 512, {0,BALLOON_VELOCITY},true,texture[BL]);
 	balloons.push_back(b);
@@ -37,8 +37,9 @@ void Game::Run()
 	while (availableArrows<20) {
 		HandleEvent();
 		BalloonGenerate();
-		Update();
-		Render();
+		update();
+		render();
+
 		SDL_Delay(1000 / FRAME_RATE);
 
 	}
@@ -52,26 +53,31 @@ void Game::HandleEvent()
 	}
 }
 
-void Game::Render()
+void Game::render()
 {
- 	SDL_RenderClear(render);
+
+	SDL_RenderClear(renderer_);
 	texture[BG]->render({ 0, 0, WIN_WIDTH, WIN_HEIGHT });
 	bow->render();
 
-	for (int i = 0; i < arrows.size(); i++)
-		arrows[i]->Render();
-	for (int i = 0; i < balloons.size(); i++)
-		balloons[i]->Render();
+	for (auto& arrow : arrows) {
+		arrow->render();
+	}
+	for (auto& balloon : balloons) {
+		balloon->Render();
+	}
 
-	SDL_RenderPresent(render);
+	SDL_RenderPresent(renderer_);
 }
 
 
 
-void Game::Update()
+void Game::update()
 {
 	bow->update();
-
+	for (auto& arrow : arrows) {
+		arrow->update();
+	}
 }
 
 bool Game::Collision(Balloon* b)
