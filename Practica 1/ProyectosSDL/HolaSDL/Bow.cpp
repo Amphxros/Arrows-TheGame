@@ -33,17 +33,15 @@ void Bow::render()
 
 void Bow::update()
 {
-	if (controlador) {
+	if (input_in) {
 		pos_.SetVector(pos_.getX(), pos_.getY() + (speed_.getY() * speed_.getX()));
-		controlador = false;
+		input_in = false;
 	}
 
-	if (arrow_texture_ != nullptr) {
-
-		if (arrow_ != nullptr) {
-			arrow_->setPos({ pos_.getX(), pos_.getY() + ((height_/2) -5)});
-		}
+	if (arrow_ != nullptr && arrow_texture_ != nullptr) {
+			arrow_->setPos({ pos_.getX(), pos_.getY() + ((height_/2) -10)});
 	}
+
 	if (pos_.getY() + height_ > WIN_HEIGHT) pos_ = { pos_.getX(), WIN_HEIGHT - height_ }; //Mantiene el arco en pantalla
 
 	else if (pos_.getY() < 0) pos_ = { pos_.getX(), 0 }; 
@@ -58,19 +56,19 @@ void Bow::handleEvents(SDL_Event& e)
 	case SDL_KEYDOWN:
 		if (e.key.keysym.sym == SDLK_UP)
 		{
-			controlador = true;
+			input_in = true;
 			speed_ = Vector2D(-1, v);
 		}
 
 		else if (e.key.keysym.sym == SDLK_DOWN)
 		{
-			controlador = true;
+			input_in = true;
 			speed_ = Vector2D(1, v);
 		}
 		
 		else if (e.key.keysym.sym == SDLK_LEFT) //Si hay flechas disponibles, crea una nueva
 		{
-			arrow_ = new Arrow({ 0, 0 }, { 1, ARROW_VELOCITY }, (double)101, (double)25, arrow_texture_,game_);
+			arrow_ = new Arrow({ 0, 0 }, { 1, ARROW_VELOCITY }, (double)100, (double)31, arrow_texture_,game_);
 		}
 		
 		else if (e.key.keysym.sym == SDLK_RIGHT) //Si hay una flecha cargada llama al metodo disparar de game y el puntero a arrow se pone en null

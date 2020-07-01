@@ -9,9 +9,11 @@ class Bow
 public:
 	Bow();
 	Bow(Point2D pos, Vector2D speed, double width, double height, Texture* textureA,Texture* textureB, Texture* arrowtexture, Game* game);
+
 	void render();
 	void update();
 	void handleEvents(SDL_Event& e);
+
 private:
 	Vector2D pos_, speed_;
 	double width_, height_;
@@ -22,8 +24,7 @@ private:
 	Arrow* arrow_ = nullptr;
 	Texture* arrow_texture_;
 	
-	bool charged;
-	bool controlador = false;
+	bool input_in = false;
 
 };
 

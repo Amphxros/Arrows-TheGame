@@ -9,6 +9,6 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 	Game g = Game();
-	g.Run();
+	g.run();
 	return 0;
 }

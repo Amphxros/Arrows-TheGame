@@ -1,4 +1,5 @@
 #include "Arrow.h"
+#include "Game.h"
 
 Arrow::Arrow():pos_(),speed_(),width_(0),height_(0),texture_(nullptr),game_(nullptr)
 {
@@ -12,6 +13,7 @@ Arrow::Arrow(Point2D pos, Vector2D speed, double width, double height, Texture* 
 Arrow::~Arrow()
 {
 	delete texture_;
+	delete game_;
 }
 
 void Arrow::render() const{
@@ -39,6 +41,8 @@ SDL_Rect* Arrow::GetPoint()
 bool Arrow::update()
 {
 	pos_ = { pos_.getX() + (speed_.getY() * speed_.getX()), pos_.getY() };
-	
+	if (pos_.getX() - width_ > WIN_WIDTH) {
+		return false;
+	}
 	return true;
 }

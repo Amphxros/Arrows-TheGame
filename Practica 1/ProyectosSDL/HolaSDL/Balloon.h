@@ -22,9 +22,9 @@ private:
 	Vector2D pos_;
 	Vector2D speed_;
 	double width_, height_;
-	int color;
-	bool stat= true;
-	uint ins = 0;
+	int color_;
+	bool non_punctured= true;
+	uint frame_ = 0;
 	Texture* texture_;
 	Game* game_;
 };

@@ -39,13 +39,13 @@ public:
 	Game::Game();
 	Game::~Game();
 	
-	void Run();
+	void run();
 	
 	void render();
 	void update();
-	void HandleEvent();
+	void handleEvents();
 	
-	bool Collision(Balloon* b);
+	bool collision(Balloon* b);
 	void shoot(Arrow* arrow);
 
 private:
@@ -56,7 +56,7 @@ private:
 	bool exit = false;
 	//int points;
 	//int arrows;
-	Texture* texture[N_TEXTURES];
+	Texture* textures_[N_TEXTURES];
 	Bow* bow;
 	int availableArrows = 10;
 
@@ -68,8 +68,8 @@ private:
 		{"..\\images\\Bow1.png", 1, 1},											
 		{"..\\images\\balloons.png", 7, 6},
 		{"..\\images\\Arrow1.png", 1, 1} };
-	void BalloonGenerate();
-
+	void balloonGenerate();
+	void closeGame();
 
 };
 
