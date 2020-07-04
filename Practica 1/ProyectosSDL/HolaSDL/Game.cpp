@@ -85,6 +85,7 @@ void Game::update()
 		
 		if (!arrows[i]->update()) {
 			arrows.erase(arrows.begin()+i);
+			//std::cout << arrows.size() << std::endl;
 		}
 	}
 	
@@ -92,6 +93,7 @@ void Game::update()
 	
 		if (!balloons[i]->update()) {
 			balloons.erase(balloons.begin() + i);
+			//std::cout << balloons.size() << std::endl;
 		}
 	}
 	
@@ -119,7 +121,7 @@ void Game::shoot(Arrow* arrow)
 void Game::balloonGenerate()
 {
 	if (rand() % 15 == 0) {
-		Balloon* b = new Balloon({ (double)(100 + rand() % (WIN_WIDTH+ 512/7)),(double)WIN_HEIGHT - 100 }, { 0, BALLOON_VELOCITY }, 400, 400, true, textures_[BL], this);
+		Balloon* b = new Balloon({ (double)(150 + (rand()%(WIN_WIDTH- 200))),(double)WIN_HEIGHT - 100 }, { 0, BALLOON_VELOCITY }, 400, 400, true, textures_[BL], this);
 		balloons.push_back(b);
 	}
 }
