@@ -4,8 +4,8 @@ Balloon::Balloon()
 {
 }
 
-Balloon::Balloon(Vector2D pos, Vector2D speed, double width, double height, bool state, Texture* texture, Game* game):
-	pos_(pos), speed_(speed), width_(width), height_(height), texture_(texture), game_(game)
+Balloon::Balloon(Vector2D pos, Vector2D speed, double width, double height, bool state, Texture* texture, Game* game,int id):
+	ArrowsGameObject(pos,speed,width,height,texture,game,id)
 {
 	color_ = rand() % 7;
 }
@@ -16,7 +16,7 @@ Balloon::~Balloon()
 
 }
 
-void Balloon::render() const
+void Balloon::render() 
 {
 	SDL_Rect dest;
 	dest.x = pos_.getX();

@@ -23,7 +23,7 @@ const uint BOW_VELOCITY = 5;
 const uint BALLOON_VELOCITY = 3;
 const uint ARROW_VELOCITY = 4;
 
-enum { BG, BT,BT2, BL, AT };
+enum { BACKGROUND1, BOW_1,BOW_2, BALLOONS, ARROW_1 };
 
 struct Textures
 {

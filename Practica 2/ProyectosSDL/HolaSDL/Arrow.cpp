@@ -1,12 +1,12 @@
 #include "Arrow.h"
 #include "Game.h"
 
-Arrow::Arrow():pos_(),speed_(),width_(0),height_(0),texture_(nullptr),game_(nullptr)
+Arrow::Arrow():ArrowsGameObject()
 {
 }
 
-Arrow::Arrow(Point2D pos, Vector2D speed, double width, double height, Texture* texture, Game* game):
-	pos_(pos), speed_(speed), width_(width), height_(height), texture_(texture),game_(game)
+Arrow::Arrow(Point2D pos, Vector2D speed, double width, double height, Texture* texture, Game* game,int id):
+	ArrowsGameObject(pos,speed,width,height,texture,game,id)
 {
 }
 
@@ -16,7 +16,7 @@ Arrow::~Arrow()
 	delete game_;
 }
 
-void Arrow::render() const{
+void Arrow::render(){
 	SDL_Rect dest;
 
 	dest.x = pos_.getX();

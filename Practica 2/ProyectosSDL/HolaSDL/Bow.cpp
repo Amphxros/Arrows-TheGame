@@ -5,13 +5,21 @@
 //Constructor
 
 
-Bow::Bow()
+Bow::Bow():
+	ArrowsGameObject(), EventHandler(), texture_B(nullptr), arrow_texture_(nullptr)
 {
 }
 
-Bow::Bow(Point2D pos, Vector2D speed, double width, double height, Texture* textureA, Texture* textureB, Texture* arrowtexture, Game* game):
-	pos_(pos), speed_(speed),width_(width), height_(height) ,texture_A(textureA), texture_B(textureB),arrow_texture_(arrowtexture),game_(game)
+Bow::Bow(Point2D pos, Vector2D speed, double width, double height, Texture* textureA, Texture* textureB, Texture* arrowtexture, Game* game, int id):
+	ArrowsGameObject(pos,speed,width,height,textureA,game,id),EventHandler(), texture_B(textureB),arrow_texture_(arrowtexture)
 {
+}
+
+Bow::~Bow()
+{
+	delete texture_B;
+	delete arrow_;
+	delete arrow_texture_;
 }
 
 void Bow::render()
@@ -27,11 +35,11 @@ void Bow::render()
 		arrow_->render();
 	}
 	else {
-		texture_A->render(dest);
+		texture_->render(dest);
 	}
 }
 
-void Bow::update()
+bool Bow::update()
 {
 	if (input_in) {
 		pos_.SetVector(pos_.getX(), pos_.getY() + (speed_.getY() * speed_.getX()));
@@ -45,33 +53,35 @@ void Bow::update()
 	if (pos_.getY() + height_ > WIN_HEIGHT) pos_ = { pos_.getX(), WIN_HEIGHT - height_ }; //Mantiene el arco en pantalla
 
 	else if (pos_.getY() < 0) pos_ = { pos_.getX(), 0 }; 
+	
+	return true;
 }
 
-void Bow::handleEvents(SDL_Event& e)
+void Bow::handleEvents(const SDL_Event& event)
 {
 	double v = speed_.getY();
 
-	switch (e.type)
+	switch (event.type)
 	{
 	case SDL_KEYDOWN:
-		if (e.key.keysym.sym == SDLK_UP)
+		if (event.key.keysym.sym == SDLK_UP)
 		{
 			input_in = true;
 			speed_ = Vector2D(-1, v);
 		}
 
-		else if (e.key.keysym.sym == SDLK_DOWN)
+		else if (event.key.keysym.sym == SDLK_DOWN)
 		{
 			input_in = true;
 			speed_ = Vector2D(1, v);
 		}
 		
-		else if (e.key.keysym.sym == SDLK_LEFT) //Si hay flechas disponibles, crea una nueva
+		else if (event.key.keysym.sym == SDLK_LEFT) //Si hay flechas disponibles, crea una nueva
 		{
 			arrow_ = new Arrow({ 0, 0 }, { 1, ARROW_VELOCITY }, (double)100, (double)31, arrow_texture_,game_);
 		}
 		
-		else if (e.key.keysym.sym == SDLK_RIGHT) //Si hay una flecha cargada llama al metodo disparar de game y el puntero a arrow se pone en null
+		else if (event.key.keysym.sym == SDLK_RIGHT) //Si hay una flecha cargada llama al metodo disparar de game y el puntero a arrow se pone en null
 		{
 			if (arrow_ != nullptr) {
 				game_->shoot(arrow_);

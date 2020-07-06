@@ -22,7 +22,7 @@ Game::Game()
 		textures_[i] = new Texture(renderer_, textures[i].route, textures[i].fil, textures[i].col);
 	}
 
-	bow = new Bow({ 0,0 }, { 0, BOW_VELOCITY }, 100, 150, textures_[BT], textures_[BT2], textures_[AT], this);
+	bow = new Bow({ 0,0 }, { 0, BOW_VELOCITY }, 100, 150, textures_[BOW_1], textures_[BOW_2], textures_[ARROW_1], this);
 
 }
 
@@ -62,7 +62,7 @@ void Game::render()
 {
 
 	SDL_RenderClear(renderer_);
-	textures_[BG]->render({ 0, 0, WIN_WIDTH, WIN_HEIGHT });
+	textures_[BACKGROUND1]->render({ 0, 0, WIN_WIDTH, WIN_HEIGHT });
 	bow->render();
 
 	for (auto& arrow : arrows) {
@@ -121,7 +121,7 @@ void Game::shoot(Arrow* arrow)
 void Game::balloonGenerate()
 {
 	if (rand() % 15 == 0) {
-		Balloon* b = new Balloon({ (double)(150 + (rand()%(WIN_WIDTH- 200))),(double)WIN_HEIGHT - 100 }, { 0, BALLOON_VELOCITY }, 400, 400, true, textures_[BL], this);
+		Balloon* b = new Balloon({ (double)(150 + (rand()%(WIN_WIDTH- 200))),(double)WIN_HEIGHT - 100 }, { 0, BALLOON_VELOCITY }, 400, 400, true, textures_[BALLOONS], this);
 		balloons.push_back(b);
 	}
 }
