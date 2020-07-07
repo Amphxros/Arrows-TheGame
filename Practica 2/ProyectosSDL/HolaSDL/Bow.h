@@ -14,7 +14,7 @@ public:
 
 	void render() override;
 	bool update() override;
-	void handleEvents(const SDL_Event& event) override;
+	void handleEvents( SDL_Event event) override;
 
 private:
 	

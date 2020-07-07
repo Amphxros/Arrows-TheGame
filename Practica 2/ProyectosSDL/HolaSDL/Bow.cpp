@@ -57,7 +57,7 @@ bool Bow::update()
 	return true;
 }
 
-void Bow::handleEvents(const SDL_Event& event)
+void Bow::handleEvents(SDL_Event event)
 {
 	double v = speed_.getY();
 
@@ -78,7 +78,7 @@ void Bow::handleEvents(const SDL_Event& event)
 		
 		else if (event.key.keysym.sym == SDLK_LEFT) //Si hay flechas disponibles, crea una nueva
 		{
-			arrow_ = new Arrow({ 0, 0 }, { 1, ARROW_VELOCITY }, (double)100, (double)31, arrow_texture_,game_);
+			arrow_ = new Arrow({ 0, 0 }, { 1, ARROW_VELOCITY }, (double)100, (double)31, arrow_texture_,game_,ARROW);
 		}
 		
 		else if (event.key.keysym.sym == SDLK_RIGHT) //Si hay una flecha cargada llama al metodo disparar de game y el puntero a arrow se pone en null

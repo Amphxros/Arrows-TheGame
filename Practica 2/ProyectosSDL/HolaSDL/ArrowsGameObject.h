@@ -13,7 +13,7 @@ public:
 	
 	virtual void render();
 	virtual bool update()=0;
-	virtual void saveToFile(std::string file);
+	virtual void saveToFile(std::string data);
 	virtual void loadFromFile();
 
 	virtual int getID() { return id_; }

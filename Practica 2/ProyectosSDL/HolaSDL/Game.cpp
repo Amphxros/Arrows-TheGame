@@ -22,8 +22,10 @@ Game::Game()
 		textures_[i] = new Texture(renderer_, textures[i].route, textures[i].fil, textures[i].col);
 	}
 
-	bow = new Bow({ 0,0 }, { 0, BOW_VELOCITY }, 100, 150, textures_[BOW_1], textures_[BOW_2], textures_[ARROW_1], this);
-
+	bow = new Bow({ 0,0 }, { 0, BOW_VELOCITY }, 100, 150, textures_[BOW_1], textures_[BOW_2], textures_[ARROW_1], this,BOW);
+	if (bow == nullptr) {
+		cout << "bow null" << endl;
+	}
 }
 
 Game::~Game()
@@ -121,7 +123,7 @@ void Game::shoot(Arrow* arrow)
 void Game::balloonGenerate()
 {
 	if (rand() % 15 == 0) {
-		Balloon* b = new Balloon({ (double)(150 + (rand()%(WIN_WIDTH- 200))),(double)WIN_HEIGHT - 100 }, { 0, BALLOON_VELOCITY }, 400, 400, true, textures_[BALLOONS], this);
+		Balloon* b = new Balloon({ (double)(150 + (rand()%(WIN_WIDTH- 200))),(double)WIN_HEIGHT - 100 }, { 0, BALLOON_VELOCITY }, 400, 400, true, textures_[BALLOONS], this,BALLOON);
 		balloons.push_back(b);
 	}
 }

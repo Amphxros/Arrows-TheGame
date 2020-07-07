@@ -7,6 +7,6 @@ public:
 	virtual ~GameObject(){}
 
 	virtual void render() {};
-	virtual bool update() {};
+	virtual bool update() { return true; };
 };
 
