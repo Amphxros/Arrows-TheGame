@@ -1,0 +1,6 @@
+
+# Autoría: Amparo Rubio Bellón
+
+ -Practica 1: Entrega para la convocatoria extraordinaria
+ -Todo funciona correctamente, sin embargo no hay ninguna funcionalidad extra.
+ 
