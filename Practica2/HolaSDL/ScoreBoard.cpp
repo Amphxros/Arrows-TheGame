@@ -1,14 +1,10 @@
 #include "ScoreBoard.h"
 #include "Game.h"
 ScoreBoard::ScoreBoard(): 
-	GameObject()
-{
-}
+	GameObject(){}
 
 ScoreBoard::ScoreBoard(Texture* score, Texture* arrow, int points, int arrows, Game* game):
-	GameObject(), score_texture(score),arrow_texture(arrow),points_(points),arrows_(arrows)
-{
-}
+	GameObject(), score_texture(score),arrow_texture(arrow),points_(points),arrows_(arrows) {}
 
 ScoreBoard::~ScoreBoard()
 {

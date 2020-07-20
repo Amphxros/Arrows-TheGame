@@ -53,8 +53,7 @@ void ArrowsGameObject::loadFromFile()
 
 //saves the object
 void ArrowsGameObject::saveToFile(string& data)
-{
-
+{	
 }
 
 

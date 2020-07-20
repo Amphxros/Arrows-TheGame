@@ -10,7 +10,7 @@ Bow::Bow(Point2D pos, Vector2D speed, double width, double height, Texture* text
 {
 }
 
-void Bow::render()
+void Bow::render() const
 {
 	SDL_Rect dest;
 	

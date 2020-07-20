@@ -11,7 +11,7 @@ public:
 	Bow();
 	Bow(Point2D pos, Vector2D speed, double width, double height, Texture* textureA, Texture* textureB, Texture* arrowtexture, Game* game);
 
-	void render() override;
+	virtual void render() const;
 	bool update() override;
 	void handleEvents(SDL_Event& e) override;
 	

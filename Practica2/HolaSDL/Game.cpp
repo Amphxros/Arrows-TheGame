@@ -22,6 +22,7 @@ Game::Game()
 		textures_[i] = new Texture(renderer_, textures[i].route, textures[i].fil, textures[i].col);
 	}
 
+	bow = new Bow(Point2D(0,0), Vector2D(0,BOW_VELOCITY), 300, 100, textures_[BOW_1], textures_[BOW_2], textures_[ARROW_1], this);
 	
 }
 
@@ -59,7 +60,6 @@ void Game::handleEvents()
 
 void Game::render()
 {
-
 	SDL_RenderClear(renderer_);
 	textures_[BACKGROUND1]->render({ 0, 0, WIN_WIDTH, WIN_HEIGHT });
 	
@@ -85,7 +85,6 @@ void Game::update()
 
 		if (!arrows[i]->update()) {
 			arrows.erase(arrows.begin() + i);
-			//std::cout << arrows.size() << std::endl;
 		}
 	}
 
