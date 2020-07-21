@@ -5,8 +5,8 @@
 //#include<iostream>
 //
 //class Game;
-//class Balloon
-//{
+class Balloon
+{
 //public:
 //	Balloon();
 //	Balloon(Vector2D pos, Vector2D speed,double width, double height, bool state, Texture* texture,Game* game);
@@ -27,5 +27,5 @@
 //	uint frame_ = 0;
 //	Texture* texture_;
 //	Game* game_;
-//};
-//
+};
+

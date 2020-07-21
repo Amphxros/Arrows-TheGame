@@ -4,8 +4,8 @@
 //#include "Texture.h"
 //#include <iostream>
 //class Game;
-//class Arrow
-//{
+class Arrow
+{
 //public:
 //	Arrow();
 //	Arrow(Point2D pos, Vector2D speed, double width, double height,Texture* texture, Game* game);
@@ -24,5 +24,5 @@
 //	Texture* texture_ = nullptr;
 //	Game* game_;
 //
-//};
-//
+};
+
