@@ -16,6 +16,8 @@ public:
 	virtual void handleEvents(SDL_Event& event);
 
 	virtual State getState() = 0;
+	inline SDLApp* getApp() { return app_; }
+
 
 protected:
 	GameState() : 

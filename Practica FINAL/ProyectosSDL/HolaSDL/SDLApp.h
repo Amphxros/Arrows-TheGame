@@ -6,6 +6,11 @@ using namespace std;
 
 using uint = unsigned int;
 
+const uint WIN_WIDTH = 800;
+const uint WIN_HEIGHT = 600;
+const uint FRAME_RATE = 50;
+
+
 class SDLApp
 {
 public:
@@ -17,7 +22,8 @@ public:
 	void update();
 	void handleEvents();
 
-	// Metodos estaticos para los callbacks
+	// callbacks
+
 	static void quitApp(SDLApp* app);
 	static void resumeApp(SDLApp* app);
 	static void loadPlayState(SDLApp* app);
