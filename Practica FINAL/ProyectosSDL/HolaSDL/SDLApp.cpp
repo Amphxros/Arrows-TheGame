@@ -7,14 +7,17 @@ bool SDLApp::exit_ = false;
 SDLApp::SDLApp()
 {
 	srand(time(NULL));
-	SDL_Init(SDL_INIT_EVERYTHING);
+	int e= SDL_Init(SDL_INIT_EVERYTHING);
+	if (e > 0) {
+		//EXCEPTION
+	}
 
 	window_ = SDL_CreateWindow("BOW and ARROW", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
 	renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
 	
 	if (!renderer_ || !window_) {
-
+		//EXCEPTION
 	}
 
 	stateMachine_ = new GameStateMachine();
@@ -23,6 +26,14 @@ SDLApp::SDLApp()
 
 SDLApp::~SDLApp()
 {
+	delete stateMachine_;
+	stateMachine_ = nullptr;
+	
+
+	
+	SDL_DestroyRenderer(renderer_);
+	SDL_DestroyWindow(window_);
+	SDL_Quit();
 }
 
 void SDLApp::run()
