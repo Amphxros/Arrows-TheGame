@@ -1,28 +1,26 @@
-//#pragma once
-//
-//#include "Vector2D.h"
-//#include "Texture.h"
-//#include <iostream>
-//class Game;
-class Arrow
+#pragma once
+#include "ArrowsGameObject.h"
+class SDLApp;
+class Arrow: public ArrowsGameObject
 {
-//public:
-//	Arrow();
-//	Arrow(Point2D pos, Vector2D speed, double width, double height,Texture* texture, Game* game);
-//	Arrow::~Arrow();
-//	
-//	void render()const;
-//	bool update();
-//	void setPos(Vector2D v);
-//	
-//	SDL_Rect* GetPoint();
-//
-//private:
-//	double width_, height_;
-//	Vector2D pos_;
-//	Vector2D speed_;
-//	Texture* texture_ = nullptr;
-//	Game* game_;
-//
+public:
+	Arrow();
+	Arrow(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, GameState* state);
+	~Arrow();
+	
+    virtual void render()const;
+	virtual void update();
+	
+	inline int getNumHits() { return nHits_; };
+	void setNumHits(int hits) { nHits_ = hits; };
+
+	void setPos(Vector2D v);	
+
+
+	SDL_Rect* GetPoint();
+
+
+	private:
+		int nHits_;
 };
 

@@ -7,11 +7,14 @@ PlayState::~PlayState()
 
 void PlayState::init()
 {
-	MenuButton* button = new MenuButton({ WIN_WIDTH / 4 , 0 }, WIN_WIDTH / 2, WIN_HEIGHT / 4, app_->getTexture(TextureOrder::BUTTON), this, SDLApp::toPause);
-	addEventHandler(button);
-	addGameObject(button);
+	// add scoreboard
+
+	//add bow
+
+	//add n butterflies
 
 
+	
 }
 
 void PlayState::render() const
@@ -28,6 +31,7 @@ void PlayState::render() const
 void PlayState::update()
 {
 	GameState::update();
+	createBalloon();
 }
 
 void PlayState::handleEvents(SDL_Event& event)
@@ -40,10 +44,27 @@ void PlayState::handleEvents(SDL_Event& event)
 	GameState::handleEvents(event);
 }
 
+void PlayState::killGameObject(GameObject* go)
+{
+
+}
+
+void PlayState::shoot(Arrow* arrow)
+{
+}
+
+bool PlayState::collision(Balloon* balloon)
+{
+	return false;
+}
+
 void PlayState::createButterflies(int n)
 {
 }
 
-void PlayState::createBalloons()
+void PlayState::createBalloon()
 {
+	if (rand() % 15==0) {
+
+	}
 }

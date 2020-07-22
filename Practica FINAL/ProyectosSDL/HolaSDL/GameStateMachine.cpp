@@ -30,7 +30,6 @@ void GameStateMachine::pushState(GameState* state)
 void GameStateMachine::popState()
 {
 	if (!states_.empty()) {
-		delete states_.top();
 		states_.pop();
 	}
 }

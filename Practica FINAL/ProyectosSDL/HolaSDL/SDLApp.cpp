@@ -2,6 +2,7 @@
 #include <time.h>
 #include "MainMenuState.h"
 #include "PlayState.h"
+#include "PauseState.h"
 
 GameStateMachine* SDLApp::stateMachine_ = nullptr;
 bool SDLApp::exit_ = false;
@@ -95,17 +96,21 @@ void SDLApp::savePlayState(SDLApp* app)
 
 void SDLApp::toPlay(SDLApp* app)
 {
-	cout << "to play" << endl;
 	stateMachine_->pushState(new PlayState(app));
 }
 
 void SDLApp::toPause(SDLApp* app)
 {
-	cout << "to pause" << endl;
+	stateMachine_->pushState(new PauseState(app));
+
 }
 
 void SDLApp::toMenu(SDLApp* app)
 {
+	while (stateMachine_->getCurrentState()->getState()!=State::MENU)
+	{
+		stateMachine_->popState();
+	}
 	cout << "to menu" << endl;
 }
 
