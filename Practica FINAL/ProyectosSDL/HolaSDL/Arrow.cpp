@@ -22,7 +22,7 @@ void Arrow::render() const
 
 void Arrow::update()
 {
-	ArrowsGameObject::update();
+	pos_ = { pos_.getX()+ speed_.getX(), pos_.getY() };
 }
 
 void Arrow::setPos(Vector2D v)

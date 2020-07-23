@@ -15,11 +15,16 @@ void ScoreBoard::render() const
 	for (int i = 0; i < arrows_; i++) {
 		SDL_Rect dest;
 
-		dest.x = WIN_WIDTH - 30 * i;
-		dest.y = 10;
-		dest.w = 25;
-		dest.h = 90;
-
+		dest.x = WIN_WIDTH - 30 * (i%10);
+		dest.w = 15;
+		dest.h = 50;
+	
+		if (i < 10) {
+			dest.y = 10;
+		}
+		else {
+			dest.y = 70;
+		}
 		arrow_texture->render(dest);
 
 	}

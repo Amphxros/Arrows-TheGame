@@ -8,12 +8,14 @@ PlayState::~PlayState()
 void PlayState::init()
 {
 	// add scoreboard
-	score = new ScoreBoard({ WIN_WIDTH/2,0 }, 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
-	addGameObject(score);
-	score->setPoints(100);
-	score->setArrows(10);
+	score_ = new ScoreBoard(Vector2D(WIN_WIDTH/2,0 ), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
+	addGameObject(score_);
+	score_->setPoints(100);
+	score_->setArrows(20);
 	//add bow
-
+	bow_ = new Bow(Vector2D(0, 0), Vector2D(0, 5), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
+	addGameObject(bow_);
+	addEventHandler(bow_);
 	//add n butterflies
 
 
@@ -55,6 +57,9 @@ void PlayState::killGameObject(GameObject* go)
 
 void PlayState::shoot(Arrow* arrow)
 {
+	gObjects_.push_back(arrow);
+	arrows_.push_back(arrow);
+	score_->setArrows(score_->getArrows() - 1);
 }
 
 bool PlayState::collision(Balloon* balloon)

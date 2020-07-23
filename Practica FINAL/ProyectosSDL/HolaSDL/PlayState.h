@@ -2,6 +2,7 @@
 #include "GameState.h"
 #include "Arrow.h"
 #include "Balloon.h"
+#include "Bow.h"
 #include "ScoreBoard.h"
 class PlayState :
 	public GameState
@@ -35,7 +36,8 @@ private:
 	void killButterfly(std::list<GameObject*>::iterator it);
 	void killReward(std::list<GameObject*>::iterator it);
 	
-	ScoreBoard* score;
+	ScoreBoard* score_;
+	Bow* bow_;
 
 	std::list<Arrow*> arrows_;
 	std::list<Balloon*> balloons_;
