@@ -8,7 +8,10 @@ PlayState::~PlayState()
 void PlayState::init()
 {
 	// add scoreboard
-
+	score = new ScoreBoard({ WIN_WIDTH/2,0 }, 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
+	addGameObject(score);
+	score->setPoints(100);
+	score->setArrows(10);
 	//add bow
 
 	//add n butterflies
@@ -32,6 +35,7 @@ void PlayState::update()
 {
 	GameState::update();
 	createBalloon();
+
 }
 
 void PlayState::handleEvents(SDL_Event& event)

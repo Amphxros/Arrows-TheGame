@@ -1,5 +1,6 @@
 #pragma once
 #include "SDLGameObject.h"
+#include <vector>
 class ScoreBoard :
 	public SDLGameObject
 {
@@ -21,6 +22,8 @@ private:
 	int arrows_;
 
 	Texture* arrow_texture;
+
+	std::vector<int> vec;
 
 };
 
