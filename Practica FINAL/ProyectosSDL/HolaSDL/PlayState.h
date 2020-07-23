@@ -25,6 +25,7 @@ public:
 	bool collision(Balloon* balloon);
 
 
+
 private:
 	
 
@@ -35,6 +36,7 @@ private:
 	void killBalloon(std::list<GameObject*>::iterator it);
 	void killButterfly(std::list<GameObject*>::iterator it);
 	void killReward(std::list<GameObject*>::iterator it);
+	void cleanMemory();
 	
 	ScoreBoard* score_;
 	Bow* bow_;

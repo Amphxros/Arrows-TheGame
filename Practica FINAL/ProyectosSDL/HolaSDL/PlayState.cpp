@@ -17,7 +17,7 @@ void PlayState::init()
 	addGameObject(bow_);
 	addEventHandler(bow_);
 	//add n butterflies
-
+	createButterflies(6+rand()%4);
 
 	
 }
@@ -35,8 +35,14 @@ void PlayState::render() const
 
 void PlayState::update()
 {
-	GameState::update();
-	createBalloon();
+	if (score_->getArrows() > 0) {
+		GameState::update();
+		createBalloon();
+		cleanMemory();
+	}
+	else {
+		//pasar a otro estado
+	}
 
 }
 
@@ -76,4 +82,33 @@ void PlayState::createBalloon()
 	if (rand() % 15==0) {
 
 	}
+}
+
+void PlayState::killArrow(std::list<GameObject*>::iterator it)
+{
+}
+
+void PlayState::killBalloon(std::list<GameObject*>::iterator it)
+{
+}
+
+void PlayState::killButterfly(std::list<GameObject*>::iterator it)
+{
+}
+
+void PlayState::killReward(std::list<GameObject*>::iterator it)
+{
+}
+
+void PlayState::cleanMemory()
+{
+	auto it = gObjectsToErase_.begin();
+
+	while (it != gObjectsToErase_.end()) {
+		delete(**it);
+		gObjects_.erase(*it);
+		it++;
+	}
+	gObjectsToErase_.clear();
+
 }
