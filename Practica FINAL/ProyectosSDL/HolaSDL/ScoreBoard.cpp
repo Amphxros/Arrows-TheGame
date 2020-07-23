@@ -38,12 +38,18 @@ void ScoreBoard::render() const
 
 void ScoreBoard::update()
 {
+	
+}
+
+void ScoreBoard::setPoints(int points)
+{
+	points_ = points;
 	vec.clear();
 	int size = (char)to_string(points_).size();
 	int score = points_;
 
 	for (int i = 0; i < size; i++) {
-	
+
 		int j = score % 10;
 		score /= 10;
 

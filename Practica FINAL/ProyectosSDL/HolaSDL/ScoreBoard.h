@@ -12,7 +12,7 @@ public:
 	virtual void update();
 
 	inline int getPoints() { return points_; }
-	void setPoints(int points) { points_ = points; };
+	void setPoints(int points);
 
 	inline int getArrows() { return arrows_; }
 	void setArrows(int arrows) { arrows_ = arrows; }
