@@ -42,6 +42,7 @@ void PlayState::update()
 	}
 	else {
 		//pasar a otro estado
+		cout << "game end" << endl;
 	}
 
 }
@@ -58,14 +59,16 @@ void PlayState::handleEvents(SDL_Event& event)
 
 void PlayState::killGameObject(GameObject* go)
 {
-
+	gObjectsToErase_.emplace_back(go);
 }
 
 void PlayState::shoot(Arrow* arrow)
 {
-	gObjects_.push_back(arrow);
-	arrows_.push_back(arrow);
-	score_->setArrows(score_->getArrows() - 1);
+	if (score_->getArrows() > 0) {
+		gObjects_.push_back(arrow);
+		arrows_.push_back(arrow);
+		score_->setArrows(score_->getArrows() - 1);
+	}
 }
 
 bool PlayState::collision(Balloon* balloon)
@@ -75,6 +78,9 @@ bool PlayState::collision(Balloon* balloon)
 
 void PlayState::createButterflies(int n)
 {
+	for (int i = 0; i < n; i++) {
+
+	}
 }
 
 void PlayState::createBalloon()
