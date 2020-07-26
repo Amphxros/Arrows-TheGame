@@ -23,6 +23,28 @@ void PlayState::init()
 
 }
 
+bool PlayState::collision(Balloon* balloon)
+{
+	bool col = false;
+	auto it = arrows_.begin();
+
+	while (it != arrows_.end() && !col) {
+
+		SDL_Rect* dest_A = &(*it)->getCollisionRect();
+		col = SDL_HasIntersection(&(balloon->getCollisionRect()),dest_A );
+		if (col) {
+			(*it)->setNumHits((*it)->getNumHits() + 1);
+			
+		}
+		else {
+			it++;
+		}
+
+	}
+	return col;
+
+}
+
 void PlayState::render() const
 {
 	SDL_Rect dest;
@@ -74,28 +96,6 @@ void PlayState::createBalloon()
 	}
 }
 
-bool PlayState::collision(Balloon* balloon)
-{
-	bool col = false;
-	auto it = arrows_.begin();
-
-	while (it != arrows_.end() && !col) {
-
-		SDL_Rect* dest_A = &(*it)->getCollisionRect();
-		col = SDL_HasIntersection(&(balloon->getCollisionRect()),dest_A );
-		if (col) {
-			(*it)->setNumHits((*it)->getNumHits() + 1);
-			
-		}
-		else {
-			it++;
-		}
-
-	}
-	return col;
-
-}
-
 void PlayState::cleanMemory()
 {
 	auto it = gObjectsToErase_.begin();
@@ -113,4 +113,23 @@ void PlayState::cleanMemory()
 void PlayState::killGameObject(std::list<GameObject*>::iterator go)
 {
 	gObjectsToErase_.emplace_back(go);
+}
+
+void PlayState::killArrow(std::list<GameObject*>::iterator it)
+{
+	arrows_.remove(static_cast<Arrow*>((*it)));
+	killGameObject(it);
+
+}
+
+void PlayState::killBalloon(std::list<GameObject*>::iterator it)
+{
+}
+
+void PlayState::killButterfly(std::list<GameObject*>::iterator it)
+{
+}
+
+void PlayState::killReward(std::list<GameObject*>::iterator it)
+{
 }

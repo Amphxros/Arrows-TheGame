@@ -24,9 +24,14 @@ public:
 
 	inline virtual State getState() { return State::PLAY; }
 
-	void killGameObject(std::list<GameObject*>::iterator go);
 	void shoot(Arrow* arrow);
 	bool collision(Balloon* balloon);
+
+	void killGameObject(std::list<GameObject*>::iterator go);
+	void killArrow(std::list<GameObject*>::iterator it);
+	void killBalloon(std::list<GameObject*>::iterator it);
+	void killButterfly(std::list<GameObject*>::iterator it);
+	void killReward(std::list<GameObject*>::iterator it);
 
 
 private:
@@ -35,10 +40,6 @@ private:
 	void createButterflies(int n);
 	void createBalloon();
 	
-	void killArrow(std::list<GameObject*>::iterator it);
-	void killBalloon(std::list<GameObject*>::iterator it);
-	void killButterfly(std::list<GameObject*>::iterator it);
-	void killReward(std::list<GameObject*>::iterator it);
 	void cleanMemory();
 
 	ScoreBoard* score_;

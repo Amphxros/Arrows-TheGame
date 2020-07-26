@@ -38,7 +38,7 @@ void Balloon::update()
 		pos_ = { pos_.getX(), pos_.getY() - speed_.getY() }; //Actualiza la posicion del globo
 		if (pos_.getY() < -height_)
 		{
-			//static_cast<PlayState*>(gamestate_)->killGameObject();
+			static_cast<PlayState*>(gamestate_)->killBalloon(it_);
 		}
 	}
 	if (static_cast<PlayState*>(gamestate_)->collision(this) && non_punctured) {
@@ -46,7 +46,7 @@ void Balloon::update()
 		frame_ = SDL_GetTicks();
 	}
 	if ((SDL_GetTicks() - frame_) / FRAME_RATE == 6 && !non_punctured) {
-	//	static_cast<PlayState*>(gamestate_)->killGameObject();
+		static_cast<PlayState*>(gamestate_)->killBalloon(it_);
 	}
 
 }

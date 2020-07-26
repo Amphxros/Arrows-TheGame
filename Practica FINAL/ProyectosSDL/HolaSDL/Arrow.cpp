@@ -25,7 +25,7 @@ void Arrow::update()
 {
 	pos_ = { pos_.getX()+ speed_.getX(), pos_.getY() };
 	if (pos_.getX() > WIN_WIDTH) {
-		static_cast<PlayState*>(gamestate_)->killGameObject(it_);
+		static_cast<PlayState*>(gamestate_)->killArrow(it_);
 	}
 }
 
