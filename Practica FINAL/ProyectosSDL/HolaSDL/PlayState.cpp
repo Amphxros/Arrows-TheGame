@@ -17,7 +17,7 @@ void PlayState::init()
 	addGameObject(bow_);
 	addEventHandler(bow_);
 	//add n butterflies
-	createButterflies(6+rand()%4);
+
 
 	
 }
@@ -35,15 +35,8 @@ void PlayState::render() const
 
 void PlayState::update()
 {
-	if (score_->getArrows() > 0) {
-		GameState::update();
-		createBalloon();
-		cleanMemory();
-	}
-	else {
-		//pasar a otro estado
-		cout << "game end" << endl;
-	}
+	GameState::update();
+	createBalloon();
 
 }
 
@@ -59,16 +52,14 @@ void PlayState::handleEvents(SDL_Event& event)
 
 void PlayState::killGameObject(GameObject* go)
 {
-	gObjectsToErase_.emplace_back(go);
+
 }
 
 void PlayState::shoot(Arrow* arrow)
 {
-	if (score_->getArrows() > 0) {
-		gObjects_.push_back(arrow);
-		arrows_.push_back(arrow);
-		score_->setArrows(score_->getArrows() - 1);
-	}
+	gObjects_.push_back(arrow);
+	arrows_.push_back(arrow);
+	score_->setArrows(score_->getArrows() - 1);
 }
 
 bool PlayState::collision(Balloon* balloon)
@@ -78,43 +69,12 @@ bool PlayState::collision(Balloon* balloon)
 
 void PlayState::createButterflies(int n)
 {
-	for (int i = 0; i < n; i++) {
-
-	}
 }
 
 void PlayState::createBalloon()
 {
-	if (rand() % 15==0) {
-
+	if (rand() % 100==0) {
+		Balloon* b = new Balloon(Vector2D(100+rand()%(WIN_WIDTH-150),WIN_HEIGHT), Vector2D(0,0.5), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this);
+		addGameObject(b);
 	}
-}
-
-void PlayState::killArrow(std::list<GameObject*>::iterator it)
-{
-}
-
-void PlayState::killBalloon(std::list<GameObject*>::iterator it)
-{
-}
-
-void PlayState::killButterfly(std::list<GameObject*>::iterator it)
-{
-}
-
-void PlayState::killReward(std::list<GameObject*>::iterator it)
-{
-}
-
-void PlayState::cleanMemory()
-{
-	auto it = gObjectsToErase_.begin();
-
-	while (it != gObjectsToErase_.end()) {
-		delete(**it);
-		gObjects_.erase(*it);
-		it++;
-	}
-	gObjectsToErase_.clear();
-
 }

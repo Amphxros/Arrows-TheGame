@@ -1,6 +1,5 @@
 #include "Arrow.h"
 #include "PlayState.h"
-#include "SDLApp.h"
 
 Arrow::Arrow()
 {
@@ -14,7 +13,6 @@ Arrow::Arrow(Vector2D pos, Vector2D speed, double width, double height, Texture*
 
 Arrow::~Arrow()
 {
-
 }
 
 void Arrow::render() const
@@ -25,9 +23,6 @@ void Arrow::render() const
 void Arrow::update()
 {
 	pos_ = { pos_.getX()+ speed_.getX(), pos_.getY() };
-	if (pos_.getX() > WIN_WIDTH) {
-		static_cast<PlayState*>(gamestate_)->killGameObject(this);
-	}
 }
 
 void Arrow::setPos(Vector2D v)
