@@ -4,6 +4,10 @@
 #include "Balloon.h"
 #include "Bow.h"
 #include "ScoreBoard.h"
+
+
+
+
 class PlayState :
 	public GameState
 {
@@ -20,7 +24,7 @@ public:
 
 	inline virtual State getState() { return State::PLAY; }
 
-	void killGameObject(GameObject* go);
+	void killGameObject(std::list<GameObject*>::iterator go);
 	void shoot(Arrow* arrow);
 	bool collision(Balloon* balloon);
 
@@ -35,7 +39,8 @@ private:
 	void killBalloon(std::list<GameObject*>::iterator it);
 	void killButterfly(std::list<GameObject*>::iterator it);
 	void killReward(std::list<GameObject*>::iterator it);
-	
+	void cleanMemory();
+
 	ScoreBoard* score_;
 	Bow* bow_;
 

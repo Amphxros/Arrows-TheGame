@@ -16,9 +16,8 @@ public:
 
 	void setPos(Vector2D v);	
 
-
 	SDL_Rect* GetPoint();
-
+	SDL_Rect getCollisionRect();
 
 	private:
 		int nHits_;

@@ -12,14 +12,15 @@ void PlayState::init()
 	addGameObject(score_);
 	score_->setPoints(100);
 	score_->setArrows(20);
+	
 	//add bow
 	bow_ = new Bow(Vector2D(0, 0), Vector2D(0, 5), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
 	addGameObject(bow_);
 	addEventHandler(bow_);
-	//add n butterflies
-
-
 	
+	//add n butterflies
+	createButterflies(10);
+
 }
 
 void PlayState::render() const
@@ -37,7 +38,7 @@ void PlayState::update()
 {
 	GameState::update();
 	createBalloon();
-
+	cleanMemory();
 }
 
 void PlayState::handleEvents(SDL_Event& event)
@@ -50,11 +51,6 @@ void PlayState::handleEvents(SDL_Event& event)
 	GameState::handleEvents(event);
 }
 
-void PlayState::killGameObject(GameObject* go)
-{
-
-}
-
 void PlayState::shoot(Arrow* arrow)
 {
 	gObjects_.push_back(arrow);
@@ -62,19 +58,59 @@ void PlayState::shoot(Arrow* arrow)
 	score_->setArrows(score_->getArrows() - 1);
 }
 
-bool PlayState::collision(Balloon* balloon)
-{
-	return false;
-}
-
 void PlayState::createButterflies(int n)
 {
+	for (int i = 0; i < n; i++) {
+
+	}
 }
 
 void PlayState::createBalloon()
 {
-	if (rand() % 100==0) {
-		Balloon* b = new Balloon(Vector2D(100+rand()%(WIN_WIDTH-150),WIN_HEIGHT), Vector2D(0,0.5), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this);
+	if (rand() % 10 == 0) {
+		Balloon* b = new Balloon(Vector2D(100 + rand() % (WIN_WIDTH - 150), WIN_HEIGHT), Vector2D(0, 0.5), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this);
 		addGameObject(b);
+		balloons_.push_back(b);
 	}
+}
+
+bool PlayState::collision(Balloon* balloon)
+{
+	bool col = false;
+	auto it = arrows_.begin();
+
+	while (it != arrows_.end() && !col) {
+
+		SDL_Rect* dest_A = &(*it)->getCollisionRect();
+		col = SDL_HasIntersection(&(balloon->getCollisionRect()),dest_A );
+		if (col) {
+			(*it)->setNumHits((*it)->getNumHits() + 1);
+			
+		}
+		else {
+			it++;
+		}
+
+	}
+	return col;
+
+}
+
+void PlayState::cleanMemory()
+{
+	auto it = gObjectsToErase_.begin();
+	while (it != gObjectsToErase_.end())
+	{
+		delete (**it);
+		gObjects_.erase(*it);
+		it++;
+	}
+	gObjectsToErase_.clear();
+
+
+}
+
+void PlayState::killGameObject(std::list<GameObject*>::iterator go)
+{
+	gObjectsToErase_.emplace_back(go);
 }

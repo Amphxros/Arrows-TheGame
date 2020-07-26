@@ -25,7 +25,7 @@ void Balloon::render() const
 	dest.w = width_ / 6;
 	dest.h = height_ / 7;
 
-	if (frame_ == 0)
+	if (frame_ == 0 && non_punctured)
 		texture_->renderFrame(dest, color_, frame_);
 	else
 		texture_->renderFrame(dest, color_, (SDL_GetTicks() - frame_) / FRAME_RATE);
@@ -38,7 +38,7 @@ void Balloon::update()
 		pos_ = { pos_.getX(), pos_.getY() - speed_.getY() }; //Actualiza la posicion del globo
 		if (pos_.getY() < -height_)
 		{
-			///static_cast<PlayState*>(gamestate_)->killGameObject(this);
+			//static_cast<PlayState*>(gamestate_)->killGameObject();
 		}
 	}
 	if (static_cast<PlayState*>(gamestate_)->collision(this) && non_punctured) {
@@ -46,7 +46,7 @@ void Balloon::update()
 		frame_ = SDL_GetTicks();
 	}
 	if ((SDL_GetTicks() - frame_) / FRAME_RATE == 6 && !non_punctured) {
-		//static_cast<PlayState*>(gamestate_)->killGameObject(this);
+	//	static_cast<PlayState*>(gamestate_)->killGameObject();
 	}
 
 }
