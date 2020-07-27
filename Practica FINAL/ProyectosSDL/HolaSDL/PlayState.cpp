@@ -19,7 +19,7 @@ void PlayState::init()
 	addEventHandler(bow_);
 	
 	//add n butterflies
-	createButterflies(10);
+	createButterflies(30);
 
 }
 
@@ -106,7 +106,7 @@ void PlayState::shoot(Arrow* arrow)
 void PlayState::createButterflies(int n)
 {
 	for (int i = 0; i < n; i++) {
-		Butterfly* b = new Butterfly(Vector2D(120 + rand() % (WIN_WIDTH - 120), rand() % WIN_HEIGHT), Vector2D(), 400, 400, app_->getTexture(TextureOrder::BUTTERFLY), this);
+		Butterfly* b = new Butterfly(Vector2D(120 + rand() % (WIN_WIDTH - 220), rand() % WIN_HEIGHT), Vector2D(0.15,0.15), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this);
 		addGameObject(b);
 	}
 }
