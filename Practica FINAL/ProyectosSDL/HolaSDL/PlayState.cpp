@@ -1,6 +1,7 @@
 #include "PlayState.h"
 #include "SDLApp.h"
 #include "MenuButton.h"
+#include <math.h>
 PlayState::~PlayState()
 {
 }
@@ -142,6 +143,8 @@ void PlayState::killGameObject(std::list<GameObject*>::iterator go)
 void PlayState::killArrow(std::list<GameObject*>::iterator it)
 {
 	arrows_.remove(static_cast<Arrow*>((*it)));
+	int p = pow((static_cast<Arrow*>(*it))->getNumHits() - 1,2)* POINTS_PER_BALLON ;
+	score_->setPoints(score_->getPoints() + p);
 	killGameObject(it);
 
 }
