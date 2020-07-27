@@ -4,6 +4,7 @@
 #include "Balloon.h"
 #include "Bow.h"
 #include "ScoreBoard.h"
+#include "Butterfly.h"
 
 
 
@@ -25,7 +26,8 @@ public:
 	inline virtual State getState() { return State::PLAY; }
 
 	void shoot(Arrow* arrow);
-	bool collision(Balloon* balloon);
+	bool collisionWithBalloon(Balloon* balloon);
+	bool collisionWithButterfly(Butterfly* butterfly);
 
 	void killGameObject(std::list<GameObject*>::iterator go);
 	void killArrow(std::list<GameObject*>::iterator it);
@@ -47,7 +49,7 @@ private:
 
 	std::list<Arrow*> arrows_;
 	std::list<Balloon*> balloons_;
-	std::list<Balloon*> butterflies_;
+	std::list<Butterfly*> butterflies_;
 	std::list<std::list<GameObject*>::iterator> gObjectsToErase_;
 
 };

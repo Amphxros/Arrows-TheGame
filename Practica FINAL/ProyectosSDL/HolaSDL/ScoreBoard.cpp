@@ -48,7 +48,12 @@ void ScoreBoard::update()
 
 void ScoreBoard::setPoints(int points)
 {
-	points_ = points;
+	if (points > 0) {
+		points_ = points;
+	}
+	else {
+		points_ = 0;
+	}
 	vec.clear();
 	int size = (char)to_string(points_).size();
 	int score = points_;

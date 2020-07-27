@@ -9,10 +9,8 @@ using namespace std;
 
 
 int main(int argc, char* argv[]){
-	
+	//CrtSetDbgFlag(CRTDBG ALLOC MEM DF | CRTDBG LEAK CHECK DF);
 	SDLApp app = SDLApp();
 	app.run();
-	//Game g = Game();
-	//g.run();
 	return 0;
 }

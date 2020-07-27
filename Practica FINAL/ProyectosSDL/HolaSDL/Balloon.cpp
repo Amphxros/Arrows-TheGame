@@ -41,7 +41,7 @@ void Balloon::update()
 			static_cast<PlayState*>(gamestate_)->killBalloon(it_);
 		}
 	}
-	if (static_cast<PlayState*>(gamestate_)->collision(this) && non_punctured) {
+	if (static_cast<PlayState*>(gamestate_)->collisionWithBalloon(this) && non_punctured) {
 		non_punctured = false;
 		frame_ = SDL_GetTicks();
 	}

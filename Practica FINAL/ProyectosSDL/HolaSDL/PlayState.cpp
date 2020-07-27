@@ -23,7 +23,7 @@ void PlayState::init()
 
 }
 
-bool PlayState::collision(Balloon* balloon)
+bool PlayState::collisionWithBalloon(Balloon* balloon)
 {
 	bool col = false;
 	auto it = arrows_.begin();
@@ -45,6 +45,28 @@ bool PlayState::collision(Balloon* balloon)
 
 }
 
+bool PlayState::collisionWithButterfly(Butterfly* butterfly)
+{
+	bool col = false;
+	auto it = arrows_.begin();
+
+	while (it != arrows_.end() && !col) {
+
+		SDL_Rect* dest_A = &(*it)->getCollisionRect();
+		col = SDL_HasIntersection(&(butterfly->getCollisionRect()), dest_A);
+		if (col) {
+			score_->setPoints(score_->getPoints() - 5);
+
+		}
+		else {
+			it++;
+		}
+
+	}
+	return col;
+
+}
+
 void PlayState::render() const
 {
 	SDL_Rect dest;
@@ -54,12 +76,13 @@ void PlayState::render() const
 	dest.h = WIN_HEIGHT;
 	app_->getTexture(TextureOrder::BACKGROUND2)->render(dest);
 	GameState::render();
+	score_->render(); //esto es para que se renderice encima del resto de objetos 
 }
 
 void PlayState::update()
 {
 	GameState::update();
-	createBalloon();
+	//createBalloon();
 	cleanMemory();
 }
 
@@ -83,7 +106,8 @@ void PlayState::shoot(Arrow* arrow)
 void PlayState::createButterflies(int n)
 {
 	for (int i = 0; i < n; i++) {
-
+		Butterfly* b = new Butterfly(Vector2D(120 + rand() % (WIN_WIDTH - 120), rand() % WIN_HEIGHT), Vector2D(), 400, 400, app_->getTexture(TextureOrder::BUTTERFLY), this);
+		addGameObject(b);
 	}
 }
 
@@ -124,10 +148,14 @@ void PlayState::killArrow(std::list<GameObject*>::iterator it)
 
 void PlayState::killBalloon(std::list<GameObject*>::iterator it)
 {
+	balloons_.remove(static_cast<Balloon*>((*it)));
+	killGameObject(it);
 }
 
 void PlayState::killButterfly(std::list<GameObject*>::iterator it)
 {
+	butterflies_.remove(static_cast<Butterfly*>((*it)));
+	killGameObject(it);
 }
 
 void PlayState::killReward(std::list<GameObject*>::iterator it)
