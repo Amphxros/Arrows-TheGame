@@ -48,6 +48,8 @@ void Butterfly::update()
 				x == 0 ? speed_ = {0.1, speed_.getY()} : speed_ = {-0.1, speed_.getY()};
 				y == 0 ? speed_ = {speed_.getX(),0.1 } : speed_ = {speed_.getX(),-0.1};
 				
+				x == 0 ? row_ = 0 : row_ = 1;
+
 				time_ = SDL_GetTicks();
 			}
 
@@ -62,14 +64,14 @@ void Butterfly::update()
 			
 			if (pos_.getX()< 120) {
 				pos_ = { 120 , pos_.getY() };
-				speed_ = { 0.1,speed_.getY() };
+				speed_ = { 0.1, speed_.getY() };
 				row_ = 1;
 				time_ = SDL_GetTicks();
 			}
 			
 			if (pos_.getY() < height_) {
 				pos_ = { pos_.getX(), 0 };
-				speed_ = {speed_.getX(),0.1 };
+				speed_ = {speed_.getX(), 0.1 };
 				time_ = SDL_GetTicks();
 			}
 			if (pos_.getY() > WIN_HEIGHT- height_) {
@@ -84,7 +86,7 @@ void Butterfly::update()
 		pos_ = { pos_.getX(), pos_.getY() + speed_.getY() };
 		
 		if (pos_.getY() > WIN_HEIGHT) {
-			static_cast<PlayState*>(gamestate_)->killButterfly(it_);
+			//static_cast<PlayState*>(gamestate_)->killButterfly(it_);
 		}
 	}
 }

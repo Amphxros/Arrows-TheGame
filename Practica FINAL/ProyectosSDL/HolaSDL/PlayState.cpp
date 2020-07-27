@@ -20,7 +20,7 @@ void PlayState::init()
 	addEventHandler(bow_);
 	
 	//add n butterflies
-	createButterflies(30);
+	createButterflies(300);
 
 }
 
@@ -163,4 +163,6 @@ void PlayState::killButterfly(std::list<GameObject*>::iterator it)
 
 void PlayState::killReward(std::list<GameObject*>::iterator it)
 {
+	//rewards_.remove(static_cast<Reward*>((*it)));
+	killGameObject(it);
 }

@@ -5,10 +5,6 @@
 #include "Bow.h"
 #include "ScoreBoard.h"
 #include "Butterfly.h"
-
-
-
-
 class PlayState :
 	public GameState
 {
@@ -50,6 +46,7 @@ private:
 	std::list<Arrow*> arrows_;
 	std::list<Balloon*> balloons_;
 	std::list<Butterfly*> butterflies_;
+//	std::list<Reward*> rewards_;
 	std::list<std::list<GameObject*>::iterator> gObjectsToErase_;
 
 };
