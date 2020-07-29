@@ -7,7 +7,7 @@ GameState::~GameState()
 		delete go;
 	}
 	gObjects_.clear();
-	eventHandlers_.clear();
+	evHandlers_.clear();
 }
 
 void GameState::update()
@@ -27,8 +27,8 @@ void GameState::render() const
 void GameState::handleEvents(SDL_Event& event)
 {
 	bool handled = false;
-	auto ev = eventHandlers_.begin();
-	while (!handled && ev != eventHandlers_.end())
+	auto ev = evHandlers_.begin();
+	while (!handled && ev != evHandlers_.end())
 	{
 		if ((*ev)->handleEvent(event)) {
 			handled = true; 
@@ -49,6 +49,6 @@ void GameState::addGameObject(SDLGameObject* go)
 
 void GameState::addEventHandler(EventHandler* ev)
 {
-	std::list<EventHandler*>::iterator it = eventHandlers_.insert(eventHandlers_.end(), ev);
+	std::list<EventHandler*>::iterator it = evHandlers_.insert(evHandlers_.end(), ev);
 	ev->setItHandler(it);
 }

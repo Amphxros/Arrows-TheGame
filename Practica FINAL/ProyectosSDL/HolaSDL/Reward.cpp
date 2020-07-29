@@ -2,6 +2,8 @@
 #include "SDLApp.h"
 #include "PlayState.h"
 
+int Reward::count = 0;
+
 Reward::Reward()
 {
 }

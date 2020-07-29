@@ -1,6 +1,7 @@
 #include "Butterfly.h"
 #include "PlayState.h"
 #include "SDLApp.h"
+int Butterfly::count = 0;
 
 Butterfly::Butterfly():
 	ArrowsGameObject()

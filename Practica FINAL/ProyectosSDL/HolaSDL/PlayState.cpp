@@ -10,6 +10,10 @@ PlayState::~PlayState()
 
 void PlayState::init()
 {
+	Arrow::count = 0;
+	Balloon::count = 0;
+	Butterfly::count = 0;
+	Reward::count = 0;
 	// add scoreboard
 	score_ = new ScoreBoard(Vector2D(WIN_WIDTH/2,0 ), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
 	addGameObject(score_);
@@ -84,11 +88,13 @@ void PlayState::loadFromFile(int seed)
 void PlayState::addReward(Reward* reward)
 {
 	createReward(reward);
+	Reward::count++;
 }
 
 void PlayState::addButterfly(int n)
 {
 	createButterflies(n);
+
 }
 
 void PlayState::addArrows(int n)
@@ -107,6 +113,8 @@ void PlayState::createButterflies(int n)
 	for (int i = 0; i < n; i++) {
 		Butterfly* b = new Butterfly(Vector2D(120 + rand() % (WIN_WIDTH - 220), rand() % WIN_HEIGHT), Vector2D(0.15,0.15), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this);
 		addGameObject(b);
+		butterflies_.push_back(b);
+		Butterfly::count++;
 	}
 }
 
@@ -114,6 +122,7 @@ void PlayState::createBalloon()
 {
 	if (rand() % 150 == 0) {
 		Balloon* b = new Balloon(Vector2D(100 + rand() % (WIN_WIDTH - 150), WIN_HEIGHT), Vector2D(0, 0.5), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this);
+		Balloon::count++;
 		addGameObject(b);
 		balloons_.push_back(b);
 	}
@@ -212,8 +221,8 @@ void PlayState::cleanMemory()
 		gObjects_.erase(*it);
 		it++;
 	}
-	gObjectsToErase_.clear();
 
+	gObjectsToErase_.clear();
 
 }
 
@@ -226,8 +235,7 @@ void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
 void PlayState::deleteArrow(std::list<GameObject*>::iterator it)
 {
 	arrows_.remove(static_cast<Arrow*>((*it)));
-	int p = pow((static_cast<Arrow*>(*it))->getNumHits() - 1,2)* POINTS_PER_BALLON ;
-	score_->setPoints(score_->getPoints() + p);
+	Arrow::count--;
 	deleteGameObject(it);
 
 }
@@ -235,17 +243,21 @@ void PlayState::deleteArrow(std::list<GameObject*>::iterator it)
 void PlayState::deleteBalloon(std::list<GameObject*>::iterator it)
 {
 	balloons_.remove(static_cast<Balloon*>((*it)));
+	Balloon::count--;
 	deleteGameObject(it);
 }
 
 void PlayState::deleteButterfly(std::list<GameObject*>::iterator it)
 {
 	butterflies_.remove(static_cast<Butterfly*>((*it)));
+	Butterfly::count--;
 	deleteGameObject(it);
 }
 
-void PlayState::deleteReward(std::list<GameObject*>::iterator it)
+void PlayState::deleteReward(std::list<GameObject*>::iterator it, std::list<EventHandler*>::iterator ev)
 {
-	//rewards_.remove(static_cast<Reward*>((*it)));
+	rewards_.remove(static_cast<Reward*>((*it)));
+	evHandlers_.remove(static_cast<Reward*>((*ev)));
+	Reward::count--;
 	deleteGameObject(it);
 }

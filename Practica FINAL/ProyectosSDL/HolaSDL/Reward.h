@@ -5,6 +5,8 @@ class Reward :
 	public ArrowsGameObject, public EventHandler
 {
 public:
+	static int count;
+
 	Reward();
 	Reward(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, Texture* textureB, GameState* state);
 	~Reward();

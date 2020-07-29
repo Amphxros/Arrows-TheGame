@@ -30,7 +30,7 @@ protected:
 
 	SDLApp* app_;
 	std::list<GameObject*> gObjects_; 
-	std::list<EventHandler*> eventHandlers_; 
+	std::list<EventHandler*> evHandlers_; 
 
 };
 

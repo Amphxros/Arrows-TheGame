@@ -36,7 +36,7 @@ public:
 	void deleteArrow(std::list<GameObject*>::iterator it);
 	void deleteBalloon(std::list<GameObject*>::iterator it);
 	void deleteButterfly(std::list<GameObject*>::iterator it);
-	void deleteReward(std::list<GameObject*>::iterator it);
+	void deleteReward(std::list<GameObject*>::iterator it, std::list<EventHandler*>::iterator ev);
 
 	bool collisionWithBalloon(Balloon* balloon);
 	bool collisionWithButterfly(Butterfly* butterfly);

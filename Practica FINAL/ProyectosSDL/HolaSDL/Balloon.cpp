@@ -2,6 +2,7 @@
 #include "PlayState.h"
 #include "SDLApp.h"
 
+int Balloon::count = 0;
 Balloon::Balloon()
 {
 	color_ = -1;
@@ -38,7 +39,7 @@ void Balloon::update()
 		pos_ = { pos_.getX(), pos_.getY() - speed_.getY() }; //Actualiza la posicion del globo
 		if (pos_.getY() < -height_)
 		{
-			//static_cast<PlayState*>(gamestate_)->deleteBalloon(it_);
+			static_cast<PlayState*>(gamestate_)->deleteBalloon(it_);
 		}
 	}
 	if (static_cast<PlayState*>(gamestate_)->collisionWithBalloon(this) && non_punctured) {

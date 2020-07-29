@@ -2,6 +2,7 @@
 #include "PlayState.h"
 #include "SDLApp.h"
 
+int Arrow::count = 0;
 Arrow::Arrow()
 {
 }
@@ -25,7 +26,7 @@ void Arrow::update()
 {
 	pos_ = { pos_.getX()+ speed_.getX(), pos_.getY() };
 	if (pos_.getX() > WIN_WIDTH) {
-		//static_cast<PlayState*>(gamestate_)->killArrow(it_);
+		static_cast<PlayState*>(gamestate_)->deleteArrow(it_);
 	}
 }
 

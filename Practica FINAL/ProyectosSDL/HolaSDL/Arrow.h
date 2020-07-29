@@ -4,6 +4,8 @@ class SDLApp;
 class Arrow: public ArrowsGameObject
 {
 public:
+	static int count;
+
 	Arrow();
 	Arrow(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, GameState* state);
 	~Arrow();

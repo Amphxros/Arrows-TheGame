@@ -4,6 +4,8 @@ class Butterfly :
 	public ArrowsGameObject
 {
 public:
+	static int count;
+	
 	Butterfly();
 	Butterfly(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, GameState* state);
 
