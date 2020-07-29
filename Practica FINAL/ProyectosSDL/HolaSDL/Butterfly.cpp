@@ -69,14 +69,14 @@ void Butterfly::update()
 				time_ = SDL_GetTicks();
 			}
 			
-			if (pos_.getY() < height_) {
-				pos_ = { pos_.getX(), 0 };
+			if (pos_.getY() < 0) {
+				pos_ = { pos_.getX(),10 };
 				speed_ = {speed_.getX(), 0.1 };
 				time_ = SDL_GetTicks();
 			}
 			if (pos_.getY() > WIN_HEIGHT- height_) {
 				pos_ = { pos_.getX(), (double)(WIN_HEIGHT-height_) };
-				speed_ = {speed_.getX(),-0.1 };
+				speed_ = {speed_.getX(), -0.1 };
 				time_ = SDL_GetTicks();
 			}
 			

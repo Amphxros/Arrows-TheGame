@@ -10,8 +10,8 @@ public:
 	virtual ~EventHandler() {}
 	virtual bool handleEvent(SDL_Event& event) = 0;
 
-	void setItHandler(const std::list<EventHandler*>::iterator& it) { it_ = it; }
+	void setItHandler(const std::list<EventHandler*>::iterator& it) { ev_ = it; }
 protected:
-	std::list<EventHandler*>::iterator it_;
+	std::list<EventHandler*>::iterator ev_;
 };
 
