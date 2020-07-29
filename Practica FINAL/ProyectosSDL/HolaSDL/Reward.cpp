@@ -25,10 +25,16 @@ void Reward::render() const
 	dest.w = width_;
 	dest.h = height_;
 
-	if (bubbled_) {
-		texture_B->render(dest);
-	}
 	texture_->renderFrame(dest, color_, frame_);
+	
+	if (bubbled_) {
+		SDL_Rect rest;
+		rest.x = pos_.getX()-width_/3;
+		rest.y = pos_.getY()-height_/2;
+		rest.w = 1.5* width_;
+		rest.h = 1.5*height_;
+		texture_B->render(rest);
+	}
 
 }
 
@@ -37,10 +43,12 @@ void Reward::update()
 	pos_ = { pos_.getX(), pos_.getY() + speed_.getY() };
 	frame_ = (SDL_GetTicks() / FRAME_RATE) % texture_->getNumCols();
 	
-	//if(...){ bubbled_=false;}
+	if(static_cast<PlayState*>(gamestate_)->collisionWithReward(this)){
+		bubbled_=false;
+	}
 	
 	if (pos_.getY() > WIN_HEIGHT || clicked_) {
-		static_cast<PlayState*>(gamestate_)->deleteReward(it_);
+		//static_cast<PlayState*>(gamestate_)->deleteReward(it_);
 	}
 
 }
@@ -57,10 +65,6 @@ bool Reward::handleEvent(SDL_Event& event)
 				SDL_Point p = { event.button.x, event.button.y };
 				if (SDL_PointInRect(&p,&(getDestRect()))) {
 					switch (color_) {
-					case 0:	//pasa de nivel
-					//static_cast<PlayState*>(gamestate_)->
-
-						break;
 					case 1:	//añade mas flechas
 						static_cast<PlayState*>(gamestate_)->addArrows(3);
 

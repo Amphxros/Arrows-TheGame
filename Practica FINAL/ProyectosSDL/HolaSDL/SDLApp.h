@@ -11,7 +11,7 @@ const uint WIN_WIDTH = 800;
 const uint WIN_HEIGHT = 600;
 const uint FRAME_RATE = 50;
 
-const uint POINTS_PER_BALLON = 15;
+const uint POINTS_PER_BALLON = 1;
 
 enum TextureOrder{
 	BACKGROUND1,

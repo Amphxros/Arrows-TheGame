@@ -13,7 +13,7 @@ void PlayState::init()
 	// add scoreboard
 	score_ = new ScoreBoard(Vector2D(WIN_WIDTH/2,0 ), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
 	addGameObject(score_);
-	score_->setPoints(100);
+	score_->setPoints(0);
 	score_->setArrows(20);
 	
 	//add bow
@@ -138,6 +138,7 @@ bool PlayState::collisionWithBalloon(Balloon* balloon)
 		col = SDL_HasIntersection(&(balloon->getCollisionRect()),dest_A );
 		if (col) {
 			(*it)->setNumHits((*it)->getNumHits() + 1);
+			
 			int p = pow((static_cast<Arrow*>(*it))->getNumHits() - 1, 2)* POINTS_PER_BALLON;
 			score_->setPoints(score_->getPoints() + p);
 		}

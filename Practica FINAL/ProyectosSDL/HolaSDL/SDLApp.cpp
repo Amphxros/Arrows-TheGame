@@ -132,7 +132,7 @@ void SDLApp::loadTextures()
 	textures_.emplace(ARROW_1, new Texture(renderer_, "..\\images\\Arrow1.png", 1, 1));
 	textures_.emplace(ARROW_2, new Texture(renderer_, "..\\images\\Arrow2.png", 1, 1));
 	textures_.emplace(BUTTERFLY, new Texture(renderer_, "..\\images\\butterfly2.png", 4, 10));
-	textures_.emplace(REWARDS, new Texture(renderer_, "..\\images\\bg1.png", 8, 10));
+	textures_.emplace(REWARDS, new Texture(renderer_, "..\\images\\rewards.png", 10,8));
 	textures_.emplace(SCOREBOARD, new Texture(renderer_, "..\\images\\digits1.png", 1, 10));
 	textures_.emplace(BUBBLE, new Texture(renderer_, "..\\images\\bubble.png", 1, 1));
 	textures_.emplace(BUTTON, new Texture(renderer_, "..\\images\\button.png", 1, 1));
