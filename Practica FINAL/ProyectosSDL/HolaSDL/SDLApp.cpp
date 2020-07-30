@@ -86,12 +86,24 @@ void SDLApp::resumeApp(SDLApp* app)
 
 void SDLApp::loadPlayState(SDLApp* app)
 {
-	cout << "loading" << endl;
+	int code = -1;
+	while (code < 0) {
+		cout << "Introduce tu codigo: " << endl;
+		cin >> code;
+	}
+	stateMachine_->pushState(new PlayState(app));
+	static_cast<PlayState*>(stateMachine_->getCurrentState())->loadFromFile(code);
 }
 
 void SDLApp::savePlayState(SDLApp* app)
 {
-	cout << "saving" << endl;
+	stateMachine_->popState();
+	int code = -1;
+	while (code < 0) {
+		cout << "Introduce tu codigo: " << endl;
+		cin >> code;
+	}
+	static_cast<PlayState*>(stateMachine_->getCurrentState())->saveToFile(code);
 }
 
 void SDLApp::toPlay(SDLApp* app)

@@ -23,7 +23,7 @@ void ScoreBoard::render() const
 			dest.y = 10;
 		}
 		else {
-			dest.y = 70;
+			dest.y = 60* (i/10);
 		}
 		arrow_texture->render(dest);
 

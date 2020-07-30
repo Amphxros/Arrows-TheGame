@@ -18,7 +18,7 @@ void PlayState::init()
 	score_ = new ScoreBoard(Vector2D(WIN_WIDTH/2,0 ), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
 	addGameObject(score_);
 	score_->setPoints(0);
-	score_->setArrows(20);
+	score_->setArrows(10);
 	
 	//add bow
 	bow_ = new Bow(Vector2D(0, 0), Vector2D(0, 5), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
@@ -26,7 +26,7 @@ void PlayState::init()
 	addEventHandler(bow_);
 	
 	//add n butterflies
-	createButterflies(20);
+	createButterflies(10);
 
 }
 
@@ -62,26 +62,80 @@ void PlayState::handleEvents(SDL_Event& event)
 void PlayState::saveToFile(int seed)
 {
 	std::ofstream file;
-	file.open(std::to_string(seed) + ".usr \n");
+	file.open(std::to_string(seed) + ".usr");
+	if (file.is_open()) {
+		//guardar nivel, puntuacion y flechas
+		file << level << " " << score_->getPoints() << " " << score_->getArrows()<<endl;
+		
+		//arco
+		bow_->saveToFile(file);
+		file << endl;
 
-	//guardar nivel, puntuacion y flechas
+		//flechas
+		file << "Arrows " << Arrow::count << endl;
+		for (Arrow* arrow : arrows_) {
+			arrow->saveToFile(file);
+			file << endl;
+		}
+		
+		//globos
+		file << "Balloons " << Balloon::count << endl;
 
-	//arco
+		for (Balloon* b : balloons_) {
+			if (b->isNonPunctured()) {
+				b->saveToFile(file);
+				file << endl;
+			}
+		}
 
-	//flechas
+		//mariposas
+		file << "Butterflies " << Butterfly::count << endl;
 
-	//globos
+		for (Butterfly* b : butterflies_) {
 
-	//mariposas
+			if (b->isAlive()) {
+				b->saveToFile(file);
+				file << endl;
+			}
+		}
+		//premios
+		file << "Rewards " << Reward::count << endl;
 
-	//premios
+		for (Reward* r : rewards_) {
+			if (r->getBubbled()) {
+				r->saveToFile(file);
+			}
+		}
 
-
+		file.close();
+	}
+	else {
+		//error
+	}
 
 }
 
 void PlayState::loadFromFile(int seed)
 {
+	std::ifstream file;
+	file.open(std::to_string(seed) + ".usr");
+
+	if (file.is_open()) {
+		int points, arrows;
+		file >> level >> points >> arrows;
+		score_->setPoints(points);
+		score_->setArrows(arrows);
+
+		//carga el arco
+		//carga las flechas
+		//carga los globos
+		//carga las mariposas
+		//carga los premios
+
+
+
+	}
+
 }
 
 
@@ -184,7 +238,6 @@ bool PlayState::collisionWithButterfly(Butterfly* butterfly)
 
 bool PlayState::collisionWithReward(Reward* reward)
 {
-
 	bool col = false;
 	auto it = arrows_.begin();
 
@@ -206,6 +259,7 @@ bool PlayState::collisionWithReward(Reward* reward)
 
 void PlayState::shoot(Arrow* arrow)
 {
+	Arrow::count++;
 	gObjects_.push_back(arrow);
 	arrows_.push_back(arrow);
 	score_->setArrows(score_->getArrows() - 1);

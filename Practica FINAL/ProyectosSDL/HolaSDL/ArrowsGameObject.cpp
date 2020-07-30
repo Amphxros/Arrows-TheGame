@@ -24,7 +24,7 @@ void ArrowsGameObject::loadFromFile(std::ifstream& file)
 
 void ArrowsGameObject::saveToFile(std::ofstream& file)
 {
-	string data =" posX " + to_string(pos_.getX()) + " posY " + to_string(pos_.getY()) + " speedX " + to_string(speed_.getX()) + " speedY " + to_string(speed_.getY());
+	string data =to_string(pos_.getX()) + " " + to_string(pos_.getY()) + " " + to_string(speed_.getX()) + " " + to_string(speed_.getY());
 	file << data;
 }
 

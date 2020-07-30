@@ -25,8 +25,6 @@ void Butterfly::render() const
 	dest.h = height_;
 
 	texture_->renderFrame(dest, row_, frame_);
-
-
 }
 
 void Butterfly::update()

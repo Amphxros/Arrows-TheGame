@@ -12,6 +12,10 @@ public:
 	virtual void render()const;
 	virtual void update();
 
+	virtual void saveToFile(std::ofstream& file);
+	virtual void loadFromFile(std::ifstream file);
+	inline bool isNonPunctured() { return non_punctured; }
+
 	SDL_Rect* GetRect() {
 		return new SDL_Rect{ (int)pos_.getY(),(int)pos_.getX(),(int)height_ / 7, (int)width_ / 6 };}
 

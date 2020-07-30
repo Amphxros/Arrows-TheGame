@@ -15,6 +15,10 @@ void PauseState::init()
 	button = new MenuButton({ WIN_WIDTH / 4 , WIN_HEIGHT/2 }, WIN_WIDTH / 2, WIN_HEIGHT / 4, app_->getTexture(TextureOrder::BUTTON), this, SDLApp::toMenu);
 	addEventHandler(button);
 	addGameObject(button);
+
+	button = new MenuButton({ WIN_WIDTH / 4 , 3* WIN_HEIGHT/4 }, WIN_WIDTH / 2, WIN_HEIGHT / 4, app_->getTexture(TextureOrder::BUTTON), this, SDLApp::savePlayState);
+	addEventHandler(button);
+	addGameObject(button);
 }
 
 void PauseState::render() const

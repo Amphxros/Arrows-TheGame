@@ -12,7 +12,7 @@ class PlayState :
 public:
 	PlayState() {};
 	PlayState(SDLApp* app):
-		GameState(app) { init(); };
+		GameState(app),level(0) { init(); };
 
 	virtual ~PlayState();
 
@@ -58,6 +58,8 @@ private:
 	std::list<Butterfly*> butterflies_;
 	std::list<Reward*> rewards_;
 	std::list<std::list<GameObject*>::iterator> gObjectsToErase_;
+
+	int level;
 
 };
 

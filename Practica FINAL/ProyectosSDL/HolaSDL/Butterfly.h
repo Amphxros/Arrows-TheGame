@@ -12,6 +12,7 @@ public:
 	virtual void render() const;
 	virtual void update();
 
+	inline bool isAlive() { return alive_; }
 private:
 	int frame_, row_;
 	bool alive_;

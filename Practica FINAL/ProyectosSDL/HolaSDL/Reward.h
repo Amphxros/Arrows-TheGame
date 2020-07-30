@@ -15,6 +15,8 @@ public:
 	virtual void update();
 	virtual bool handleEvent(SDL_Event& event);
 
+	inline bool getBubbled() { return bubbled_; }
+
 private:
 	bool bubbled_;
 	bool clicked_;
