@@ -38,8 +38,10 @@ bool MenuButton::handleEvent(SDL_Event& event)
 		SDL_Point p = { event.button.x, event.button.y };
 
 		if (SDL_PointInRect(&p, &getDestRect())) {
-			callback_(gamestate_->getApp());
-			return true;
+			if (callback_ != nullptr) {
+				callback_(gamestate_->getApp());
+				return true;
+			}
 		}
 
 	}

@@ -30,7 +30,9 @@ SDLApp::~SDLApp()
 {
 	delete stateMachine_;
 	stateMachine_ = nullptr;
-	
+	for (auto tex = textures_.begin(); tex != textures_.end(); ++tex) {
+		delete tex->second;
+	}
 
 	
 	SDL_DestroyRenderer(renderer_);
@@ -40,7 +42,7 @@ SDLApp::~SDLApp()
 
 void SDLApp::run()
 {
-	while (!exit_ || stateMachine_ != nullptr) {
+	while (!exit_) {
 		render();
 		update();
 		handleEvents();

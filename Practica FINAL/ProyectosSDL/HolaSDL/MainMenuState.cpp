@@ -11,6 +11,11 @@ MainMenuState::MainMenuState(SDLApp* app):
 
 MainMenuState::~MainMenuState()
 {
+	for (auto& go : gObjects_) {
+		delete go;
+	}
+
+	gObjects_.clear();
 }
 
 void MainMenuState::init()
