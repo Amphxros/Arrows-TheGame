@@ -50,7 +50,7 @@ void Reward::update()
 	}
 	
 	if (pos_.getY() > WIN_HEIGHT || clicked_) {
-		//static_cast<PlayState*>(gamestate_)->deleteReward(it_);
+		static_cast<PlayState*>(gamestate_)->deleteReward(it_, ev_);
 	}
 
 }

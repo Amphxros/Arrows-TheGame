@@ -6,6 +6,10 @@ GameState::~GameState()
 	for (auto& go : gObjects_) {
 		delete go;
 	}
+
+	for (auto& ev : evHandlers_)
+		delete ev;
+
 	gObjects_.clear();
 	evHandlers_.clear();
 }

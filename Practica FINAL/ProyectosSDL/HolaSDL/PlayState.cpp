@@ -127,6 +127,12 @@ void PlayState::loadFromFile(int seed)
 		score_->setArrows(arrows);
 
 		//carga el arco
+		int posx, posy, speedx, speedy;
+
+		file >> posx >> posy >> speedx >> speedy;
+		bow_->set(Vector2D(posx, posy), Vector2D(speedx, speedy));
+		
+
 		//carga las flechas
 		//carga los globos
 		//carga las mariposas
@@ -134,6 +140,9 @@ void PlayState::loadFromFile(int seed)
 
 
 
+	}
+	else {
+		cout << "Cant load" << endl;
 	}
 
 }
@@ -185,6 +194,7 @@ void PlayState::createBalloon()
 void PlayState::createReward(Reward* reward)
 {
 	addGameObject(reward);
+	Reward::count++;
 	addEventHandler(reward);
 	rewards_.push_back(reward);
 }
@@ -260,7 +270,7 @@ bool PlayState::collisionWithReward(Reward* reward)
 void PlayState::shoot(Arrow* arrow)
 {
 	Arrow::count++;
-	gObjects_.push_back(arrow);
+	addGameObject(arrow);
 	arrows_.push_back(arrow);
 	score_->setArrows(score_->getArrows() - 1);
 }
@@ -273,6 +283,7 @@ void PlayState::cleanMemory()
 	{
 		delete (**it);
 		gObjects_.erase(*it);
+		gObjectsToErase_.erase(it);
 		it++;
 	}
 
@@ -283,7 +294,7 @@ void PlayState::cleanMemory()
 
 void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
 {
-	gObjectsToErase_.emplace_back(go);
+	gObjectsToErase_.push_back(go);
 }
 
 void PlayState::deleteArrow(std::list<GameObject*>::iterator it)

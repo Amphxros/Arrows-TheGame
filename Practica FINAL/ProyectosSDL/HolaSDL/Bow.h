@@ -17,6 +17,8 @@ public:
 	virtual void update();
 	virtual bool handleEvent(SDL_Event& e);
 
+	void set(Vector2D pos, Vector2D speed) { pos_ = pos; speed_ = speed; }
+
 private:
 	Texture* texture_B;
 

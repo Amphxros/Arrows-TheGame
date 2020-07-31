@@ -3,8 +3,7 @@
 
 ArrowsGameObject::~ArrowsGameObject()
 {
-	delete texture_;
-	delete gamestate_;
+	SDLGameObject::~SDLGameObject();
 }
 
 void ArrowsGameObject::render() const
@@ -20,11 +19,12 @@ void ArrowsGameObject::update()
 
 void ArrowsGameObject::loadFromFile(std::ifstream& file)
 {
+
 }
 
 void ArrowsGameObject::saveToFile(std::ofstream& file)
 {
-	string data =to_string(pos_.getX()) + " " + to_string(pos_.getY()) + " " + to_string(speed_.getX()) + " " + to_string(speed_.getY());
+	string data =to_string(pos_.getX()) + " " + to_string(pos_.getY()) + " " + to_string(speed_.getX()) + " " + to_string(speed_.getY())+ " ";
 	file << data;
 }
 
