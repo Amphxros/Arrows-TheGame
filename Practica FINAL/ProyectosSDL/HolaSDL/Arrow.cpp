@@ -3,6 +3,7 @@
 #include "SDLApp.h"
 
 int Arrow::count = 0;
+
 Arrow::Arrow()
 {
 }

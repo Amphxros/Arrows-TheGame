@@ -8,7 +8,7 @@ class SDLGameObject :
 	public GameObject
 {
 public:
-	~SDLGameObject() { delete texture_; delete gamestate_; };
+	virtual ~SDLGameObject() { delete texture_; delete gamestate_; };
 
 	virtual void render() const = 0;
 	virtual void update()= 0;

@@ -8,7 +8,7 @@ public:
 
 	Arrow();
 	Arrow(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, GameState* state);
-	~Arrow();
+	virtual ~Arrow();
 	
     virtual void render()const;
 	virtual void update();

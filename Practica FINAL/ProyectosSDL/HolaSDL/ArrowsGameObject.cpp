@@ -3,7 +3,6 @@
 
 ArrowsGameObject::~ArrowsGameObject()
 {
-	SDLGameObject::~SDLGameObject();
 }
 
 void ArrowsGameObject::render() const

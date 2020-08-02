@@ -62,7 +62,7 @@ void PlayState::handleEvents(SDL_Event& event)
 void PlayState::saveToFile(int seed)
 {
 	std::ofstream file;
-	file.open(std::to_string(seed) + ".usr");
+	file.open(std::to_string(seed) + ".sav");
 	if (file.is_open()) {
 		//guardar nivel, puntuacion y flechas
 		file << level << " " << score_->getPoints() << " " << score_->getArrows()<<endl;
@@ -118,7 +118,7 @@ void PlayState::saveToFile(int seed)
 void PlayState::loadFromFile(int seed)
 {
 	std::ifstream file;
-	file.open(std::to_string(seed) + ".usr");
+	file.open(std::to_string(seed) + ".sav");
 
 	if (file.is_open()) {
 		int points, arrows;
@@ -284,13 +284,12 @@ void PlayState::cleanMemory()
 		delete (**it);
 		gObjects_.erase(*it);
 		gObjectsToErase_.erase(it);
-		it++;
+		it = it++;
 	}
 
 	gObjectsToErase_.clear();
 
 }
-
 
 void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
 {

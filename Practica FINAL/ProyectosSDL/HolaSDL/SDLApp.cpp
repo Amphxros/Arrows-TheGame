@@ -102,10 +102,12 @@ void SDLApp::savePlayState(SDLApp* app)
 	stateMachine_->popState();
 	int code = -1;
 	while (code < 0) {
-		cout << "Introduce tu codigo: " << endl;
+		cout << "Introduce un codigo: " << endl;
 		cin >> code;
 	}
 	static_cast<PlayState*>(stateMachine_->getCurrentState())->saveToFile(code);
+
+	cout << " guardado "<<code<<".sav" << endl;
 }
 
 void SDLApp::toPlay(SDLApp* app)
