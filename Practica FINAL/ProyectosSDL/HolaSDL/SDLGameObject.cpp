@@ -1,5 +1,5 @@
 #include "SDLGameObject.h"
-
+#include "GameState.h"
 SDL_Rect SDLGameObject::getDestRect() const
 {
 	SDL_Rect dest;

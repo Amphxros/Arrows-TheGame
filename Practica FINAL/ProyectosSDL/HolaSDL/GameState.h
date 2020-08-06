@@ -9,7 +9,7 @@ class SDLApp;
 class GameState
 {
 public:
-	virtual ~GameState();
+	~GameState();
 
 	virtual void update();
 	virtual void render() const;

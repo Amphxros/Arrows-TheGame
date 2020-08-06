@@ -45,8 +45,8 @@ void PlayState::render() const
 void PlayState::update()
 {
 	GameState::update();
-	createBalloon();
 	cleanMemory();
+	createBalloon();
 }
 
 void PlayState::handleEvents(SDL_Event& event)
@@ -278,18 +278,97 @@ void PlayState::shoot(Arrow* arrow)
 
 void PlayState::cleanMemory()
 {
-	auto it = gObjectsToErase_.begin();
-	while (it != gObjectsToErase_.end())
-	{
-		delete (**it);
-		gObjects_.erase(*it);
-		gObjectsToErase_.erase(it);
-		it = it++;
+	if (!gObjectsToErase_.empty()) {
+
+		auto it = gObjectsToErase_.begin();
+
+		while (it != gObjectsToErase_.end()) {
+			auto git = gObjects_.begin();
+			bool found = false;
+			while (!found && git != gObjects_.end()) {
+
+				if (dynamic_cast<EventHandler*>(**it)) {
+					bool eventFounded = false;
+					auto eit = evHandlers_.begin();
+					while (!eventFounded && eit != evHandlers_.end())
+					{
+						auto aux = dynamic_cast<GameObject*>(*eit);
+						if (*git == aux) {
+
+							evHandlers_.erase(eit);
+							eventFounded = true;
+						}
+						else eit++;
+					}
+
+				}
+
+				else if (dynamic_cast<Arrow*>(*git)) {
+					auto ait = arrows_.begin();
+					bool arrowFounded = false;
+					while (!arrowFounded && ait != arrows_.end())
+					{
+						if ((*git) == (*ait)) {
+							arrows_.erase(ait);
+							arrowFounded = true;
+							found = true;
+						}
+						else ait++;
+					}
+				}
+
+				else if (dynamic_cast<Balloon*>(*git)) {
+					auto bit = balloons_.begin();
+					bool bFounded = false;
+					while (!bFounded && bit != balloons_.end())
+					{
+						if ((*git) == (*bit)) {
+							balloons_.erase(bit);
+							bFounded = true;
+							found = true;
+						}
+						else bit++;
+					}
+				}
+				
+				else if (dynamic_cast<Butterfly*>(*git)) {
+					auto bit = butterflies_.begin();
+					bool bFounded = false;
+					while (!bFounded && bit != butterflies_.end())
+					{
+						if ((*git) == (*bit)) {
+							butterflies_.erase(bit);
+							bFounded = true;
+							found = true;
+						}
+						else bit++;
+					}
+				}
+				
+				if (dynamic_cast<Reward*>(*git)) {
+					auto rit = rewards_.begin();
+					bool bFounded = false;
+					while (!bFounded && rit != rewards_.end())
+					{
+						if ((*git) == (*rit)) {
+							rewards_.erase(rit);
+							bFounded = true;
+							found = true;
+						}
+						else rit++;
+					}
+				}
+
+				git++;
+
+			}
+		
+			it++;
+		}
+		gObjectsToErase_.clear();
 	}
-
-	gObjectsToErase_.clear();
-
 }
+
 
 void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
 {
