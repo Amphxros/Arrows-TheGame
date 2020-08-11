@@ -5,7 +5,9 @@
 #include "PauseState.h"
 
 GameStateMachine* SDLApp::stateMachine_ = nullptr;
+
 bool SDLApp::exit_ = false;
+
 SDLApp::SDLApp()
 {
 	srand(time(NULL));

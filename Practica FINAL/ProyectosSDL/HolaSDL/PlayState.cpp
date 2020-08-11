@@ -377,7 +377,7 @@ void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
 
 void PlayState::deleteArrow(std::list<GameObject*>::iterator it)
 {
-	arrows_.remove(static_cast<Arrow*>((*it)));
+	//arrows_.remove(static_cast<Arrow*>((*it)));
 	Arrow::count--;
 	deleteGameObject(it);
 
@@ -385,22 +385,22 @@ void PlayState::deleteArrow(std::list<GameObject*>::iterator it)
 
 void PlayState::deleteBalloon(std::list<GameObject*>::iterator it)
 {
-	balloons_.remove(static_cast<Balloon*>((*it)));
+	//balloons_.remove(static_cast<Balloon*>((*it)));
 	Balloon::count--;
 	deleteGameObject(it);
 }
 
 void PlayState::deleteButterfly(std::list<GameObject*>::iterator it)
 {
-	butterflies_.remove(static_cast<Butterfly*>((*it)));
+	//butterflies_.remove(static_cast<Butterfly*>((*it)));
 	Butterfly::count--;
 	deleteGameObject(it);
 }
 
 void PlayState::deleteReward(std::list<GameObject*>::iterator it, std::list<EventHandler*>::iterator ev)
 {
-	rewards_.remove(static_cast<Reward*>((*it)));
-	evHandlers_.remove(static_cast<Reward*>((*ev)));
+	//rewards_.remove(static_cast<Reward*>((*it)));
+	//evHandlers_.remove(static_cast<Reward*>((*ev)));
 	Reward::count--;
 	deleteGameObject(it);
 }
