@@ -3,7 +3,6 @@
 #include "SDL_image.h"
 #include "checkML.h"
 #include <iostream>
-#include "Game.h"
 #include "SDLApp.h"
 using namespace std;
 
