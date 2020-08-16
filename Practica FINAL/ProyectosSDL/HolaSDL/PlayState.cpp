@@ -78,14 +78,14 @@ void PlayState::saveToFile(int seed)
 		file << endl;
 
 		//flechas
-		file << "Arrows " << Arrow::count << endl;
+		file << Arrow::count << endl;
 		for (Arrow* arrow : arrows_) {
 			arrow->saveToFile(file);
 			file << endl;
 		}
 		
 		//globos
-		file << "Balloons " << Balloon::count << endl;
+		file << Balloon::count << endl;
 
 		for (Balloon* b : balloons_) {
 			if (b->isNonPunctured()) {
@@ -95,7 +95,7 @@ void PlayState::saveToFile(int seed)
 		}
 
 		//mariposas
-		file << "Butterflies " << Butterfly::count << endl;
+		file << Butterfly::count << endl;
 
 		for (Butterfly* b : butterflies_) {
 
@@ -105,7 +105,7 @@ void PlayState::saveToFile(int seed)
 			}
 		}
 		//premios
-		file << "Rewards " << Reward::count << endl;
+		file << Reward::count << endl;
 
 		for (Reward* r : rewards_) {
 			if (r->getBubbled()) {
@@ -138,8 +138,18 @@ void PlayState::loadFromFile(int seed)
 		file >> posx >> posy >> speedx >> speedy;
 		bow_->set(Vector2D(posx, posy), Vector2D(speedx, speedy));
 		
-
 		//carga las flechas
+		int count;
+
+		file >> count ;
+
+		for (int i = 0; i < count; i++) {
+			cout << "cargando flecha"<<endl;
+		
+
+
+		}
+
 		//carga los globos
 		//carga las mariposas
 		//carga los premios
@@ -364,12 +374,19 @@ void PlayState::cleanMemory()
 						else rit++;
 					}
 				}
-
+				auto auxIT = git;
+				auto auxEIT = it;
+				GameObject* gm = *git;
 				git++;
+				it++;
+				gObjectsToErase_.erase(auxEIT);
+				gObjects_.erase(auxIT);
+				delete (gm);
+				found = true;
+
 
 			}
 		
-			it++;
 		}
 		gObjectsToErase_.clear();
 	}
