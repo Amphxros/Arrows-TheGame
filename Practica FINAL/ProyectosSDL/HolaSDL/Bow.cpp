@@ -10,6 +10,10 @@ Bow::Bow(Vector2D pos, Vector2D speed, double width, double height, Texture* tex
 
 Bow::~Bow()
 {
+	delete arrow_texture_;
+	delete arrow_;
+	delete texture_B;
+
 }
 
 void Bow::render() const
@@ -33,7 +37,7 @@ void Bow::render() const
 void Bow::update()
 {
 	if (input_in) {
-		pos_.SetVector(pos_.getX(), pos_.getY() + (speed_.getY() * speed_.getX()));
+		pos_.set(pos_.getX(), pos_.getY() + (speed_.getY() * speed_.getX()));
 		input_in = false;
 	}
 	
@@ -71,7 +75,7 @@ bool Bow::handleEvent(SDL_Event& e)
 		
 		else if (e.key.keysym.sym == SDLK_LEFT) //Si hay flechas disponibles, crea una nueva
 		{
-			arrow_ = new Arrow({ 0, 0 }, { 1, 4}, (double)100, (double)31, arrow_texture_,gamestate_);
+			arrow_ = new Arrow({ pos_.getX(), pos_.getY() }, { 1, 4}, (double)100, (double)31, arrow_texture_,gamestate_);
 			return true;
 		}
 		

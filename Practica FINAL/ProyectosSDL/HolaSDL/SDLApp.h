@@ -46,7 +46,7 @@ public:
 	void update();
 	void handleEvents();
 
-	Texture* getTexture(TextureOrder n) { return textures_.at(n); }
+	inline Texture* getTexture(TextureOrder n) { return textures_.at(n); }
 
 	// callbacks
 
@@ -60,8 +60,8 @@ public:
 	static void toEnd(SDLApp* app);
 
 private:
-	SDL_Window* window_;
-	SDL_Renderer* renderer_;
+	SDL_Window* window_=nullptr;
+	SDL_Renderer* renderer_=nullptr;
 	
 	static GameStateMachine* stateMachine_;
 	static bool exit_;

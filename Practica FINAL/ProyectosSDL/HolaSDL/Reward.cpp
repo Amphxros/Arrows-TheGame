@@ -4,7 +4,8 @@
 
 int Reward::count = 0;
 
-Reward::Reward()
+Reward::Reward():
+	ArrowsGameObject(), EventHandler(), texture_B(nullptr), frame_(-1), color_(-1), bubbled_(false), clicked_(true)
 {
 }
 

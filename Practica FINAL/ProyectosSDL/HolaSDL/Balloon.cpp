@@ -16,7 +16,7 @@ Balloon::Balloon(Vector2D pos, Vector2D speed, double width, double height, bool
 
 Balloon::~Balloon()
 {
-
+	ArrowsGameObject::~ArrowsGameObject();
 }
 
 void Balloon::render() const

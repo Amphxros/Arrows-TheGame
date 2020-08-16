@@ -16,7 +16,7 @@ public:
 	inline double getY() const { return y_; }
 	
 	void Normalize();
-	void SetVector(double nX, double nY) { x_ = nX, y_ = nY; }
+	void set(double nX, double nY) { x_ = nX, y_ = nY; }
 	
 	Vector2D operator +(Vector2D v) { return { x_ + v.getX(),y_ + v.getY() }; }
 	Vector2D operator *(double d ) { return { x_*d , y_ *d }; }

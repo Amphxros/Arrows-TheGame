@@ -44,9 +44,15 @@ void PlayState::render() const
 
 void PlayState::update()
 {
-	GameState::update();
-	cleanMemory();
-	createBalloon();
+	if (butterflies_.size() > 0) {
+		GameState::update();
+		cleanMemory();
+		createBalloon();
+	}
+	else {
+		cout << "all butterflies are dead" << endl;
+		app_->quitApp(app_);
+	}
 }
 
 void PlayState::handleEvents(SDL_Event& event)
@@ -347,12 +353,12 @@ void PlayState::cleanMemory()
 				
 				if (dynamic_cast<Reward*>(*git)) {
 					auto rit = rewards_.begin();
-					bool bFounded = false;
-					while (!bFounded && rit != rewards_.end())
+					bool rFounded = false;
+					while (!rFounded && rit != rewards_.end())
 					{
 						if ((*git) == (*rit)) {
 							rewards_.erase(rit);
-							bFounded = true;
+							rFounded = true;
 							found = true;
 						}
 						else rit++;
