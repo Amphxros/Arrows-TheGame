@@ -31,6 +31,7 @@ public:
 	void addButterfly(int n);
 	void addArrows(int n);
 	void addPoints(int n);
+	void addBalloon(Balloon* b);
 
 	void deleteGameObject(std::list<GameObject*>::iterator go);
 	void deleteArrow(std::list<GameObject*>::iterator it);

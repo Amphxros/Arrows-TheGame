@@ -127,6 +127,7 @@ void PlayState::loadFromFile(int seed)
 	file.open(std::to_string(seed) + ".sav");
 
 	if (file.is_open()) {
+		
 		int points, arrows;
 		file >> level >> points >> arrows;
 		score_->setPoints(points);
@@ -145,12 +146,22 @@ void PlayState::loadFromFile(int seed)
 
 		for (int i = 0; i < count; i++) {
 			cout << "cargando flecha"<<endl;
-		
-
-
+			int posx, posy, speedx, speedy;
+			file >> posx >> posy >> speedx >> speedy;
+			shoot(new Arrow(Vector2D(posx, posy), Vector2D(speedx, speedy), (double)100, (double)31, app_->getTexture(TextureOrder::ARROW_1), this));
 		}
 
 		//carga los globos
+		
+		file >> count;
+
+		for (int i = 0; i < count; i++) {
+			cout << "cargando flecha" << endl;
+			int posx, posy, speedx, speedy;
+			file >> posx >> posy >> speedx >> speedy;
+
+		}
+
 		//carga las mariposas
 		//carga los premios
 
@@ -167,13 +178,11 @@ void PlayState::loadFromFile(int seed)
 void PlayState::addReward(Reward* reward)
 {
 	createReward(reward);
-	Reward::count++;
 }
 
 void PlayState::addButterfly(int n)
 {
 	createButterflies(n);
-
 }
 
 void PlayState::addArrows(int n)
@@ -184,6 +193,13 @@ void PlayState::addArrows(int n)
 void PlayState::addPoints(int n)
 {
 	score_->setPoints(score_->getPoints() + n);
+}
+
+void PlayState::addBalloon(Balloon* b)
+{
+	Balloon::count++;
+	addGameObject(b);
+	balloons_.push_back(b);
 }
 
 
