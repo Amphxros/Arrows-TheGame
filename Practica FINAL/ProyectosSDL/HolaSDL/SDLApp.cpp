@@ -62,6 +62,8 @@ void SDLApp::update()
 {
 
 	stateMachine_->getCurrentState()->update();
+	stateMachine_->getCurrentState()->deleteObjects();
+
 }
 
 void SDLApp::handleEvents()
