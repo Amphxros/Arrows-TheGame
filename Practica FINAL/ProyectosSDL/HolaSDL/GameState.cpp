@@ -1,58 +1,84 @@
 #include "GameState.h"
-#include "ArrowsGameObject.h"
+#include "EventHandler.h"
+#include "GameObject.h"
+#include "GameStateMachine.h"
+#include "Arrow.h"
 
-GameState::~GameState()
-{
-	for (auto& go : gObjects_) {
-		delete go;
-	}
+GameState::GameState( SDLApp* _app) :app_(_app) {}
 
-	for (auto& ev : evHandlers_)
-		delete ev;
+//Elimina todos los objetos
+GameState::~GameState() {
+	for (auto it = gObjects_.begin(); it != gObjects_.end();) {
+		auto aux = it;
+		it++;
+		delete* aux;
+	};
 
-	gObjects_.clear();
-	evHandlers_.clear();
+	app_ = nullptr;
 }
 
-void GameState::update()
-{
-	for (auto& go : gObjects_) {
-		go->update();
-	}
-}
-
-void GameState::render() const
-{
-	for (auto& go : gObjects_) {
-		go->render();
+void GameState::update() {
+	for (auto it = gObjects_.begin(); it != gObjects_.end(); ++it) {
+		(*it)->update();
 	}
 }
 
-void GameState::handleEvents(SDL_Event& event)
-{
-	bool handled = false;
-	auto ev = evHandlers_.begin();
-	while (!handled && ev != evHandlers_.end())
-	{
-		if ((*ev)->handleEvent(event)) {
-			handled = true; 
+void GameState::render() const{
+
+	for (auto it = gObjects_.begin(); it != gObjects_.end(); ++it) {
+		(*it)->render();
+	}
+}
+
+void GameState::handleEvents(SDL_Event& event) {
+	while (SDL_PollEvent(&event)) {
+		if (event.type != SDL_QUIT) {
+			for (auto eventIT = evObjects_.begin(); eventIT != evObjects_.end(); ++eventIT) {
+				auto* aux = dynamic_cast<EventHandler*>(*eventIT);
+				(aux)->handleEvent(event);
+			}
 		}
-		else 
-			++ev;
 	}
 }
 
-void GameState::addGameObject(SDLGameObject* go)
-{
-	std::list<GameObject*>::iterator it = gObjects_.insert(gObjects_.end(), go);
+//Elimina todos los objetos que están en lista a ser borrados
+void GameState::deleteObjects() {
+	if (!gObjectsToErase_.empty()) {
+		auto OTEIT = gObjectsToErase_.begin();
+		while (OTEIT != gObjectsToErase_.end()) {
+			auto GOIT = gObjects_.begin();
+			bool found = false;
+			while (!found && GOIT != gObjects_.end()) {
+				if ((*OTEIT) == (*GOIT)) {//Coincidencia entre objectToErase y gameObject
 
-	if (dynamic_cast<ArrowsGameObject*>(go))
-		static_cast<ArrowsGameObject*>(go)->setItList(it);
-	
-}
+					if (dynamic_cast<EventHandler*>(*OTEIT)) {
+						bool eventFounded = false;
+						auto EHIT = evObjects_.begin();
+						while (!eventFounded && EHIT != evObjects_.end())
+						{
+							auto aux = dynamic_cast<GameObject*>(*EHIT);
+							if (*OTEIT == aux) {
 
-void GameState::addEventHandler(EventHandler* ev)
-{
-	std::list<EventHandler*>::iterator it = evHandlers_.insert(evHandlers_.end(), ev);
-	ev->setItHandler(it);
+								evObjects_.erase(EHIT);
+								eventFounded = true;
+								found = true;
+							}
+							else EHIT++;
+						}
+					}
+		
+					auto auxIT = GOIT;
+					auto auxEIT = OTEIT;
+					GameObject* gm = *GOIT;
+					OTEIT++;
+					GOIT++;
+					gObjectsToErase_.erase(auxEIT);
+					gObjects_.erase(auxIT);
+					delete (gm);
+					found = true;
+				}
+				else GOIT++;
+			}
+		}
+	}
 }

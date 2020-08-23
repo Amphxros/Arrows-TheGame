@@ -1,8 +1,7 @@
 #include "MainMenuState.h"
 #include "MenuButton.h"
 
-MainMenuState::MainMenuState():
-	GameState() { }
+
 
 MainMenuState::MainMenuState(SDLApp* app):
 	GameState(app) {
@@ -22,7 +21,7 @@ void MainMenuState::init()
 {
 
 	MenuButton* button = new MenuButton({ WIN_WIDTH/4 , 0 }, WIN_WIDTH / 2, WIN_HEIGHT / 4, app_->getTexture(TextureOrder::BUTTON), this, nullptr);
-	addEventHandler(button);	
+	addEventHandler(button);
 	addGameObject(button);
 
 	button = new MenuButton({ WIN_WIDTH / 4, WIN_HEIGHT / 4 }, WIN_WIDTH / 2, WIN_HEIGHT / 4, app_->getTexture(TextureOrder::BUTTON), this, SDLApp::loadPlayState);

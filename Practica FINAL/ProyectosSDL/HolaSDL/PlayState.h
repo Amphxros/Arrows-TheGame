@@ -10,7 +10,6 @@ class PlayState :
 	public GameState
 {
 public:
-	PlayState() {};
 	PlayState(SDLApp* app):
 		GameState(app),level(0) { init(); };
 
@@ -20,6 +19,7 @@ public:
 	virtual void render() const;
 	virtual void update();
 	virtual void handleEvents(SDL_Event& event);
+	
 	void saveToFile(int seed);
 	void loadFromFile(int seed);
 

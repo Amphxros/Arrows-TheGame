@@ -4,7 +4,6 @@ class PauseState :
 	public GameState
 {
 public:
-	PauseState() {};
 	PauseState(SDLApp* app) :
 		GameState(app) {
 		init();
