@@ -31,13 +31,15 @@ void GameState::render() const{
 }
 
 void GameState::handleEvents(SDL_Event& event) {
-	while (SDL_PollEvent(&event)) {
-		if (event.type != SDL_QUIT) {
-			for (auto eventIT = evObjects_.begin(); eventIT != evObjects_.end(); ++eventIT) {
-				auto* aux = dynamic_cast<EventHandler*>(*eventIT);
-				(aux)->handleEvent(event);
-			}
+	bool handled = false;
+	auto ev = evObjects_.begin();
+	while (!handled && ev != evObjects_.end())
+	{
+		if ((*ev)->handleEvent(event)) {
+			handled = true;
 		}
+		else
+			++ev;
 	}
 }
 

@@ -43,15 +43,15 @@ void PlayState::render() const
 
 void PlayState::update()
 {
-	if (butterflies_.size() > 0) {
+	//if (butterflies_.size() > 0) {
 		GameState::update();
 		cleanMemory();
 		createBalloon();
-	}
-	else {
-		cout << "all butterflies are dead" << endl;
-		app_->quitApp(app_);
-	}
+	//}
+	//else {
+		//cout << "all butterflies are dead" << endl;
+		//app_->quitApp(app_);
+	//}
 }
 
 void PlayState::handleEvents(SDL_Event& event)
