@@ -189,6 +189,9 @@ void PlayState::loadFromFile(int seed)
 
 void PlayState::shoot(Arrow* arrow)
 {
+	Arrow::count++;
+	addGameObject(arrow);
+	arrows_.push_back(arrow);
 }
 
 void PlayState::addReward(Reward* reward)
@@ -216,14 +219,18 @@ void PlayState::addBalloon(Balloon* b)
 
 void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
 {
+	killObject(go);
 }
 
 void PlayState::deleteArrow(std::list<GameObject*>::iterator it)
 {
+	Arrow::count--;
+	killObject(it);
 }
 
 void PlayState::deleteBalloon(std::list<GameObject*>::iterator it)
 {
+	Balloon::count--;
 	killObject(it);
 }
 
