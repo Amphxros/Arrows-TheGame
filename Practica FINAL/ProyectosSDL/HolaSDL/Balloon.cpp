@@ -16,7 +16,8 @@ Balloon::Balloon(Vector2D pos, Vector2D speed, double width, double height, bool
 
 Balloon::~Balloon()
 {
-	ArrowsGameObject::~ArrowsGameObject();
+	texture_ = nullptr;
+	gamestate_ = nullptr;
 }
 
 void Balloon::render() const

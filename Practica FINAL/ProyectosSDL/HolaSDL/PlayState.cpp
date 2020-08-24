@@ -209,6 +209,9 @@ void PlayState::addPoints(int n)
 
 void PlayState::addBalloon(Balloon* b)
 {
+	addGameObject(b);
+	balloons_.push_back(b);
+	Balloon::count++;
 }
 
 void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
@@ -221,6 +224,7 @@ void PlayState::deleteArrow(std::list<GameObject*>::iterator it)
 
 void PlayState::deleteBalloon(std::list<GameObject*>::iterator it)
 {
+	killObject(it);
 }
 
 void PlayState::deleteButterfly(std::list<GameObject*>::iterator it)
@@ -252,6 +256,10 @@ void PlayState::createButterflies(int n)
 
 void PlayState::createBalloon()
 {
+	if (rand() % 15 == 0) {
+		Balloon* b = new Balloon(Vector2D(100 + rand() % (WIN_WIDTH - 150), WIN_HEIGHT), Vector2D(0, 0.5), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this);
+		addBalloon(b);
+	}
 }
 
 void PlayState::createReward(Reward* reward)
