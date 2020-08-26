@@ -50,7 +50,7 @@ void Balloon::update()
 	}
 	if ((SDL_GetTicks() - frame_) / FRAME_RATE == 6 && !non_punctured) {
 		static_cast<PlayState*>(gamestate_)->deleteBalloon(it_);
-		if (rand() % 100 == 0) {
+		if (rand() % 100<=33) {
 			Reward* reward = new Reward(pos_, { 0,0.15 }, 40, 40, gamestate_->getApp()->getTexture(TextureOrder::REWARDS), gamestate_->getApp()->getTexture(TextureOrder::BUBBLE), gamestate_);
 			static_cast<PlayState*>(gamestate_)->addReward(reward);
 		}

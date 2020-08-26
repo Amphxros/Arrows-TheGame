@@ -43,6 +43,7 @@ public:
 	bool collisionWithButterfly(Butterfly* butterfly);
 	bool collisionWithReward(Reward* reward);
 
+	void nextLevel();
 
 private:
 
@@ -59,7 +60,7 @@ private:
 	std::list<Butterfly*> butterflies_;
 	std::list<Reward*> rewards_;
 	std::list<std::list<GameObject*>::iterator> gObjectsToErase_;
-
+	Texture* background_;
 	int level;
 
 };

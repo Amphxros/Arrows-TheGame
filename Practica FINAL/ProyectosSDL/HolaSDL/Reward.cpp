@@ -35,10 +35,10 @@ void Reward::render() const
 
 	if (bubbled_) {
 		SDL_Rect rest;
-		rest.x = pos_.getX() - width_ / 3;
+		rest.x = pos_.getX() - width_ / 2;
 		rest.y = pos_.getY() - height_ / 2;
-		rest.w = 1.5 * width_;
-		rest.h = 1.5 * height_;
+		rest.w = 2 * width_;
+		rest.h = 2 * height_;
 		texture_B->render(rest);
 	}
 }
@@ -75,14 +75,15 @@ bool Reward::handleEvent(SDL_Event& event)
 					switch (color_) {
 					case 1:
 						static_cast<PlayState*>(gamestate_)->addPoints(50);
+						break;
 					case 2:
 						static_cast<PlayState*>(gamestate_)->addArrows(1);
-
+						break;
 					case 3:
 						static_cast<PlayState*>(gamestate_)->addButterfly(5);
-
+						break;
 					case 0:
-						std::cout << "next level" << endl;
+						static_cast<PlayState*>(gamestate_)->nextLevel();
 						break;
 					}
 

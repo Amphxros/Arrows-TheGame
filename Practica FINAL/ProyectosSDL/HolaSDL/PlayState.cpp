@@ -19,7 +19,7 @@ void PlayState::init()
 	addGameObject(score_);
 	score_->setPoints(0);
 	score_->setArrows(10);
-
+	nextLevel();
 	//add bow
 	bow_ = new Bow(Vector2D(0, 0), Vector2D(0, 5), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
 	addGameObject(bow_);
@@ -36,7 +36,7 @@ void PlayState::render() const
 	dest.y = 0;
 	dest.w = WIN_WIDTH;
 	dest.h = WIN_HEIGHT;
-	app_->getTexture(TextureOrder::BACKGROUND2)->render(dest);
+	background_->render(dest);
 	GameState::render();
 	score_->render(); //esto es para que se renderice encima del resto de objetos 
 }
@@ -312,6 +312,24 @@ bool PlayState::collisionWithReward(Reward* reward)
 
 	}
 	return col;
+}
+
+void PlayState::nextLevel()
+{
+	level++;
+	if (level % 3 == 0) {
+		background_ = app_->getTexture(TextureOrder::BACKGROUND2);
+	}
+	else if (level % 3 == 1) {
+		background_ = app_->getTexture(TextureOrder::BACKGROUND3);
+	}
+	else if (level%3 == 2) {
+		background_ = app_->getTexture(TextureOrder::BACKGROUND4);
+	}
+
+	score_->setPoints(0);
+	score_->setArrows(10);
+
 }
 
 void PlayState::createButterflies(int n)
