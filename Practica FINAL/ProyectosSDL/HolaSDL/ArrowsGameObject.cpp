@@ -3,6 +3,8 @@
 
 ArrowsGameObject::~ArrowsGameObject()
 {
+	gamestate_ = nullptr;
+	texture_ = nullptr;
 }
 
 void ArrowsGameObject::render() const

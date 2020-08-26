@@ -196,6 +196,10 @@ void PlayState::shoot(Arrow* arrow)
 
 void PlayState::addReward(Reward* reward)
 {
+	Reward::count++;
+	addGameObject(reward);
+	addEventHandler(reward);
+	rewards_.push_back(reward);
 }
 
 void PlayState::addButterfly(int n)
@@ -236,25 +240,78 @@ void PlayState::deleteBalloon(std::list<GameObject*>::iterator it)
 
 void PlayState::deleteButterfly(std::list<GameObject*>::iterator it)
 {
+	Butterfly::count--;
+	killObject(it);
 }
 
 void PlayState::deleteReward(std::list<GameObject*>::iterator it, std::list<EventHandler*>::iterator ev)
 {
+	Reward::count--;
+	killObject(it);
 }
 
 bool PlayState::collisionWithBalloon(Balloon* balloon)
 {
-	return false;
+	bool col = false;
+	auto it = arrows_.begin();
+
+	while (it != arrows_.end() && !col) {
+
+		SDL_Rect* dest_A = &(*it)->getCollisionRect();
+		col = SDL_HasIntersection(&(balloon->getCollisionRect()), dest_A);
+		if (col) {
+			(*it)->setNumHits((*it)->getNumHits() + 1);
+
+			int p = pow((static_cast<Arrow*>(*it))->getNumHits() - 1, 2)* POINTS_PER_BALLON;
+			score_->setPoints(score_->getPoints() + p);
+		}
+		else {
+			it++;
+		}
+
+	}
+	return col;
 }
 
 bool PlayState::collisionWithButterfly(Butterfly* butterfly)
 {
-	return false;
+	bool col = false;
+	auto it = arrows_.begin();
+
+	while (it != arrows_.end() && !col) {
+
+		SDL_Rect* dest_A = &(*it)->getCollisionRect();
+		col = SDL_HasIntersection(&(butterfly->getCollisionRect()), dest_A);
+		if (col) {
+			score_->setPoints(score_->getPoints() - 5);
+
+		}
+		else {
+			it++;
+		}
+
+	}
+	return col;
 }
 
 bool PlayState::collisionWithReward(Reward* reward)
 {
-	return false;
+	bool col = false;
+	auto it = arrows_.begin();
+
+	while (it != arrows_.end() && !col) {
+
+		SDL_Rect* dest_A = &(*it)->getCollisionRect();
+		col = SDL_HasIntersection(&(reward->getCollisionRect()), dest_A);
+		if (col) {
+			//aqui podemos sumar puntos???
+		}
+		else {
+			it++;
+		}
+
+	}
+	return col;
 }
 
 void PlayState::createButterflies(int n)

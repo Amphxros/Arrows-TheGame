@@ -113,7 +113,7 @@ void SDLApp::savePlayState(SDLApp* app)
 
 	cout << " guardado "<<code<<".sav" << endl;
 }
-
+ 
 void SDLApp::toPlay(SDLApp* app)
 {
 	stateMachine_->pushState(new PlayState(app));
@@ -122,12 +122,11 @@ void SDLApp::toPlay(SDLApp* app)
 void SDLApp::toPause(SDLApp* app)
 {
 	stateMachine_->pushState(new PauseState(app));
-
 }
 
 void SDLApp::toMenu(SDLApp* app)
 {
-	while (static_cast<MainMenuState*>(stateMachine_->getCurrentState()))
+	while (dynamic_cast<MainMenuState*>(stateMachine_->getCurrentState())==nullptr)
 	{
 		stateMachine_->popState();
 	}

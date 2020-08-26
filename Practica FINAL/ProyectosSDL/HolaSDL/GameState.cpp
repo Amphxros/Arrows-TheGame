@@ -32,14 +32,13 @@ void GameState::render() const{
 
 void GameState::handleEvents(SDL_Event& event) {
 	bool handled = false;
-	auto ev = evObjects_.begin();
+	list<EventHandler*>::iterator ev = evObjects_.begin();
 	while (!handled && ev != evObjects_.end())
 	{
 		if ((*ev)->handleEvent(event)) {
 			handled = true;
 		}
-		else
-			++ev;
+		ev++;
 	}
 }
 
@@ -55,40 +54,41 @@ void GameState::deleteObjects() {
 			bool found = false;
 			
 			while (!found && g_it != gObjects_.end()) {
-				if ((*er_it) == (g_it)) {		
+				if ((*er_it) == (g_it)) {
 
-					if (dynamic_cast<EventHandler*>(**er_it)) {
+					if (dynamic_cast<EventHandler*>(*g_it)) {
 						bool eventFounded = false;
 						auto ev_it = evObjects_.begin();
 						while (!eventFounded && ev_it != evObjects_.end())
 						{
 							auto aux = dynamic_cast<GameObject*>(*ev_it);
-							if (**er_it == aux) {
-
-								evObjects_.erase(ev_it);
+							if (*g_it == aux) {
+								auto aux_it = ev_it;		
+								//evObjects_.erase(aux_it);
+								evObjects_.remove(*aux_it);
 								eventFounded = true;
 								found = true;
 							}
 							else ev_it++;
 						}
 					}
-		
-					auto auxIT = g_it;
-					auto auxEIT = er_it;
-					GameObject* gm = *g_it;
-					er_it++;
-					g_it++;
-					gObjectsToErase_.erase(auxEIT);
-					gObjects_.erase(auxIT);
-					delete (gm);
-					found = true;
+
+						auto aux_it = g_it;
+						auto aux_e_it = er_it;
+						GameObject* gm = *g_it;
+						er_it++;
+						g_it++;
+						gObjectsToErase_.erase(aux_e_it);
+						gObjects_.erase(aux_it);
+						delete (gm);
+						found = true;
+					}
+					else g_it++;
 				}
-				else g_it++;
-			}
 			
 		}
-		gObjectsToErase_.clear();
 	}
+	gObjectsToErase_.clear();
 
 }
 
@@ -98,4 +98,11 @@ void GameState::addGameObject(SDLGameObject* go)
 
 	if (dynamic_cast<ArrowsGameObject*>(go))
 		static_cast<ArrowsGameObject*>(go)->setItList(it);
+}
+
+void GameState::addEventHandler(EventHandler* ev)
+{
+	std::list<EventHandler*>::iterator it = evObjects_.insert(evObjects_.end(), ev);
+	ev->setItHandler(it); evObjects_.push_back(ev);
+	
 }

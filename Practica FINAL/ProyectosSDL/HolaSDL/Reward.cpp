@@ -17,7 +17,9 @@ Reward::Reward(Vector2D pos, Vector2D speed, double width, double height, Textur
 
 Reward::~Reward()
 {
-	delete texture_B;
+	texture_ = nullptr;
+	texture_B=nullptr;
+	gamestate_ = nullptr;
 }
 
 void Reward::render() const
@@ -29,17 +31,17 @@ void Reward::render() const
 	dest.h = height_;
 
 	texture_->renderFrame(dest, color_, frame_);
-	
+
 	if (bubbled_) {
 		SDL_Rect rest;
-		rest.x = pos_.getX()-width_/3;
-		rest.y = pos_.getY()-height_/2;
-		rest.w = 1.5* width_;
-		rest.h = 1.5*height_;
+		rest.x = pos_.getX() - width_ / 3;
+		rest.y = pos_.getY() - height_ / 2;
+		rest.w = 1.5 * width_;
+		rest.h = 1.5 * height_;
 		texture_B->render(rest);
 	}
-
 }
+
 
 void Reward::update()
 {
@@ -67,19 +69,6 @@ bool Reward::handleEvent(SDL_Event& event)
 			if (event.button.button == SDL_BUTTON_LEFT) {
 				SDL_Point p = { event.button.x, event.button.y };
 				if (SDL_PointInRect(&p,&(getDestRect()))) {
-					switch (color_) {
-					case 1:	//añade mas flechas
-						static_cast<PlayState*>(gamestate_)->addArrows(3);
-
-						break;
-					case 2:	//añade mas puntos
-						static_cast<PlayState*>(gamestate_)->addButterfly(5);
-						break;
-					case 3:	//añade mas mariposas
-						static_cast<PlayState*>(gamestate_)->addPoints(50);
-						break;
-				
-					}
 
 					clicked_ = true;
 					return true;

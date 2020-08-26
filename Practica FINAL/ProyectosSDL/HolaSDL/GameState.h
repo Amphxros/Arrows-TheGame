@@ -33,12 +33,9 @@ protected:
 
 	SDLApp* app_ = nullptr;
 	State name;
-	void addGameObject(SDLGameObject* go);
 
-	void addEventHandler(EventHandler* ev) {
-		std::list<EventHandler*>::iterator it = evObjects_.insert(evObjects_.end(), ev);
-		ev->setItHandler(it); evObjects_.push_back(ev); 
-	};
+	void addGameObject(SDLGameObject* go);
+	void addEventHandler(EventHandler* ev);
 
 
 };
