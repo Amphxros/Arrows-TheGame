@@ -50,9 +50,9 @@ SDL_Rect Arrow::getCollisionRect()
 {
 	SDL_Rect dest;
 
-	dest.x = pos_.getX() + (3 * width_ / 4);
+	dest.x = pos_.getX() + 3*(width_/4);
 	dest.y = pos_.getY();
-	dest.w = width_ / 4;
+	dest.w = width_/4;
 	dest.h = height_;
 
 	return dest;

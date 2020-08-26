@@ -17,7 +17,15 @@ public:
 	inline bool isNonPunctured() { return non_punctured; }
 
 	SDL_Rect* GetRect() {
-		return new SDL_Rect{ (int)pos_.getY(),(int)pos_.getX(),(int)height_ / 7, (int)width_ / 6 };}
+		SDL_Rect dest;
+		dest.x = pos_.getX();
+		dest.y = pos_.getY();
+		dest.w = width_ / 7;
+		dest.h = height_ / 6;
+
+		return &(dest);
+	
+	}
 
 private:
 	int color_;

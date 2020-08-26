@@ -258,7 +258,7 @@ bool PlayState::collisionWithBalloon(Balloon* balloon)
 	while (it != arrows_.end() && !col) {
 
 		SDL_Rect* dest_A = &(*it)->getCollisionRect();
-		col = SDL_HasIntersection(&(balloon->getCollisionRect()), dest_A);
+		col = SDL_HasIntersection(balloon->GetRect(), dest_A);
 		if (col) {
 			(*it)->setNumHits((*it)->getNumHits() + 1);
 
@@ -316,11 +316,13 @@ bool PlayState::collisionWithReward(Reward* reward)
 
 void PlayState::createButterflies(int n)
 {
+	for(int i=0;i<n;i++){
+	}
 }
 
 void PlayState::createBalloon()
 {
-	if (rand() % 15 == 0) {
+	if (rand() % 50 == 0) {
 		Balloon* b = new Balloon(Vector2D(100 + rand() % (WIN_WIDTH - 150), WIN_HEIGHT), Vector2D(0, 0.5), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this);
 		addBalloon(b);
 	}
@@ -328,6 +330,7 @@ void PlayState::createBalloon()
 
 void PlayState::createReward(Reward* reward)
 {
+
 }
 
 void PlayState::cleanMemory()

@@ -13,6 +13,7 @@ Reward::Reward(Vector2D pos, Vector2D speed, double width, double height, Textur
 	ArrowsGameObject(pos,speed,width,height,texture,state), EventHandler(), 
 	frame_(0), color_(rand()%4), texture_B(textureB), bubbled_(true), clicked_(false)
 {
+	color_ = rand() % 4;
 }
 
 Reward::~Reward()
@@ -71,6 +72,21 @@ bool Reward::handleEvent(SDL_Event& event)
 				if (SDL_PointInRect(&p,&(getDestRect()))) {
 
 					clicked_ = true;
+					switch (color_) {
+					case 1:
+						static_cast<PlayState*>(gamestate_)->addPoints(50);
+					case 2:
+						static_cast<PlayState*>(gamestate_)->addArrows(1);
+
+					case 3:
+						static_cast<PlayState*>(gamestate_)->addButterfly(5);
+
+					case 0:
+						std::cout << "next level" << endl;
+						break;
+					}
+
+
 					return true;
 				}
 			}
