@@ -13,6 +13,7 @@ const uint FRAME_RATE = 50;
 
 const uint POINTS_PER_BALLON = 1;
 
+//enum para las texturas
 enum TextureOrder{
 	BACKGROUND1,
 	BACKGROUND2,
@@ -38,14 +39,25 @@ enum TextureOrder{
 class SDLApp
 {
 public:
+	//constructora
 	SDLApp();
+	//destructora
 	~SDLApp();
 
+
+	//bucle principal
 	void run();
+	
+	//renderizado
 	void render() const;
+	
+	//actualizado
 	void update();
+	
+	//manejo de eventos
 	void handleEvents();
 
+	//devuelve la textura correspondiente
 	inline Texture* getTexture(TextureOrder n) { return textures_.at(n); }
 
 	// callbacks
@@ -57,7 +69,6 @@ public:
 	static void toPlay(SDLApp* app);
 	static void toPause(SDLApp* app);
 	static void toMenu(SDLApp* app);
-	static void toEnd(SDLApp* app);
 
 private:
 	SDL_Window* window_=nullptr;

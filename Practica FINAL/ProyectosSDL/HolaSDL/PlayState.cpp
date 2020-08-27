@@ -96,10 +96,8 @@ void PlayState::saveToFile(int seed)
 		file << Balloon::count << endl;
 
 		for (Balloon* b : balloons_) {
-			if (b->isNonPunctured()) {
-				b->saveToFile(file);
-				file << endl;
-			}
+			b->saveToFile(file);
+			file << endl;
 		}
 
 		//mariposas
@@ -107,18 +105,15 @@ void PlayState::saveToFile(int seed)
 
 		for (Butterfly* b : butterflies_) {
 
-			if (b->isAlive()) {
-				b->saveToFile(file);
-				file << endl;
-			}
+			b->saveToFile(file);
+			file << endl;
 		}
 		//premios
 		file << Reward::count << endl;
 
 		for (Reward* r : rewards_) {
-			if (r->getBubbled()) {
-				r->saveToFile(file);
-			}
+			r->saveToFile(file);
+		
 		}
 
 		file.close();
@@ -136,16 +131,21 @@ void PlayState::loadFromFile(int seed)
 
 	if (file.is_open()) {
 
-		int points, arrows;
-		file >> level >> points >> arrows;
-		score_->setPoints(points);
+		int score, level_,arrows;
+
+		file >> level_ >> score >> arrows;
 		score_->setArrows(arrows);
+		score_->setPoints(score);
+		level = level_;
 
 		//carga el arco
 		int posx, posy, speedx, speedy;
 
 		file >> posx >> posy >> speedx >> speedy;
-		bow_->set(Vector2D(posx, posy), Vector2D(speedx, speedy));
+		bow_ = nullptr;
+		bow_ = new Bow(Vector2D(posx, posy), Vector2D(speedx, speedy), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
+	
+		cout << "cargando arco" << endl;
 
 		//carga las flechas
 		int count;
@@ -165,9 +165,10 @@ void PlayState::loadFromFile(int seed)
 
 		for (int i = 0; i < count; i++) {
 			cout << "cargando globos" << endl;
-			int posx, posy, speedx, speedy;
-			file >> posx >> posy >> speedx >> speedy;
+			int posx, posy, speedx, speedy, color;
+			file >> posx >> posy >> speedx >> speedy>> color;
 
+			addNewBalloon(new Balloon(Vector2D(posx, posy), Vector2D(speedx, speedy), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this));
 		}
 
 		//carga las mariposas
@@ -177,7 +178,7 @@ void PlayState::loadFromFile(int seed)
 			cout << "cargando mariposas" << endl;
 			int posx, posy, speedx, speedy;
 			file >> posx >> posy >> speedx >> speedy;
-
+			addNewButterfly(new Butterfly(Vector2D(posx, posy), Vector2D(speedx, speedy), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this));
 		}
 		//carga los premios
 		file >> count;
@@ -186,7 +187,7 @@ void PlayState::loadFromFile(int seed)
 			cout << "cargando flecha" << endl;
 			int posx, posy, speedx, speedy;
 			file >> posx >> posy >> speedx >> speedy;
-
+			addNewReward(new Reward(Vector2D(posx, posy), Vector2D(speedx, speedy), 40, 40, app_->getTexture(TextureOrder::REWARDS), app_->getTexture(TextureOrder::BUBBLE), this));
 		}
 
 
@@ -206,7 +207,7 @@ void PlayState::shoot(Arrow* arrow)
 	}
 }
 
-void PlayState::addReward(Reward* reward)
+void PlayState::addNewReward(Reward* reward)
 {
 	Reward::count++;
 	addGameObject(reward);
@@ -229,11 +230,18 @@ void PlayState::addPoints(int n)
 	score_->setPoints(score_->getPoints() + n);
 }
 
-void PlayState::addBalloon(Balloon* b)
+void PlayState::addNewBalloon(Balloon* b)
 {
 	addGameObject(b);
 	balloons_.push_back(b);
 	Balloon::count++;
+}
+
+void PlayState::addNewButterfly(Butterfly* b)
+{
+	addGameObject(b);
+	butterflies_.push_back(b);
+	Butterfly::count++;
 }
 
 void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
@@ -333,7 +341,7 @@ void PlayState::nextLevel()
 {
 	level++;
 	int score = score_->getPoints();
-	
+
 	if (level % 3 == 0) {
 		background_ = app_->getTexture(TextureOrder::BACKGROUND2);
 	}
@@ -345,7 +353,7 @@ void PlayState::nextLevel()
 	}
 
 	score_->setPoints(score);
-
+	score_->setArrows(10);
 }
 
 void PlayState::clear()
@@ -354,10 +362,8 @@ void PlayState::clear()
 	score_ = nullptr;
 
 	for (auto it = gObjects_.begin(); it != gObjects_.end(); ++it) {
-		auto aux = dynamic_cast<GameObject*>(*it);
-		aux = nullptr;
+		killObject(it);
 	}
-	gObjects_.clear();
 	gObjectsToErase_.clear();
 
 	arrows_.clear();
@@ -371,9 +377,7 @@ void PlayState::createButterflies(int n)
 {
 	for (int i = 0; i < n; i++) {
 		Butterfly* b = new Butterfly(Vector2D(120 + rand() % (WIN_WIDTH - 220), rand() % WIN_HEIGHT), Vector2D(0.15, 0.15), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this);
-		addGameObject(b);
-		butterflies_.push_back(b);
-		Butterfly::count++;
+		addNewButterfly(b);
 	}
 }
 
@@ -381,7 +385,7 @@ void PlayState::createBalloon()
 {
 	if (rand() % 50 == 0) {
 		Balloon* b = new Balloon(Vector2D(100 + rand() % (WIN_WIDTH - 150), WIN_HEIGHT), Vector2D(0, 0.5), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this);
-		addBalloon(b);
+		addNewBalloon(b);
 	}
 }
 

@@ -15,6 +15,10 @@ public:
 	virtual void update();
 	virtual bool handleEvent(SDL_Event& event);
 
+
+	virtual void saveToFile(std::ofstream& file);
+	virtual void loadFromFile(std::ifstream file);
+
 	inline bool getBubbled() { return bubbled_; }
 
 private:

@@ -102,3 +102,14 @@ bool Reward::handleEvent(SDL_Event& event)
 		return false;
 	}
 }
+
+void Reward::saveToFile(std::ofstream& file)
+{
+	ArrowsGameObject::saveToFile(file);
+	file << color_;
+}
+void Reward::loadFromFile(std::ifstream file)
+{
+	ArrowsGameObject::loadFromFile(file);
+	file >> color_;
+}

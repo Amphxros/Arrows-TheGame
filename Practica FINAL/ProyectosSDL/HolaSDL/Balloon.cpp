@@ -52,7 +52,7 @@ void Balloon::update()
 		static_cast<PlayState*>(gamestate_)->deleteBalloon(it_);
 		if (rand() % 100<=33) {
 			Reward* reward = new Reward(pos_, { 0,0.15 }, 40, 40, gamestate_->getApp()->getTexture(TextureOrder::REWARDS), gamestate_->getApp()->getTexture(TextureOrder::BUBBLE), gamestate_);
-			static_cast<PlayState*>(gamestate_)->addReward(reward);
+			static_cast<PlayState*>(gamestate_)->addNewReward(reward);
 		}
 	}
 

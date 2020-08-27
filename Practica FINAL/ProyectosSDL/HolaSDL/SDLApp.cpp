@@ -8,6 +8,7 @@ GameStateMachine* SDLApp::stateMachine_ = nullptr;
 
 bool SDLApp::exit_ = false;
 
+//constructora
 SDLApp::SDLApp()
 {
 	srand(time(NULL));
@@ -28,6 +29,7 @@ SDLApp::SDLApp()
 	stateMachine_->pushState(new MainMenuState(this));
 }
 
+//destructora
 SDLApp::~SDLApp()
 {
 	delete stateMachine_;
@@ -36,12 +38,12 @@ SDLApp::~SDLApp()
 		delete tex->second;
 	}
 
-	
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
 	SDL_Quit();
 }
 
+//bucle principal
 void SDLApp::run()
 {
 	while (!exit_) {
@@ -51,6 +53,7 @@ void SDLApp::run()
 	}
 }
 
+//renderizado
 void SDLApp::render() const
 {
 	SDL_RenderClear(renderer_);
@@ -58,6 +61,7 @@ void SDLApp::render() const
 	SDL_RenderPresent(renderer_);
 }
 
+//update
 void SDLApp::update()
 {
 
@@ -66,6 +70,7 @@ void SDLApp::update()
 
 }
 
+//handle events
 void SDLApp::handleEvents()
 {
 	SDL_Event ev;
@@ -80,16 +85,19 @@ void SDLApp::handleEvents()
 	}
 }
 
+//cierra el bucle principal
 void SDLApp::quitApp(SDLApp* app)
 {
 	exit_ = true;
 }
 
+//vuelve al estado previo
 void SDLApp::resumeApp(SDLApp* app)
 {
 	stateMachine_->popState();
 }
 
+// carga una partida cn el codigo introducido
 void SDLApp::loadPlayState(SDLApp* app)
 {
 	int code = -1;
@@ -101,6 +109,7 @@ void SDLApp::loadPlayState(SDLApp* app)
 	static_cast<PlayState*>(stateMachine_->getCurrentState())->loadFromFile(code);
 }
 
+//guarda una partida
 void SDLApp::savePlayState(SDLApp* app)
 {
 	stateMachine_->popState();
@@ -113,17 +122,20 @@ void SDLApp::savePlayState(SDLApp* app)
 
 	cout << " guardado "<<code<<".sav" << endl;
 }
- 
+
+//crea una partida nueva
 void SDLApp::toPlay(SDLApp* app)
 {
 	stateMachine_->pushState(new PlayState(app));
 }
 
+//pausa el juego
 void SDLApp::toPause(SDLApp* app)
 {
 	stateMachine_->pushState(new PauseState(app));
 }
 
+//va al menu
 void SDLApp::toMenu(SDLApp* app)
 {
 	while (dynamic_cast<MainMenuState*>(stateMachine_->getCurrentState())==nullptr)
@@ -133,12 +145,7 @@ void SDLApp::toMenu(SDLApp* app)
 	cout << "to menu" << endl;
 }
 
-void SDLApp::toEnd(SDLApp* app)
-{
-
-	cout << "to end" << endl;
-}
-
+//carga las texturas
 void SDLApp::loadTextures()
 {
 	textures_.emplace(BACKGROUND1, new Texture(renderer_, "..\\images\\bg1.png", 1, 1));

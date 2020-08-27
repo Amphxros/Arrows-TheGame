@@ -27,11 +27,9 @@ public:
 
 	void shoot(Arrow* arrow);
 	
-	void addReward(Reward* reward);
-	void addButterfly(int n);
-	void addArrows(int n);
-	void addPoints(int n);
-	void addBalloon(Balloon* b);
+	void addNewReward(Reward* reward);
+	void addNewBalloon(Balloon* b);
+	void addNewButterfly(Butterfly* b);
 
 	void deleteGameObject(std::list<GameObject*>::iterator go);
 	void deleteArrow(std::list<GameObject*>::iterator it);
@@ -45,6 +43,11 @@ public:
 
 	void nextLevel();
 	void clear();
+
+	void addButterfly(int n);
+	void addArrows(int n);
+	void addPoints(int n);
+
 
 private:
 
