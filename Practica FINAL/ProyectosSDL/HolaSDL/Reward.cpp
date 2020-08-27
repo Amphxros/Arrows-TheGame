@@ -74,15 +74,22 @@ bool Reward::handleEvent(SDL_Event& event)
 					clicked_ = true;
 					switch (color_) {
 					case 1:
+						cout << "añadido 50 puntos" << endl;
 						static_cast<PlayState*>(gamestate_)->addPoints(50);
 						break;
 					case 2:
-						static_cast<PlayState*>(gamestate_)->addArrows(1);
+
+						cout << "añadido flechas" << endl;
+						static_cast<PlayState*>(gamestate_)->addArrows(1 + rand()%3);
 						break;
 					case 3:
-						static_cast<PlayState*>(gamestate_)->addButterfly(5);
+
+						cout << "añadido mariposas" << endl;
+						static_cast<PlayState*>(gamestate_)->addButterfly(rand()% 5);
 						break;
 					case 0:
+
+						cout << "siguiente nivel" << endl;
 						static_cast<PlayState*>(gamestate_)->nextLevel();
 						break;
 					}

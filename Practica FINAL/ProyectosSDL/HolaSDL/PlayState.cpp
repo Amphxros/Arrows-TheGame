@@ -43,15 +43,20 @@ void PlayState::render() const
 
 void PlayState::update()
 {
-	//if (butterflies_.size() > 0) {
+	if (Butterfly::count!= 0 && score_->getArrows()>0) {
 		GameState::update();
-		cleanMemory();
 		createBalloon();
-	//}
-	//else {
-		//cout << "all butterflies are dead" << endl;
-		//app_->quitApp(app_);
-	//}
+	}
+	else {
+		if (Butterfly::count == 0) {
+			cout << "all butterflies are dead " << endl;
+		}
+		else {
+			cout << "there are no more arrows" << endl;
+		}
+
+		app_->quitApp(app_);
+	}
 }
 
 void PlayState::handleEvents(SDL_Event& event)
@@ -189,9 +194,12 @@ void PlayState::loadFromFile(int seed)
 
 void PlayState::shoot(Arrow* arrow)
 {
-	Arrow::count++;
-	addGameObject(arrow);
-	arrows_.push_back(arrow);
+	if (score_->getArrows() > 0) {
+		Arrow::count++;
+		score_->setArrows(score_->getArrows() - 1);
+		addGameObject(arrow);
+		arrows_.push_back(arrow);
+	}
 }
 
 void PlayState::addReward(Reward* reward)
@@ -204,14 +212,17 @@ void PlayState::addReward(Reward* reward)
 
 void PlayState::addButterfly(int n)
 {
+	createButterflies(n);
 }
 
 void PlayState::addArrows(int n)
 {
+	score_->setArrows(score_->getArrows() + n);
 }
 
 void PlayState::addPoints(int n)
 {
+	score_->setPoints(score_->getPoints() + n);
 }
 
 void PlayState::addBalloon(Balloon* b)
@@ -317,6 +328,7 @@ bool PlayState::collisionWithReward(Reward* reward)
 void PlayState::nextLevel()
 {
 	level++;
+
 	if (level % 3 == 0) {
 		background_ = app_->getTexture(TextureOrder::BACKGROUND2);
 	}
@@ -334,7 +346,11 @@ void PlayState::nextLevel()
 
 void PlayState::createButterflies(int n)
 {
-	for(int i=0;i<n;i++){
+	for (int i = 0; i < n; i++) {
+		Butterfly* b = new Butterfly(Vector2D(120 + rand() % (WIN_WIDTH - 220), rand() % WIN_HEIGHT), Vector2D(0.15, 0.15), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this);
+		addGameObject(b);
+		butterflies_.push_back(b);
+		Butterfly::count++;
 	}
 }
 
