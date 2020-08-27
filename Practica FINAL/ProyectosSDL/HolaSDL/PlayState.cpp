@@ -2,10 +2,11 @@
 #include "SDLApp.h"
 #include <math.h>
 #include <string>
-
+#include "GameObject.h"
 
 PlayState::~PlayState()
 {
+	clear();
 }
 
 void PlayState::init()
@@ -14,12 +15,15 @@ void PlayState::init()
 	Balloon::count = 0;
 	Butterfly::count = 0;
 	Reward::count = 0;
+	
+	background_ = app_->getTexture(TextureOrder::BACKGROUND2);
+
 	// add scoreboard
 	score_ = new ScoreBoard(Vector2D(WIN_WIDTH / 2, 0), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
 	addGameObject(score_);
 	score_->setPoints(0);
 	score_->setArrows(10);
-	nextLevel();
+	
 	//add bow
 	bow_ = new Bow(Vector2D(0, 0), Vector2D(0, 5), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
 	addGameObject(bow_);
@@ -328,7 +332,9 @@ bool PlayState::collisionWithReward(Reward* reward)
 void PlayState::nextLevel()
 {
 	level++;
-
+	int score = score_->getPoints();
+	clear();
+	init();
 	if (level % 3 == 0) {
 		background_ = app_->getTexture(TextureOrder::BACKGROUND2);
 	}
@@ -339,8 +345,28 @@ void PlayState::nextLevel()
 		background_ = app_->getTexture(TextureOrder::BACKGROUND4);
 	}
 
-	score_->setPoints(0);
-	score_->setArrows(10);
+	score_->setPoints(score);
+
+}
+
+void PlayState::clear()
+{
+	delete score_;
+	score_ = nullptr;
+
+	for (GameObject* obj : gObjects_) {
+		delete obj;
+		obj = nullptr;
+	}
+
+	gObjects_.clear();
+	gObjectsToErase_.clear();
+	evObjects_.clear();
+
+	arrows_.clear();
+	balloons_.clear();
+	butterflies_.clear();
+	rewards_.clear();
 
 }
 

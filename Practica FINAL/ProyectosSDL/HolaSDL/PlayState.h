@@ -44,6 +44,7 @@ public:
 	bool collisionWithReward(Reward* reward);
 
 	void nextLevel();
+	void clear();
 
 private:
 
