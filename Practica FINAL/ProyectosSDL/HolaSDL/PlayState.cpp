@@ -333,8 +333,7 @@ void PlayState::nextLevel()
 {
 	level++;
 	int score = score_->getPoints();
-	clear();
-	init();
+	
 	if (level % 3 == 0) {
 		background_ = app_->getTexture(TextureOrder::BACKGROUND2);
 	}
@@ -354,14 +353,12 @@ void PlayState::clear()
 	delete score_;
 	score_ = nullptr;
 
-	for (GameObject* obj : gObjects_) {
-		delete obj;
-		obj = nullptr;
+	for (auto it = gObjects_.begin(); it != gObjects_.end(); ++it) {
+		auto aux = dynamic_cast<GameObject*>(*it);
+		aux = nullptr;
 	}
-
 	gObjects_.clear();
 	gObjectsToErase_.clear();
-	evObjects_.clear();
 
 	arrows_.clear();
 	balloons_.clear();
