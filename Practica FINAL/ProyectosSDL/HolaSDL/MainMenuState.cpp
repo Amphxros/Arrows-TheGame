@@ -20,11 +20,7 @@ MainMenuState::~MainMenuState()
 void MainMenuState::init()
 {
 
-	MenuButton* button = new MenuButton({ WIN_WIDTH/4 , 0 }, WIN_WIDTH / 2, WIN_HEIGHT / 4, app_->getTexture(TextureOrder::BUTTON), this, nullptr);
-	addEventHandler(button);
-	addGameObject(button);
-
-	button = new MenuButton({ WIN_WIDTH / 4, WIN_HEIGHT / 4 }, WIN_WIDTH / 2, WIN_HEIGHT / 4, app_->getTexture(TextureOrder::BUTTON), this, SDLApp::loadPlayState);
+	MenuButton* button = new MenuButton({ WIN_WIDTH / 4, WIN_HEIGHT / 4 }, WIN_WIDTH / 2, WIN_HEIGHT / 4, app_->getTexture(TextureOrder::BUTTON), this, SDLApp::loadPlayState);
 	addEventHandler(button);
 	addGameObject(button);
 
