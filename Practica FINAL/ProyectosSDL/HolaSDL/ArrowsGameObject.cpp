@@ -22,8 +22,10 @@ void ArrowsGameObject::update()
 void ArrowsGameObject::loadFromFile(std::ifstream& file)
 {
 	float x, y, z, w;
+	
 	file >>x >> y >> z >> w;
-
+	cout << x<<" "<<y<<" "<<z<<" "<<w<< endl;
+	
 	pos_ = { (double)x,(double)y };
 	speed_ = { (double)z,(double)w };
 }
