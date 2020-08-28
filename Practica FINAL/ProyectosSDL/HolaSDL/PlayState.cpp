@@ -147,15 +147,13 @@ void PlayState::loadFromFile(int seed)
 		setBackground(level);
 
 		//carga el arco
-		int posx, posy, speedx, speedy;
-
-		file >> posx >> posy >> speedx >> speedy;
-		bow_ = new Bow(Vector2D(posx, posy), Vector2D(speedx, speedy), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
+		bow_ = new Bow(Vector2D(0,0), Vector2D(0,0), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
+		bow_->loadFromFile(file);
 		addGameObject(bow_);
 		addEventHandler(bow_);
 		
 		//carga las flechas
-		int arrows;
+		int arrows=-1;
 		file >> arrows;
 		for (int i = 0; i < arrows; i++) {
 			Arrow* a= new Arrow(Vector2D(0, 0), Vector2D(0, 0), (double)100, (double)31,app_->getTexture(TextureOrder::ARROW_1), this);
@@ -166,7 +164,7 @@ void PlayState::loadFromFile(int seed)
 		score_->setArrows(arrow);
 		
 		//carga los globos
-		int ballons;
+		int ballons=-1;
 		file >> ballons;
 		for (int i = 0; i < ballons; i++) {
 			Balloon* b = new Balloon(Vector2D(0, 0), Vector2D(0, 0), 400, 400, false, app_->getTexture(TextureOrder::BALLOONS), this);
@@ -176,7 +174,7 @@ void PlayState::loadFromFile(int seed)
 
 
 		//carga las mariposas
-		int butterflies;
+		int butterflies=-1;
 		file >> butterflies;
 		for (int i = 0; i < butterflies; i++) {
 		
