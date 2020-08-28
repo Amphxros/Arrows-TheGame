@@ -17,7 +17,7 @@ public:
 
 
 	virtual void saveToFile(std::ofstream& file);
-	virtual void loadFromFile(std::ifstream file);
+	virtual void loadFromFile(std::ifstream& file);
 
 	inline bool getBubbled() { return bubbled_; }
 

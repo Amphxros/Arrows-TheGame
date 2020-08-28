@@ -11,11 +11,20 @@ class PlayState :
 {
 public:
 	PlayState(SDLApp* app):
-		GameState(app),level(0) { init(); };
+		GameState(app), level(0) {
+		init(); createGame();
+	};
+	
+	PlayState(SDLApp* app, int seed) :
+		GameState(app), level(0) {
+		init(); loadFromFile(seed);
+	};
 
 	virtual ~PlayState();
 
 	void init();
+	void createGame();
+
 	virtual void render() const;
 	virtual void update();
 	virtual void handleEvents(SDL_Event& event);
@@ -55,6 +64,9 @@ private:
 	void createBalloon();
 	void createReward(Reward* reward);
 	void cleanMemory();
+
+	void setBackground(int level);
+
 
 	ScoreBoard* score_;
 	Bow* bow_;

@@ -105,8 +105,7 @@ void SDLApp::loadPlayState(SDLApp* app)
 		cout << "Introduce tu codigo: " << endl;
 		cin >> code;
 	}
-	stateMachine_->pushState(new PlayState(app));
-	static_cast<PlayState*>(stateMachine_->getCurrentState())->loadFromFile(code);
+	stateMachine_->pushState(new PlayState(app,code));
 }
 
 //guarda una partida

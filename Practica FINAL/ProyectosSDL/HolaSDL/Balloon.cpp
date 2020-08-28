@@ -64,7 +64,7 @@ void Balloon::saveToFile(std::ofstream& file)
 	file << color_;
 }
 
-void Balloon::loadFromFile(std::ifstream file)
+void Balloon::loadFromFile(std::ifstream& file)
 {
 	ArrowsGameObject::loadFromFile(file);
 	file >> color_;

@@ -12,8 +12,8 @@ public:
 	virtual void render()const;
 	virtual void update();
 
-	virtual void saveToFile(std::ofstream& file);
-	virtual void loadFromFile(std::ifstream file);
+	virtual void saveToFile(std::ofstream& file) override;
+	void loadFromFile(std::ifstream& file);
 	inline bool isNonPunctured() { return non_punctured; }
 
 	SDL_Rect* GetRect() {
