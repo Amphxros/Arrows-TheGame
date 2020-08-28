@@ -88,39 +88,41 @@ void PlayState::saveToFile(int seed)
 
 		//arco
 		bow_->saveToFile(file);
-		file << endl;
-
+		
 		//flechas
 		file << Arrow::count << endl;
+		cout << Arrow::count << " " << arrows_.size()<<endl;
+
 		for (Arrow* arrow : arrows_) {
 			arrow->saveToFile(file);
-			file << endl;
 		}
 
 		//globos
 		file << Balloon::count << endl;
+		cout << Balloon::count << " " << balloons_.size()<<endl;
 
 		for (Balloon* b : balloons_) {
-			b->saveToFile(file);
-			file << endl;
+			if (b->isNonPunctured()) {
+				b->saveToFile(file);
+			}
 		}
 
 		//mariposas
 		file << Butterfly::count << endl;
-
+		cout << Butterfly::count << " " << butterflies_.size()<<endl;
 		for (Butterfly* b : butterflies_) {
-
 			b->saveToFile(file);
-			file << endl;
 		}
+
 		//premios
 		file << Reward::count << endl;
+		cout << Reward::count << " " << rewards_.size() << endl;
 
 		for (Reward* r : rewards_) {
 			r->saveToFile(file);
-			file << endl;
-		
 		}
+
+		cout<< endl;
 
 		file.close();
 	}
@@ -136,7 +138,6 @@ void PlayState::loadFromFile(int seed)
 	file.open(std::to_string(seed) + ".sav");
 
 	if (file.is_open()) {
-
 		score_ = new ScoreBoard(Vector2D(WIN_WIDTH / 2, 0), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
 		addGameObject(score_);
 
@@ -172,7 +173,6 @@ void PlayState::loadFromFile(int seed)
 			addNewBalloon(b);
 		}
 
-
 		//carga las mariposas
 		int butterflies=-1;
 		file >> butterflies;
@@ -191,8 +191,6 @@ void PlayState::loadFromFile(int seed)
 			r->loadFromFile(file);
 			addNewReward(r);
 		}
-
-
 	}
 	else {
 		throw domain_error("archivo corrupto");

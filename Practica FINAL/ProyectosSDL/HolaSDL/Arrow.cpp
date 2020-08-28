@@ -7,8 +7,7 @@ int Arrow::count = 0;
 Arrow::Arrow(){}
 
 Arrow::Arrow(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, GameState* state):
-	ArrowsGameObject(pos,speed,width,height,texture,state),nHits_(0)
-{}
+	ArrowsGameObject(pos,speed,width,height,texture,state),nHits_(0){}
 
 Arrow::~Arrow()
 {

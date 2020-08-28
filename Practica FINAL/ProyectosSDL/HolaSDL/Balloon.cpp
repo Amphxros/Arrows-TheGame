@@ -1,6 +1,7 @@
 #include "Balloon.h"
 #include "PlayState.h"
 #include "SDLApp.h"
+#include <string>
 
 int Balloon::count = 0;
 Balloon::Balloon()
@@ -60,8 +61,13 @@ void Balloon::update()
 
 void Balloon::saveToFile(std::ofstream& file)
 {
-	ArrowsGameObject::saveToFile(file);
-	file << color_;
+
+	if ((pos_.getX() >= 0 && pos_.getX() < WIN_WIDTH) && (pos_.getY() >= 0 && pos_.getY() < WIN_HEIGHT)) {
+		string data = to_string((int)pos_.getX()) + " " + to_string((int)pos_.getY()) + " " + to_string((int)speed_.getX()) + " " + to_string((int)speed_.getY()) + " " + (to_string)(color_);
+		cout << data << endl;
+		file << data;
+		file << endl;
+	}
 }
 
 void Balloon::loadFromFile(std::ifstream& file)

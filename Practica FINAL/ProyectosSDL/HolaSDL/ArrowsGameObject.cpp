@@ -1,5 +1,6 @@
 #include "ArrowsGameObject.h"
 #include <string>
+#include "SDLApp.h"
 
 ArrowsGameObject::~ArrowsGameObject()
 {
@@ -20,7 +21,7 @@ void ArrowsGameObject::update()
 
 void ArrowsGameObject::loadFromFile(std::ifstream& file)
 {
-	int x, y, z, w;
+	float x, y, z, w;
 	file >>x >> y >> z >> w;
 
 	pos_ = { (double)x,(double)y };
@@ -29,8 +30,12 @@ void ArrowsGameObject::loadFromFile(std::ifstream& file)
 
 void ArrowsGameObject::saveToFile(std::ofstream& file)
 {
-	string data =to_string((int)pos_.getX()) + " " + to_string((int)pos_.getY()) + " " + to_string((int)speed_.getX()) + " " + to_string((int)speed_.getY())+ " ";
-	file << data;
+	if ((pos_.getX() >= 0 && pos_.getX() < WIN_WIDTH) && (pos_.getY() >= 0 && pos_.getY() < WIN_HEIGHT)) {
+		string data = to_string((int)pos_.getX()) + " " + to_string((int)pos_.getY()) + " " + to_string((int)speed_.getX()) + " " + to_string((int)speed_.getY()) + " ";
+		cout << data << endl;
+		file << data;
+		file << endl;
+	}
 }
 
 SDL_Rect ArrowsGameObject::getCollisionRect()
