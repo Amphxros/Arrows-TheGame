@@ -24,10 +24,10 @@ void ArrowsGameObject::loadFromFile(std::ifstream& file)
 	float x, y, z, w;
 	
 	file >>x >> y >> z >> w;
-	cout << x<<" "<<y<<" "<<z<<" "<<w<< endl;
 	
 	pos_ = { (double)x,(double)y };
 	speed_ = { (double)z,(double)w };
+	cout << pos_.getX()<<" "<< pos_.getY() <<" "<< speed_.getX() <<" "<< speed_.getY() << endl;
 }
 
 void ArrowsGameObject::saveToFile(std::ofstream& file)

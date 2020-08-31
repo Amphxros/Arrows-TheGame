@@ -146,7 +146,7 @@ void PlayState::loadFromFile(int seed)
 		file >> level_ >> score >> arrow;
 		level = level_;
 		setBackground(level);
-
+		cout << endl;
 		//carga el arco
 		bow_ = new Bow(Vector2D(0,0), Vector2D(0,0), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
 		bow_->loadFromFile(file);
@@ -156,6 +156,7 @@ void PlayState::loadFromFile(int seed)
 		//carga las flechas
 		int arrows=-1;
 		file >> arrows;
+		cout << endl;
 		for (int i = 0; i < arrows; i++) {
 			Arrow* a= new Arrow(Vector2D(0, 0), Vector2D(0, 0), (double)100, (double)31,app_->getTexture(TextureOrder::ARROW_1), this);
 			a->loadFromFile(file);
@@ -167,6 +168,7 @@ void PlayState::loadFromFile(int seed)
 		//carga los globos
 		int ballons=-1;
 		file >> ballons;
+		cout << endl;
 		for (int i = 0; i < ballons; i++) {
 			Balloon* b = new Balloon(Vector2D(0, 0), Vector2D(0, 0), 400, 400, false, app_->getTexture(TextureOrder::BALLOONS), this);
 			b->loadFromFile(file);
@@ -176,6 +178,7 @@ void PlayState::loadFromFile(int seed)
 		//carga las mariposas
 		int butterflies=-1;
 		file >> butterflies;
+		cout << endl;
 		for (int i = 0; i < butterflies; i++) {
 		
 			Butterfly* b = new Butterfly(Vector2D(120 + rand() % (WIN_WIDTH - 220), rand() % WIN_HEIGHT), Vector2D(0.15, 0.15), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this);
@@ -186,6 +189,7 @@ void PlayState::loadFromFile(int seed)
 		//carga los premios
 		int rewards;
 		file >> rewards;
+		cout << endl;
 		for (int i = 0; i < rewards; i++) {
 			Reward* r = new Reward(Vector2D(0,0), Vector2D(0,0), 40, 40, app_->getTexture(TextureOrder::REWARDS), app_->getTexture(TextureOrder::BUBBLE), this);
 			r->loadFromFile(file);
@@ -252,24 +256,28 @@ void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
 void PlayState::deleteArrow(std::list<GameObject*>::iterator it)
 {
 	Arrow::count--;
+	arrows_.remove(static_cast<Arrow*>((*it)));
 	killObject(it);
 }
 
 void PlayState::deleteBalloon(std::list<GameObject*>::iterator it)
 {
 	Balloon::count--;
+	balloons_.remove(static_cast<Balloon*>((*it)));
 	killObject(it);
 }
 
 void PlayState::deleteButterfly(std::list<GameObject*>::iterator it)
 {
 	Butterfly::count--;
+	butterflies_.remove(static_cast<Butterfly*>((*it)));
 	killObject(it);
 }
 
 void PlayState::deleteReward(std::list<GameObject*>::iterator it, std::list<EventHandler*>::iterator ev)
 {
 	Reward::count--;
+	rewards_.remove(static_cast<Reward*>((*it)));
 	killObject(it);
 }
 
