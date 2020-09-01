@@ -40,7 +40,6 @@ public:
 	void addNewBalloon(Balloon* b);
 	void addNewButterfly(Butterfly* b);
 
-	void deleteGameObject(std::list<GameObject*>::iterator go);
 	void deleteArrow(std::list<GameObject*>::iterator it);
 	void deleteBalloon(std::list<GameObject*>::iterator it);
 	void deleteButterfly(std::list<GameObject*>::iterator it);
@@ -59,15 +58,6 @@ public:
 
 
 private:
-
-	void createButterflies(int n);
-	void createBalloon();
-	void createReward(Reward* reward);
-	void cleanMemory();
-
-	void setBackground(int level);
-
-
 	ScoreBoard* score_;
 	Bow* bow_;
 
@@ -75,9 +65,20 @@ private:
 	std::list<Balloon*> balloons_;
 	std::list<Butterfly*> butterflies_;
 	std::list<Reward*> rewards_;
-	std::list<std::list<GameObject*>::iterator> gObjectsToErase_;
+	
+	int num_arrows_;
+	int num_balloons_;
+	int num_butterflies_;
+	int num_rewards_;
+
+
 	Texture* background_;
 	int level;
 
+	void deleteGameObject(std::list<GameObject*>::iterator go);
+	void createButterflies(int n);
+	void createBalloon();
+
+	void setBackground(int level);
 };
 

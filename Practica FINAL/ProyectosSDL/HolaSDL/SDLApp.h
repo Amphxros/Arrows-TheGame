@@ -6,9 +6,6 @@
 using namespace std;
 
 using uint = unsigned int;
-
-const uint WIN_WIDTH = 800;
-const uint WIN_HEIGHT = 600;
 const uint FRAME_RATE = 50;
 
 const uint POINTS_PER_BALLON = 1;
@@ -60,8 +57,11 @@ public:
 	//devuelve la textura correspondiente
 	inline Texture* getTexture(TextureOrder n) { return textures_.at(n); }
 
-	// callbacks
+	inline uint getWidth() { return WIN_WIDTH; }
+	inline uint getHeight() { return WIN_HEIGHT; }
 
+
+	// callbacks
 	static void quitApp(SDLApp* app);
 	static void resumeApp(SDLApp* app);
 	static void loadPlayState(SDLApp* app);
@@ -73,6 +73,9 @@ public:
 private:
 	SDL_Window* window_=nullptr;
 	SDL_Renderer* renderer_=nullptr;
+
+	const uint WIN_WIDTH = 800;
+	const uint WIN_HEIGHT = 600;
 	
 	static GameStateMachine* stateMachine_;
 	static bool exit_;

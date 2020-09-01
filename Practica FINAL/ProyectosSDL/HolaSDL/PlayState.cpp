@@ -11,12 +11,10 @@ PlayState::~PlayState()
 
 void PlayState::init()
 {
-	Arrow::count = 0;
-	Balloon::count = 0;
-	Butterfly::count = 0;
-	Reward::count = 0;
-	
-
+	num_arrows_ = 0;
+	num_balloons_ = 0;
+	num_butterflies_ = 0;
+	num_rewards_ = 0;
 }
 
 void PlayState::createGame()
@@ -24,7 +22,7 @@ void PlayState::createGame()
 	background_ = app_->getTexture(TextureOrder::BACKGROUND2);
 
 	// add scoreboard
-	score_ = new ScoreBoard(Vector2D(WIN_WIDTH / 2, 0), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
+	score_ = new ScoreBoard(Vector2D(app_->getWidth() / 2, 0), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
 	addGameObject(score_);
 	score_->setPoints(0);
 	score_->setArrows(10);
@@ -43,8 +41,8 @@ void PlayState::render() const
 	SDL_Rect dest;
 	dest.x = 0;
 	dest.y = 0;
-	dest.w = WIN_WIDTH;
-	dest.h = WIN_HEIGHT;
+	dest.w = app_->getWidth();
+	dest.h = app_->getHeight();
 	background_->render(dest);
 	GameState::render();
 	score_->render(); //esto es para que se renderice encima del resto de objetos 
@@ -90,16 +88,16 @@ void PlayState::saveToFile(int seed)
 		bow_->saveToFile(file);
 		
 		//flechas
-		file << Arrow::count << endl;
-		cout << Arrow::count << " " << arrows_.size()<<endl;
+		file << num_arrows_ << endl;
+		cout << num_arrows_<< " " << arrows_.size()<<endl;
 
 		for (Arrow* arrow : arrows_) {
 			arrow->saveToFile(file);
 		}
 
 		//globos
-		file << Balloon::count << endl;
-		cout << Balloon::count << " " << balloons_.size()<<endl;
+		file << num_balloons_ << endl;
+		cout << num_balloons_ << " " << balloons_.size()<<endl;
 
 		for (Balloon* b : balloons_) {
 			if (b->isNonPunctured()) {
@@ -108,15 +106,15 @@ void PlayState::saveToFile(int seed)
 		}
 
 		//mariposas
-		file << Butterfly::count << endl;
-		cout << Butterfly::count << " " << butterflies_.size()<<endl;
+		file << num_butterflies_ << endl;
+		cout << num_butterflies_ << " " << butterflies_.size()<<endl;
 		for (Butterfly* b : butterflies_) {
 			b->saveToFile(file);
 		}
 
 		//premios
-		file << Reward::count << endl;
-		cout << Reward::count << " " << rewards_.size() << endl;
+		file << num_rewards_ << endl;
+		cout << num_rewards_ << " " << rewards_.size() << endl;
 
 		for (Reward* r : rewards_) {
 			r->saveToFile(file);
@@ -138,7 +136,7 @@ void PlayState::loadFromFile(int seed)
 	file.open(std::to_string(seed) + ".sav");
 
 	if (file.is_open()) {
-		score_ = new ScoreBoard(Vector2D(WIN_WIDTH / 2, 0), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
+		score_ = new ScoreBoard(Vector2D(app_->getWidth() / 2, 0), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
 		addGameObject(score_);
 
 		int score, level_,arrow;
@@ -181,7 +179,7 @@ void PlayState::loadFromFile(int seed)
 		cout << endl;
 		for (int i = 0; i < butterflies; i++) {
 		
-			Butterfly* b = new Butterfly(Vector2D(120 + rand() % (WIN_WIDTH - 220), rand() % WIN_HEIGHT), Vector2D(0.15, 0.15), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this);
+			Butterfly* b = new Butterfly(Vector2D(120 + rand() % (app_->getWidth() - 220), rand() % app_->getHeight()), Vector2D(0.15, 0.15), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this);
 			b->loadFromFile(file);
 			addNewButterfly(b);
 		}
@@ -236,16 +234,16 @@ void PlayState::addPoints(int n)
 
 void PlayState::addNewBalloon(Balloon* b)
 {
+	num_balloons_++;
 	addGameObject(b);
 	balloons_.push_back(b);
-	Balloon::count++;
 }
 
 void PlayState::addNewButterfly(Butterfly* b)
 {
+	num_butterflies_++;
 	addGameObject(b);
 	butterflies_.push_back(b);
-	Butterfly::count++;
 }
 
 void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
@@ -255,28 +253,28 @@ void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
 
 void PlayState::deleteArrow(std::list<GameObject*>::iterator it)
 {
-	Arrow::count--;
+	num_arrows_--;
 	arrows_.remove(static_cast<Arrow*>((*it)));
 	killObject(it);
 }
 
 void PlayState::deleteBalloon(std::list<GameObject*>::iterator it)
 {
-	Balloon::count--;
+	num_balloons_--;
 	balloons_.remove(static_cast<Balloon*>((*it)));
 	killObject(it);
 }
 
 void PlayState::deleteButterfly(std::list<GameObject*>::iterator it)
 {
-	Butterfly::count--;
+	num_butterflies_--;
 	butterflies_.remove(static_cast<Butterfly*>((*it)));
 	killObject(it);
 }
 
 void PlayState::deleteReward(std::list<GameObject*>::iterator it, std::list<EventHandler*>::iterator ev)
 {
-	Reward::count--;
+	num_rewards_--;
 	rewards_.remove(static_cast<Reward*>((*it)));
 	killObject(it);
 }
@@ -334,12 +332,7 @@ bool PlayState::collisionWithReward(Reward* reward)
 
 		SDL_Rect* dest_A = &(*it)->getCollisionRect();
 		col = SDL_HasIntersection(&(reward->getCollisionRect()), dest_A);
-		if (col) {
-			//aqui podemos sumar puntos???
-		}
-		else {
-			it++;
-		}
+		it++;
 
 	}
 	return col;
@@ -372,8 +365,8 @@ void PlayState::clear()
 	for (auto it = gObjects_.begin(); it != gObjects_.end(); ++it) {
 		killObject(it);
 	}
-	gObjectsToErase_.clear();
 
+	gObjectsToErase_.clear();
 	arrows_.clear();
 	balloons_.clear();
 	butterflies_.clear();
@@ -384,7 +377,7 @@ void PlayState::clear()
 void PlayState::createButterflies(int n)
 {
 	for (int i = 0; i < n; i++) {
-		Butterfly* b = new Butterfly(Vector2D(120 + rand() % (WIN_WIDTH - 220), rand() % WIN_HEIGHT), Vector2D(0.15, 0.15), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this);
+		Butterfly* b = new Butterfly(Vector2D(120 + rand() % (app_->getWidth() - 220), rand() % app_->getHeight()), Vector2D(0.15, 0.15), 50, 50, app_->getTexture(TextureOrder::BUTTERFLY), this);
 		addNewButterfly(b);
 	}
 }
@@ -392,19 +385,9 @@ void PlayState::createButterflies(int n)
 void PlayState::createBalloon()
 {
 	if (rand() % 50 == 0) {
-		Balloon* b = new Balloon(Vector2D(100 + rand() % (WIN_WIDTH - 150), WIN_HEIGHT), Vector2D(0, 0.5), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this);
+		Balloon* b = new Balloon(Vector2D(100 + rand() % (app_->getWidth() - 150), app_->getHeight()), Vector2D(0, 0.5), 400, 400, true, app_->getTexture(TextureOrder::BALLOONS), this);
 		addNewBalloon(b);
 	}
-}
-
-void PlayState::createReward(Reward* reward)
-{
-
-}
-
-void PlayState::cleanMemory()
-{
-	
 }
 
 void PlayState::setBackground(int level)

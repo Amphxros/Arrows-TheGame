@@ -2,12 +2,9 @@
 #include "SDLApp.h"
 #include "PlayState.h"
 
-int Reward::count = 0;
 
 Reward::Reward():
-	ArrowsGameObject(), EventHandler(), texture_B(nullptr), frame_(-1), color_(-1), bubbled_(false), clicked_(true)
-{
-}
+	ArrowsGameObject(), EventHandler(), texture_B(nullptr), frame_(-1), color_(-1), bubbled_(false), clicked_(true){}
 
 Reward::Reward(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, Texture* textureB, GameState* state):
 	ArrowsGameObject(pos,speed,width,height,texture,state), EventHandler(), 
