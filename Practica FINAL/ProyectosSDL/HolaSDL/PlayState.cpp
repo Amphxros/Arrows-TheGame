@@ -50,12 +50,12 @@ void PlayState::render() const
 
 void PlayState::update()
 {
-	if (Butterfly::count!= 0 && score_->getArrows()>0) {
+	if (num_butterflies_!= 0 && score_->getArrows()>0) {
 		GameState::update();
 		createBalloon();
 	}
 	else {
-		if (Butterfly::count == 0) {
+		if (num_butterflies_ == 0) {
 			cout << "all butterflies are dead " << endl;
 		}
 		else {
@@ -202,7 +202,7 @@ void PlayState::loadFromFile(int seed)
 void PlayState::shoot(Arrow* arrow)
 {
 	if (score_->getArrows() > 0) {
-		Arrow::count++;
+		num_arrows_++;
 		score_->setArrows(score_->getArrows() - 1);
 		addGameObject(arrow);
 		arrows_.push_back(arrow);
@@ -211,7 +211,7 @@ void PlayState::shoot(Arrow* arrow)
 
 void PlayState::addNewReward(Reward* reward)
 {
-	Reward::count++;
+	num_rewards_++;
 	addGameObject(reward);
 	addEventHandler(reward);
 	rewards_.push_back(reward);

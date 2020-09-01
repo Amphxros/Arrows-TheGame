@@ -6,8 +6,11 @@
 using namespace std;
 
 using uint = unsigned int;
-const uint FRAME_RATE = 50;
 
+//constantes
+const uint FRAME_RATE = 50;
+const uint WIN_WIDTH = 800;
+const uint WIN_HEIGHT = 600;
 const uint POINTS_PER_BALLON = 1;
 
 //enum para las texturas
@@ -71,17 +74,18 @@ public:
 	static void toMenu(SDLApp* app);
 
 private:
+	//ventana
 	SDL_Window* window_=nullptr;
+	//renderizado
 	SDL_Renderer* renderer_=nullptr;
-
-	const uint WIN_WIDTH = 800;
-	const uint WIN_HEIGHT = 600;
-	
+	//maquina de estados
 	static GameStateMachine* stateMachine_;
+	//booleano de continuado
 	static bool exit_;
-	
+	//mapa de texturas
 	std::map<TextureOrder, Texture*> textures_;
 
+	//carga las texturas en el mapa
 	void loadTextures();
 
 };

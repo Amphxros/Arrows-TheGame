@@ -15,6 +15,6 @@ public:
 	virtual void update();
 	virtual void handleEvents(SDL_Event& event);
 
-	inline virtual State getState() { return State::PAUSE; }
+
 };
 

@@ -50,7 +50,7 @@ void Reward::update()
 		bubbled_=false;
 	}
 	
-	if (pos_.getY() > WIN_HEIGHT || clicked_) {
+	if (pos_.getY() > gamestate_->getApp()->getHeight() || clicked_) {
 		static_cast<PlayState*>(gamestate_)->deleteReward(it_, ev_);
 	}
 

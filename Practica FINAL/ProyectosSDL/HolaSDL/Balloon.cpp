@@ -3,7 +3,6 @@
 #include "SDLApp.h"
 #include <string>
 
-int Balloon::count = 0;
 Balloon::Balloon()
 {
 	color_ = -1;

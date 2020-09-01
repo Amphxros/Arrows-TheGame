@@ -3,38 +3,43 @@
 #include "SDLGameObject.h"
 #include "EventHandler.h"
 
-enum class State{ MENU, PLAY, PAUSE, END };
 
 class SDLApp;
-using uint = unsigned int;
 
 class GameState
 {
 
 public:
+	//constructora
 	GameState (SDLApp* _app);
+	//destructora
 	~GameState();
+	
 	//Métodos virtuales
+
+	//actualiza los GO de la lista gObjects_
 	virtual void update();
+	//renderiza los GO de la lista gObjects_
 	virtual void render() const;
+	//maneja los eventos de la lista evObjects_
 	virtual void handleEvents(SDL_Event & event);
 
-
-	void killObject(std::list<GameObject*>::iterator _gm) { gObjectsToErase_.push_back(_gm); };
+	//pone a eliminar el objeto con el iterador it
+	void killObject(std::list<GameObject*>::iterator it_) { gObjectsToErase_.push_back(it_); };
+	//devuelve la app
 	inline SDLApp* getApp() { return app_; };
-	inline State getState() { return name; }
 	void deleteObjects();
 
 protected:
-	const int MAX_LEVELS = 4;
-	list<GameObject*> gObjects_;			//Lista de todos los objetos
-	list<EventHandler*> evObjects_;		//Lista de objetos con eventos
+	list<GameObject*> gObjects_;										//Lista de todos los objetos
+	list<EventHandler*> evObjects_;										//Lista de objetos con eventos
 	std::list<std::list<GameObject*>::iterator> gObjectsToErase_;		//Listas de objetos a borrar
 
-	SDLApp* app_ = nullptr;
-	State name;
+	SDLApp* app_ = nullptr;		//puntero a la app
 
+	//añade el objeto go a la lista gObjects_
 	void addGameObject(SDLGameObject* go);
+	//añade ev a la lista evObjects
 	void addEventHandler(EventHandler* ev);
 
 

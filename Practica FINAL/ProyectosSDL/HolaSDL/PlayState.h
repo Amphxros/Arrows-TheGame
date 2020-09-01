@@ -32,7 +32,6 @@ public:
 	void saveToFile(int seed);
 	void loadFromFile(int seed);
 
-	inline virtual State getState() { return State::PLAY; }
 
 	void shoot(Arrow* arrow);
 	

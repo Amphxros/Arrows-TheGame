@@ -1,7 +1,6 @@
 #include "Butterfly.h"
 #include "PlayState.h"
 #include "SDLApp.h"
-int Butterfly::count = 0;
 
 Butterfly::Butterfly():
 	ArrowsGameObject()
@@ -85,7 +84,7 @@ void Butterfly::update()
 		pos_ = { pos_.getX(), pos_.getY() + speed_.getY() };
 		
 		if (pos_.getY() > WIN_HEIGHT) {
-			//static_cast<PlayState*>(gamestate_)->killButterfly(it_);
+			static_cast<PlayState*>(gamestate_)->deleteButterfly(it_);
 		}
 	}
 }

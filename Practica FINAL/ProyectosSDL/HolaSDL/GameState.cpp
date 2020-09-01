@@ -4,7 +4,8 @@
 #include "GameStateMachine.h"
 #include "Arrow.h"
 
-GameState::GameState( SDLApp* _app) :app_(_app) {}
+GameState::GameState( SDLApp* _app) :
+	app_(_app) {}
 
 //Elimina todos los objetos
 GameState::~GameState() {
