@@ -1,10 +1,11 @@
 #pragma once
 #include "GameState.h"
+
+#include "checkML.h"
 class MainMenuState :
 	public GameState
 {
 public:
-	MainMenuState();
 	MainMenuState(SDLApp* app);
 	virtual ~MainMenuState();
 

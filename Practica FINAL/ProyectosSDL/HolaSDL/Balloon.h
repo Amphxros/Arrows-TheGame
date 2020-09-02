@@ -1,9 +1,10 @@
 #pragma once
 #include "ArrowsGameObject.h"
+
+#include "checkML.h"
 class Balloon: public ArrowsGameObject
 {
 public:
-	static int count;
 
 	Balloon();
 	Balloon(Vector2D pos, Vector2D speed,double width, double height, bool punct, Texture* texture,GameState* state);

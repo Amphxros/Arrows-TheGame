@@ -1,6 +1,6 @@
 #include "Vector2D.h"
 
-void Vector2D::Normalize()
+void Vector2D::normalize()
 {
 	double mod = sqrt(pow(x_, 2) + pow(y_, 2));
 	if (mod > 0.0) {

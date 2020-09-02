@@ -3,9 +3,7 @@
 #include "SDLApp.h"
 
 ScoreBoard::ScoreBoard():
-	SDLGameObject()
-{
-}
+	SDLGameObject(){ }
 
 ScoreBoard::ScoreBoard(Vector2D pos, int width, int height, Texture* texture, Texture* arrow, GameState* state):
 	SDLGameObject(pos,width,height,texture,state),arrow_texture(arrow), points_(0), arrows_(0) {}
@@ -29,7 +27,7 @@ void ScoreBoard::render() const
 
 	}
 
-	for (int i = 0; i < vec.size(); i++) {
+	for (int i = 0; i < num_.size(); i++) {
 		SDL_Rect dest;
 
 		dest.x = pos_.getX() - width_ * i;
@@ -37,15 +35,9 @@ void ScoreBoard::render() const
 		dest.w = width_;
 		dest.h = height_;
 
-		texture_->renderFrame(dest, 0, vec[i]);
+		texture_->renderFrame(dest, 0, num_[i]);
 	}
 }
-
-void ScoreBoard::update()
-{
-	
-}
-
 void ScoreBoard::setPoints(int points)
 {
 	if (points > 0) {
@@ -54,7 +46,7 @@ void ScoreBoard::setPoints(int points)
 	else {
 		points_ = 0;
 	}
-	vec.clear();
+	num_.clear();
 	int size = (char)to_string(points_).size();
 	int score = points_;
 
@@ -63,6 +55,6 @@ void ScoreBoard::setPoints(int points)
 		int j = score % 10;
 		score /= 10;
 
-		vec.push_back(j);
+		num_.push_back(j);
 	}
 }

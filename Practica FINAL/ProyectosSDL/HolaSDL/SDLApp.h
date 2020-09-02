@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "GameStateMachine.h"
 #include <map>
+#include "checkML.h"
 
 using namespace std;
 
@@ -44,24 +45,20 @@ public:
 	//destructora
 	~SDLApp();
 
-
 	//bucle principal
-	void run();
-	
-	//renderizado
-	void render() const;
-	
-	//actualizado
-	void update();
-	
-	//manejo de eventos
-	void handleEvents();
-
+	void run();	
 	//devuelve la textura correspondiente
 	inline Texture* getTexture(TextureOrder n) { return textures_.at(n); }
 
 	inline uint getWidth() { return WIN_WIDTH; }
 	inline uint getHeight() { return WIN_HEIGHT; }
+
+	//renderizado
+	void render() const;
+	//actualizado
+	void update();
+	//manejo de eventos
+	void handleEvents();
 
 
 	// callbacks
@@ -74,16 +71,14 @@ public:
 	static void toMenu(SDLApp* app);
 
 private:
-	//ventana
-	SDL_Window* window_=nullptr;
-	//renderizado
-	SDL_Renderer* renderer_=nullptr;
-	//maquina de estados
-	static GameStateMachine* stateMachine_;
-	//booleano de continuado
-	static bool exit_;
-	//mapa de texturas
-	std::map<TextureOrder, Texture*> textures_;
+	
+	SDL_Window* window_=nullptr;		//ventana
+	SDL_Renderer* renderer_=nullptr;	//renderizado
+	
+	static GameStateMachine* stateMachine_;		//maquina de estados
+	static bool exit_;		//booleano para el bucle principal
+	
+	std::map<TextureOrder, Texture*> textures_;		//mapa de texturas
 
 	//carga las texturas en el mapa
 	void loadTextures();

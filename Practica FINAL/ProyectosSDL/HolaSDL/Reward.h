@@ -1,11 +1,12 @@
 #pragma once
 #include "ArrowsGameObject.h"
 #include "EventHandler.h"
+
+#include "checkML.h"
 class Reward :
 	public ArrowsGameObject, public EventHandler
 {
 public:
-	static int count;
 
 	Reward();
 	Reward(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, Texture* textureB, GameState* state);

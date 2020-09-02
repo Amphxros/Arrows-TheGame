@@ -1,9 +1,12 @@
+
+//clase textura cogida del campus
 #ifndef TextureH
 #define TextureH
 
 #include "SDL.h" // Windows
 #include "SDL_image.h" // Windows
 
+#include "checkML.h"
 #include <iostream>
 
 using namespace std;

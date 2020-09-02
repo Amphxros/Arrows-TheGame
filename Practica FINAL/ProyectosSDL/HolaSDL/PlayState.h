@@ -5,6 +5,7 @@
 #include "Bow.h"
 #include "ScoreBoard.h"
 #include "Butterfly.h"
+#include "checkML.h"
 #include "Reward.h"
 class PlayState :
 	public GameState
