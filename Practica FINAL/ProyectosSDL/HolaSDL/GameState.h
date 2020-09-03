@@ -43,5 +43,6 @@ protected:
 	//añade ev a la lista evObjects
 	void addEventHandler(EventHandler* ev);
 
+	void deleteGameObjects();
 
 };

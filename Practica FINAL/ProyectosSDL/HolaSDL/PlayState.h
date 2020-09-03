@@ -33,6 +33,7 @@ public:
 	void saveToFile(int seed);
 	void loadFromFile(int seed);
 
+	void deleteObjects();
 
 	void shoot(Arrow* arrow);
 	
@@ -75,7 +76,10 @@ private:
 	Texture* background_;
 	int level;
 
+
 	void deleteGameObject(std::list<GameObject*>::iterator go);
+	void createNewBow();
+	void createScoreBoard();
 	void createButterflies(int n);
 	void createBalloon();
 

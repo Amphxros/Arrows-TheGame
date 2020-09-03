@@ -20,18 +20,8 @@ void PlayState::init()
 void PlayState::createGame()
 {
 	background_ = app_->getTexture(TextureOrder::BACKGROUND2);
-
-	// add scoreboard
-	score_ = new ScoreBoard(Vector2D(app_->getWidth() / 2, 0), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
-	addGameObject(score_);
-	score_->setPoints(0);
-	score_->setArrows(10);
-
-	//add bow
-	bow_ = new Bow(Vector2D(0, 0), Vector2D(0, 5), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
-	addGameObject(bow_);
-	addEventHandler(bow_);
-
+	createScoreBoard();
+	createNewBow();
 	//add n butterflies
 	createButterflies(10);
 }
@@ -53,6 +43,7 @@ void PlayState::update()
 	if (num_butterflies_!= 0 && score_->getArrows()>0) {
 		GameState::update();
 		createBalloon();
+		deleteObjects();
 	}
 	else {
 		if (num_butterflies_ == 0) {
@@ -199,6 +190,55 @@ void PlayState::loadFromFile(int seed)
 	}
 }
 
+void PlayState::deleteObjects()
+{
+	if (!gObjectsToErase_.empty()) {
+	
+		std::list<std::list<GameObject*>::iterator>::iterator er_it = gObjectsToErase_.begin();
+	
+		while (er_it != gObjectsToErase_.end()) {
+	
+			auto g_it = gObjects_.begin();
+			bool found = false;
+	
+			while (!found && g_it != gObjects_.end()) {
+				if ((*er_it) == (g_it)) {
+	
+					if (dynamic_cast<EventHandler*>(*g_it)) {
+						bool eventFounded = false;
+						auto ev_it = evObjects_.begin();
+						while (!eventFounded && ev_it != evObjects_.end())
+						{
+							auto aux = dynamic_cast<GameObject*>(*ev_it);
+							if (*g_it == aux) {
+								auto aux_it = ev_it;
+								//evObjects_.erase(aux_it);
+								evObjects_.remove(*aux_it);
+								eventFounded = true;
+								found = true;
+							}
+							else ev_it++;
+						}
+					}
+	
+					auto aux_it = g_it;
+					auto aux_e_it = er_it;
+					GameObject* gm = *g_it;
+					er_it++;
+					g_it++;
+					gObjectsToErase_.erase(aux_e_it);
+					gObjects_.erase(aux_it);
+					delete (gm);
+					found = true;
+				}
+				else g_it++;
+			}
+	
+		}
+	}
+	gObjectsToErase_.clear();
+}
+
 void PlayState::shoot(Arrow* arrow)
 {
 	if (score_->getArrows() > 0) {
@@ -237,6 +277,7 @@ void PlayState::addNewBalloon(Balloon* b)
 	num_balloons_++;
 	addGameObject(b);
 	balloons_.push_back(b);
+
 }
 
 void PlayState::addNewButterfly(Butterfly* b)
@@ -247,8 +288,25 @@ void PlayState::addNewButterfly(Butterfly* b)
 }
 
 void PlayState::deleteGameObject(std::list<GameObject*>::iterator go)
+
 {
 	killObject(go);
+}
+
+void PlayState::createNewBow()
+{
+	//add bow
+	bow_ = new Bow(Vector2D(0, 0), Vector2D(0, 5), 100, 150, app_->getTexture(TextureOrder::BOW_1), app_->getTexture(TextureOrder::BOW_2), app_->getTexture(TextureOrder::ARROW_1), this);
+	addGameObject(bow_);
+	addEventHandler(bow_);
+}
+
+void PlayState::createScoreBoard()
+{
+	// add scoreboard
+	score_ = new ScoreBoard(Vector2D(app_->getWidth() / 2, 0), 20, 20, app_->getTexture(TextureOrder::SCOREBOARD), app_->getTexture(TextureOrder::ARROW_2), this);
+	score_->setPoints(0);
+	score_->setArrows(10);
 }
 
 void PlayState::deleteArrow(std::list<GameObject*>::iterator it)
@@ -341,7 +399,10 @@ bool PlayState::collisionWithReward(Reward* reward)
 void PlayState::nextLevel()
 {
 	level++;
+	clear();
+
 	int score = score_->getPoints();
+	createScoreBoard();
 
 	if (level % 3 == 0) {
 		background_ = app_->getTexture(TextureOrder::BACKGROUND2);
@@ -361,17 +422,16 @@ void PlayState::clear()
 {
 	delete score_;
 	score_ = nullptr;
-
-	for (auto it = gObjects_.begin(); it != gObjects_.end(); ++it) {
-		killObject(it);
-	}
-
-	gObjectsToErase_.clear();
+	
+	deleteGameObjects();
+	
+	gObjects_.clear();
 	arrows_.clear();
 	balloons_.clear();
+	evObjects_.clear();
 	butterflies_.clear();
 	rewards_.clear();
-
+	gObjectsToErase_.clear();
 }
 
 void PlayState::createButterflies(int n)

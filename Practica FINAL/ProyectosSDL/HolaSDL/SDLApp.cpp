@@ -64,10 +64,7 @@ void SDLApp::render() const
 //update
 void SDLApp::update()
 {
-
 	stateMachine_->getCurrentState()->update();
-	stateMachine_->getCurrentState()->deleteObjects();
-
 }
 
 //handle events
