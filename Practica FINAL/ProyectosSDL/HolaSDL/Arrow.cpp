@@ -29,6 +29,7 @@ void Arrow::setPos(Vector2D v)
 	pos_ = v;
 }
 
+//devuelve la hitbox(corresponde a la punta de la flecha)
 SDL_Rect Arrow::getCollisionRect()
 {
 	SDL_Rect dest;

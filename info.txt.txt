@@ -1,6 +1,10 @@
 
 # Autoría: Amparo Rubio Bellón
 
- -Practica 1: Entrega para la convocatoria extraordinaria
+ -Practica FINAL: Entrega para la convocatoria extraordinaria
  -Todo funciona correctamente, sin embargo no hay ninguna funcionalidad extra.
- 
+
+FUNCIONALIDAD:
+-En el main menu hay 3 botones iguales, el 1º carga un archivo .sav con el codigo que pases en la consola, el 2º inicia una nueva partida y el 3º quita el juego.
+- En playstate para pausar el juego pulsa esc
+- en pausestate el primer boton reauda la partida, el segundo te lleva al menú y el tercero guardará la partida con un codigo que pases en consola .sav

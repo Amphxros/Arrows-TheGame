@@ -74,3 +74,15 @@ void Balloon::loadFromFile(std::ifstream& file)
 	ArrowsGameObject::loadFromFile(file);
 	file >> color_;
 }
+
+SDL_Rect* Balloon::GetRect()
+{
+	SDL_Rect dest;
+	dest.x = pos_.getX();
+	dest.y = pos_.getY();
+	dest.w = width_ / 7;
+	dest.h = height_ / 6;
+
+	return &(dest);
+
+}
