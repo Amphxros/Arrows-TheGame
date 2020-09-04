@@ -194,49 +194,48 @@ void PlayState::deleteObjects()
 {
 	if (!gObjectsToErase_.empty()) {
 	
-		std::list<std::list<GameObject*>::iterator>::iterator er_it = gObjectsToErase_.begin();
+	std::list<std::list<GameObject*>::iterator>::iterator er_it = gObjectsToErase_.begin();
 	
-		while (er_it != gObjectsToErase_.end()) {
+	while (er_it != gObjectsToErase_.end()) {
 	
-			auto g_it = gObjects_.begin();
-			bool found = false;
+		auto g_it = gObjects_.begin();
+		bool found = false;
 	
-			while (!found && g_it != gObjects_.end()) {
-				if ((*er_it) == (g_it)) {
+		while (!found && g_it != gObjects_.end()) {
+			if ((*er_it) == (g_it)) {
 	
-					if (dynamic_cast<EventHandler*>(*g_it)) {
-						bool eventFounded = false;
-						auto ev_it = evObjects_.begin();
-						while (!eventFounded && ev_it != evObjects_.end())
-						{
-							auto aux = dynamic_cast<GameObject*>(*ev_it);
-							if (*g_it == aux) {
-								auto aux_it = ev_it;
-								//evObjects_.erase(aux_it);
-								evObjects_.remove(*aux_it);
-								eventFounded = true;
-								found = true;
-							}
-							else ev_it++;
+				if (dynamic_cast<EventHandler*>(*g_it)) {
+					bool eventFounded = false;
+					auto ev_it = evObjects_.begin();
+					while (!eventFounded && ev_it != evObjects_.end())
+					{
+						auto aux = dynamic_cast<GameObject*>(*ev_it);
+						if (*g_it == aux) {
+							auto aux_it = ev_it;
+							evObjects_.remove(*aux_it);
+							eventFounded = true;
+							found = true;
 						}
+						else ev_it++;
 					}
-	
-					auto aux_it = g_it;
-					auto aux_e_it = er_it;
-					GameObject* gm = *g_it;
-					er_it++;
-					g_it++;
-					gObjectsToErase_.erase(aux_e_it);
-					gObjects_.erase(aux_it);
-					delete (gm);
-					found = true;
 				}
-				else g_it++;
+	
+				auto aux_it = g_it;
+				auto aux_e_it = er_it;
+				GameObject* gm = *g_it;
+				er_it++;
+				g_it++;
+				gObjectsToErase_.erase(aux_e_it);
+				gObjects_.erase(aux_it);
+				delete (gm);
+				found = true;
+				}
+			else g_it++;
 			}
 	
 		}
-	}
 	gObjectsToErase_.clear();
+	}
 }
 
 void PlayState::shoot(Arrow* arrow)
@@ -403,17 +402,7 @@ void PlayState::nextLevel()
 
 	int score = score_->getPoints();
 	createScoreBoard();
-
-	if (level % 3 == 0) {
-		background_ = app_->getTexture(TextureOrder::BACKGROUND2);
-	}
-	else if (level % 3 == 1) {
-		background_ = app_->getTexture(TextureOrder::BACKGROUND3);
-	}
-	else if (level%3 == 2) {
-		background_ = app_->getTexture(TextureOrder::BACKGROUND4);
-	}
-
+	setBackground(level);
 	score_->setPoints(score);
 	score_->setArrows(10);
 }
@@ -423,7 +412,7 @@ void PlayState::clear()
 	delete score_;
 	score_ = nullptr;
 	
-	deleteGameObjects();
+	gObjects_.erase(gObjects_.begin(), gObjects_.end());
 	
 	gObjects_.clear();
 	arrows_.clear();
