@@ -184,6 +184,8 @@ void PlayState::loadFromFile(int seed)
 			r->loadFromFile(file);
 			addNewReward(r);
 		}
+
+		file.close();
 	}
 	else {
 		throw domain_error("archivo corrupto");
@@ -398,9 +400,9 @@ bool PlayState::collisionWithReward(Reward* reward)
 void PlayState::nextLevel()
 {
 	level++;
-	clear();
-
 	int score = score_->getPoints();
+	delete score_;
+	//clear();
 	createScoreBoard();
 	setBackground(level);
 	score_->setPoints(score);
@@ -412,7 +414,23 @@ void PlayState::clear()
 	delete score_;
 	score_ = nullptr;
 	
-	gObjects_.erase(gObjects_.begin(), gObjects_.end());
+	for (auto i = gObjects_.begin(); i != gObjects_.end(); i++)
+		gObjects_.erase(i);
+
+	for (auto i = evObjects_.begin(); i != evObjects_.end(); i++)
+		evObjects_.remove(static_cast<EventHandler*>(*i));
+
+	for (auto i = arrows_.begin(); i != arrows_.end(); i++)
+		arrows_.remove(static_cast<Arrow*>(*i));
+	
+	for (auto i = balloons_.begin(); i != balloons_.end(); i++)
+		balloons_.remove(static_cast<Balloon*>(*i));
+	
+	for (auto i = butterflies_.begin(); i != butterflies_.end(); i++)
+		butterflies_.remove(static_cast<Butterfly*>(*i));
+	
+	for (auto i = rewards_.begin(); i != rewards_.end(); i++)
+		rewards_.remove(static_cast<Reward*>(*i));
 	
 	gObjects_.clear();
 	arrows_.clear();

@@ -8,10 +8,7 @@ Reward::Reward():
 
 Reward::Reward(Vector2D pos, Vector2D speed, double width, double height, Texture* texture, Texture* textureB, GameState* state):
 	ArrowsGameObject(pos,speed,width,height,texture,state), EventHandler(), 
-	frame_(0), color_(rand()%4), texture_B(textureB), bubbled_(true), clicked_(false)
-{
-	color_ = rand() % 4;
-}
+	frame_(0), color_(rand()%4), texture_B(textureB), bubbled_(true), clicked_(false) { }
 
 Reward::~Reward()
 {
